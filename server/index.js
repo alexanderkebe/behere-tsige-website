@@ -3,7 +3,7 @@ import cors from 'cors';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 import defaultContent from '../src/data/defaultContent.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -11,8 +11,7 @@ const CONTENT_PATH = path.join(__dirname, '../data/content.json');
 const PUBLIC_CONTENT_PATH = path.join(__dirname, '../public/content.json');
 const PORT = process.env.PORT || 3001;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'behere2026';
-
-const tokens = new Set();
+const JWT_SECRET = process.env.JWT_SECRET || 'behere-secret-key-2026';
 
 const app = express();
 app.use(cors());
@@ -44,10 +43,13 @@ async function writeContent(data) {
 function authMiddleware(req, res, next) {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : '';
-  if (!token || !tokens.has(token)) {
+  
+  try {
+    jwt.verify(token, JWT_SECRET);
+    next();
+  } catch {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  next();
 }
 
 app.get('/api/content', async (_req, res) => {
@@ -65,8 +67,7 @@ app.post('/api/auth/login', (req, res) => {
   if (password !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Invalid password' });
   }
-  const token = crypto.randomBytes(32).toString('hex');
-  tokens.add(token);
+  const token = jwt.sign({ authenticated: true }, JWT_SECRET, { expiresIn: '24h' });
   res.json({ token });
 });
 
@@ -81,9 +82,8 @@ app.put('/api/content', authMiddleware, async (req, res) => {
 });
 
 app.post('/api/auth/logout', authMiddleware, (req, res) => {
-  const header = req.headers.authorization || '';
-  const token = header.startsWith('Bearer ') ? header.slice(7) : '';
-  tokens.delete(token);
+  // With JWT tokens, logout is handled client-side by removing the token
+  // No server-side action needed
   res.json({ ok: true });
 });
 
