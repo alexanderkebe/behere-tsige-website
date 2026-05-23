@@ -1,9 +1,7 @@
-import fs from 'fs/promises';
-import path from 'path';
-import jwt from 'jsonwebtoken';
-import { fileURLToPath } from 'url';
+const fs = require('fs/promises');
+const path = require('path');
+const jwt = require('jsonwebtoken');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const defaultContentPath = path.join(__dirname, '../src/data/defaultContent.js');
 
 const CONTENT_PATH = path.join(process.cwd(), 'data/content.json');
@@ -52,7 +50,7 @@ function verifyToken(req) {
   }
 }
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method === 'GET') {
     try {
       const content = await readContent();
@@ -78,3 +76,5 @@ export default async function handler(req, res) {
     res.status(405).json({ error: 'Method not allowed' });
   }
 }
+
+module.exports = handler;

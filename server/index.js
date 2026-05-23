@@ -1,12 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import jwt from 'jsonwebtoken';
-import defaultContent from '../src/data/defaultContent.js';
+const express = require('express');
+const cors = require('cors');
+const fs = require('fs/promises');
+const path = require('path');
+const jwt = require('jsonwebtoken');
+const defaultContent = require('../src/data/defaultContent.js');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(__filename);
 const CONTENT_PATH = path.join(__dirname, '../data/content.json');
 const PUBLIC_CONTENT_PATH = path.join(__dirname, '../public/content.json');
 const PORT = process.env.PORT || 3001;

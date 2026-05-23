@@ -13,7 +13,7 @@ export function clearToken() {
 }
 
 export async function login(password) {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch('/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password }),
@@ -46,7 +46,7 @@ export async function saveContent(content) {
 export async function logout() {
   const token = getToken();
   if (token) {
-    await fetch('/api/auth/logout', {
+    await fetch('/api/logout', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
     }).catch(() => {});
