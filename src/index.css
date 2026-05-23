@@ -99,6 +99,25 @@ button {
   background: rgba(255, 255, 255, 0.0);
 }
 
+.header-entrance {
+  animation: headerSlideDown 0.7s var(--ease-smooth) both;
+}
+
+.nav-logo-entrance {
+  animation: fadeIn 0.8s var(--ease-smooth) 0.15s both;
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .header.scrolled {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
@@ -241,6 +260,20 @@ button {
   height: 2px;
   background: var(--navy);
   transition: all var(--transition-base);
+  transform-origin: center;
+}
+
+.mobile-menu-toggle.is-open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-open .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-toggle.is-open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* =============================================
@@ -266,6 +299,31 @@ button {
   pointer-events: all;
 }
 
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(197, 160, 68, 0.15);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity 0.4s var(--ease-smooth),
+    transform 0.4s var(--ease-smooth);
+  transition-delay: var(--mobile-item-delay, 0ms);
+}
+
+.mobile-nav-links-open .mobile-nav-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mobile-nav-item svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
 .mobile-overlay-header {
   display: flex;
   align-items: center;
@@ -289,20 +347,6 @@ button {
   flex-direction: column;
   padding: 24px 32px;
   gap: 4px;
-}
-
-.mobile-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(197, 160, 68, 0.15);
-}
-
-.mobile-nav-item svg {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
 }
 
 .mobile-nav-link {
@@ -375,6 +419,16 @@ button {
   display: block;
   object-fit: cover;
   object-position: center top;
+}
+
+.hero-bg-img {
+  animation: heroKenBurns 22s ease-in-out infinite alternate;
+  transform-origin: center center;
+}
+
+@keyframes heroKenBurns {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
 }
 
 /* Hero main content */
@@ -549,6 +603,21 @@ button {
   display: block;
 }
 
+.hero-shape-entrance {
+  animation: heroShapeRise 1.2s var(--ease-smooth) 0.5s both;
+}
+
+@keyframes heroShapeRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* =============================================
    SERVICES SECTION (Dark Navy)
@@ -675,19 +744,46 @@ button {
   box-sizing: border-box;
 }
 
-/* ── Scroll-in animation ── */
-.about-text-col,
-.about-gallery {
+/* ── Scroll-in reveal animations ── */
+.reveal {
+  /* Visible by default until JS marks off-screen items as hidden */
+}
+
+.reveal.reveal-ready:not(.reveal-visible) {
   opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  transition:
+    opacity 0.65s var(--ease-smooth),
+    transform 0.65s var(--ease-smooth);
+  transition-delay: var(--reveal-delay, 0ms);
 }
-.about-gallery {
-  transition-delay: 0.15s;
+
+.reveal.reveal-ready:not(.reveal-visible).reveal-up {
+  transform: translateY(32px);
 }
-.about-visible {
+
+.reveal.reveal-ready:not(.reveal-visible).reveal-left {
+  transform: translateX(-36px);
+}
+
+.reveal.reveal-ready:not(.reveal-visible).reveal-right {
+  transform: translateX(36px);
+}
+
+.reveal.reveal-ready:not(.reveal-visible).reveal-scale {
+  transform: scale(0.96);
+}
+
+.reveal.reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(0) scale(1);
+  transition:
+    opacity 0.65s var(--ease-smooth),
+    transform 0.65s var(--ease-smooth);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.reveal-done {
+  transition: none;
 }
 
 /* ── Text column ── */
@@ -809,7 +905,10 @@ button {
   inset: 0;
   opacity: 0;
   z-index: 1;
-  transition: opacity 0.6s var(--ease-smooth);
+  transform: scale(1.04);
+  transition:
+    opacity 0.7s var(--ease-smooth),
+    transform 0.7s var(--ease-smooth);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -818,6 +917,7 @@ button {
 .carousel-slide.active {
   opacity: 1;
   z-index: 2;
+  transform: scale(1);
 }
 
 .carousel-img {
@@ -1991,6 +2091,33 @@ button {
 .delay-6 { animation-delay: 0.6s; }
 .delay-7 { animation-delay: 0.7s; }
 .delay-8 { animation-delay: 0.8s; }
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal.reveal-ready:not(.reveal-visible),
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-bg-img {
+    animation: none;
+  }
+}
 
 
 /* =============================================

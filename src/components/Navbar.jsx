@@ -56,9 +56,9 @@ export default function Navbar({ lang, setLang }) {
 
   return (
     <>
-      <header className={`header ${scrolled ? 'scrolled' : ''}`} id="main-header">
+      <header className={`header header-entrance ${scrolled ? 'scrolled' : ''}`} id="main-header">
         <nav className="nav" id="main-nav">
-          <a href="#home" className="nav-logo" id="nav-logo" onClick={() => handleNavClick('#home')}>
+          <a href="#home" className="nav-logo nav-logo-entrance" id="nav-logo" onClick={() => handleNavClick('#home')}>
             <img src="/assets/logo.png" alt="Logo" className="logo-img" />
           </a>
 
@@ -88,7 +88,7 @@ export default function Navbar({ lang, setLang }) {
             </button>
 
             <button
-              className="mobile-menu-toggle"
+              className={`mobile-menu-toggle ${mobileOpen ? 'is-open' : ''}`}
               id="mobile-menu-toggle"
               aria-label="Toggle navigation menu"
               onClick={() => setMobileOpen(true)}

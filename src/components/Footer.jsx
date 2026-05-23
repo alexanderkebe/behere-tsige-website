@@ -1,4 +1,6 @@
 import React from 'react';
+import Reveal from './Reveal';
+import { useContent } from '../context/ContentContext';
 import {
   FacebookIcon,
   TelegramIcon,
@@ -14,68 +16,25 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-const SOCIALS = [
-  { id: 'social-youtube', label: 'YouTube', icon: YoutubeIcon, href: 'https://youtube.com/@BehereTsigeMekaneSelamStMary' },
-  { id: 'social-facebook', label: 'Facebook', icon: FacebookIcon, href: 'https://facebook.com/BehereTsigeMekaneSelamStMary' },
-  { id: 'social-telegram', label: 'Telegram', icon: TelegramIcon, href: 'https://t.me/BehereTsigeMekaneSelam' },
-  { id: 'social-instagram', label: 'Instagram', icon: InstagramIcon, href: 'https://instagram.com/behere.tsige.st.mary' },
-  { id: 'social-tiktok', label: 'TikTok', icon: TikTokIcon, href: 'https://tiktok.com/@beheretsige.st.mary' },
-  { id: 'social-linkedin', label: 'LinkedIn', icon: LinkedInIcon, href: 'https://linkedin.com/company/beheretsige-st-mary' },
-];
-
-const CONTENT = {
-  en: {
-    description: 'Preserving the ancient traditions of the Ethiopian Orthodox Tewahedo Church while nurturing the spiritual growth of our community and providing a beacon of hope and grace.',
-    colServices: 'Service Hours',
-    colContact: 'Contact Us',
-    colLinks: 'Quick Links',
-    sundayKidase: 'Sunday Divine Liturgy (Kidase) - 5:00 AM',
-    saturdayKidase: 'Saturday Kidase - 6:00 AM',
-    weekdayKidase: 'Weekday Liturgy - 6:00 AM',
-    address: 'Bihere Tsige Road, Gullele, Addis Ababa, Ethiopia',
-    phone: 'Phone: +251 11 320 1234',
-    email: 'Email: info@beheretsigestmary.org',
-    links: [
-      { label: 'Home', href: '#home' },
-      { label: 'About Us', href: '#about' },
-      { label: 'Services', href: '#services' },
-      { label: 'Events', href: '#events' },
-      { label: 'News', href: '#news' },
-      { label: 'Donate', href: '#donate' },
-    ],
-    copyright: '© 2026 Bihere Tsige Mekane Selam Kidist Dengel Mariam Church. All rights reserved.',
-  },
-  am: {
-    description: 'የማኅበረሰባችንን መንፈሳዊ እድገት እያሳደገ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያንን ጥንታዊ እምነት፣ ሥርዓትና ታሪክ ይጠብቃል።',
-    colServices: 'የአምልኮ ሰዓታት',
-    colContact: 'ያግኙን',
-    colLinks: 'ፈጣን አገናኞች',
-    sundayKidase: 'የእሑድ ቅዳሴ - ከጧቱ 11:00 ሰዓት ጀምሮ',
-    saturdayKidase: 'የቅዳሜ ቅዳሴ - ከጧቱ 12:00 ሰዓት ጀምሮ',
-    weekdayKidase: 'የዕለታት ቅዳሴ - ከጧቱ 12:00 ሰዓት ጀምሮ',
-    address: 'የብሔረ ጽጌ መንገድ፣ ጉለሌ፣ አዲስ አበባ፣ ኢትዮጵያ',
-    phone: 'ስልክ፡ +251 11 320 1234',
-    email: 'ኢሜይል፡ info@beheretsigestmary.org',
-    links: [
-      { label: 'መነሻ', href: '#home' },
-      { label: 'ስለ እኛ', href: '#about' },
-      { label: 'አገልግሎቶች', href: '#services' },
-      { label: 'መርሃ ግብራት', href: '#events' },
-      { label: 'ዜና', href: '#news' },
-      { label: 'ልገሳ', href: '#donate' },
-    ],
-    copyright: '© 2026 ብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን። መብቱ በሕግ የተጠበቀ ነው።',
-  },
+const SOCIAL_ICONS = {
+  'social-youtube': YoutubeIcon,
+  'social-facebook': FacebookIcon,
+  'social-telegram': TelegramIcon,
+  'social-instagram': InstagramIcon,
+  'social-tiktok': TikTokIcon,
+  'social-linkedin': LinkedInIcon,
 };
 
 export default function Footer({ lang }) {
-  const c = CONTENT[lang] || CONTENT.en;
+  const { content } = useContent();
+  const c = content.footer[lang] || content.footer.en;
+  const socials = content.socials;
 
   return (
     <footer id="footer" className="footer">
       <div className="footer-top">
         {/* Col 1: About Church */}
-        <div className="footer-col footer-col-about">
+        <Reveal className="footer-col footer-col-about" direction="up" delay={0}>
           <img src="/assets/logo.png" alt="Church Logo" className="footer-logo" />
           <h3 className="footer-church-title">
             {lang === 'am'
@@ -83,10 +42,10 @@ export default function Footer({ lang }) {
               : 'Bihere Tsige Mekane Selam St. Mary Church'}
           </h3>
           <p className="footer-church-desc">{c.description}</p>
-        </div>
+        </Reveal>
 
         {/* Col 2: Quick Links */}
-        <div className="footer-col">
+        <Reveal className="footer-col" direction="up" delay={80}>
           <h4 className="footer-col-title">{c.colLinks}</h4>
           <ul className="footer-links">
             {c.links.map((link, i) => (
@@ -97,20 +56,20 @@ export default function Footer({ lang }) {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
         {/* Col 3: Services schedule */}
-        <div className="footer-col">
+        <Reveal className="footer-col" direction="up" delay={160}>
           <h4 className="footer-col-title">{c.colServices}</h4>
           <ul className="footer-schedule">
             <li>{c.sundayKidase}</li>
             <li>{c.saturdayKidase}</li>
             <li>{c.weekdayKidase}</li>
           </ul>
-        </div>
+        </Reveal>
 
         {/* Col 4: Contact info */}
-        <div className="footer-col">
+        <Reveal className="footer-col" direction="up" delay={240}>
           <h4 className="footer-col-title">{c.colContact}</h4>
           <div className="footer-contact">
             <p className="footer-contact-address">{c.address}</p>
@@ -119,14 +78,14 @@ export default function Footer({ lang }) {
               <a href="mailto:info@beheretsigestmary.org">{c.email}</a>
             </p>
           </div>
-        </div>
+        </Reveal>
       </div>
 
-      <div className="footer-bottom">
+      <Reveal className="footer-bottom" delay={120}>
         <p className="footer-copyright">{c.copyright}</p>
         <div className="social-links" id="social-links">
-          {SOCIALS.map((social) => {
-            const IconComponent = social.icon;
+          {socials.map((social) => {
+            const IconComponent = SOCIAL_ICONS[social.id] || YoutubeIcon;
             return (
               <a
                 key={social.id}
@@ -142,7 +101,7 @@ export default function Footer({ lang }) {
             );
           })}
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

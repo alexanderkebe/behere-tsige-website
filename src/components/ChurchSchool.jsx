@@ -1,5 +1,7 @@
 import React from 'react';
 import { DiamondOrnament } from './Icons';
+import Reveal from './Reveal';
+import { useContent } from '../context/ContentContext';
 
 /* ── SVG icons for the 4 Abnet levels ── */
 const ReadingIcon = () => (
@@ -87,72 +89,14 @@ const SUNDAY_LEVELS = [
   { key: 'ethics', icon: EthicsIcon },
 ];
 
-const CONTENT = {
-  en: {
-    sectionTag: 'Serve at Your Parish',
-    sectionTitle: 'Church Education',
-    abnet: {
-      title: 'Traditional Church School',
-      subtitle: 'Abnet School',
-      intro: 'Preserving our sacred traditions by providing comprehensive religious education for all ages.',
-      join: 'Join Now',
-    },
-    sundaySchool: {
-      title: 'Sunday School',
-      subtitle: 'Youth & Family',
-      intro: 'Nurturing the next generation through biblical studies, cultural values, and spiritual fellowship tailored for children, youth, and families.',
-      join: 'Join Now',
-    },
-    abnetLevels: {
-      nibab: { title: 'Nibab (Reading)', desc: 'Learning Ge\'ez alphabet and basic prayers.' },
-      kidase: { title: 'Kidase (Liturgy)', desc: 'Studying liturgical rites and sacred meanings.' },
-      zema: { title: 'Zema (Hymns)', desc: 'Learning ancient church hymns and sacred melodies.' },
-      kine: { title: 'Kine (Poetry)', desc: 'Advanced study of religious poetry and spiritual expression.' },
-    },
-    sundaySchoolLevels: {
-      bible: { title: 'Bible Study', desc: 'Systematic study of scriptures and teachings.' },
-      hymns: { title: 'Spiritual Hymns', desc: 'Learning traditional spiritual songs and chants.' },
-      liturgical: { title: 'Liturgical Education', desc: 'Understanding church sacraments, rituals, and prayers.' },
-      ethics: { title: 'Christian Life & Ethics', desc: 'Practical guidance on Christian values, family, and community service.' },
-    },
-  },
-  am: {
-    sectionTag: 'በደብርዎ ያገልግሉ',
-    sectionTitle: 'ባህላዊ የቤተ ክርስቲያን ትምህርት ቤት',
-    abnet: {
-      title: 'የአቢነት ትምህርት',
-      subtitle: 'ባህላዊ ትምህርት ቤት',
-      intro: 'ለሁሉም ዕድሜ አጠቃላይ ሃይማኖታዊ ትምህርትን በማቅረብ ቅዱስ ወጎቻችንን እንጠብቃለን።',
-      join: 'ይቀላቀሉ',
-    },
-    sundaySchool: {
-      title: 'የሰንበት ትምህርት ቤት',
-      subtitle: 'ወጣቶች እና ቤተሰብ',
-      intro: 'ለልጆች፣ ወጣቶች እና ቤተሰቦች የተዘጋጀ የመጽሐፍ ቅዱስ ጥናት፣ ባህላዊ እሴቶች እና መንፈሳዊ ኅብረት።',
-      join: 'ይቀላቀሉ',
-    },
-    abnetLevels: {
-      nibab: { title: 'ንባብ', desc: 'የግእዝ ፊደል ማንበብ እና መሰረታዊ ጸሎቶችን መማር።' },
-      kidase: { title: 'ቅዳሴ', desc: 'የቅዳሴ ሥርዓት እና ቅዱስ ትርጉሞቹን ማጥናት።' },
-      zema: { title: 'ዜማ', desc: 'የቤተ ክርስቲያንን ጥንታዊ መዝሙሮች እና ቅዱስ ዜማዎችን መማር።' },
-      kine: { title: 'ቅኔ', desc: 'የሃይማኖታዊ ግጥሞች እና የመንፈሳዊ ገለጻ የላቀ ጥናት።' },
-    },
-    sundaySchoolLevels: {
-      bible: { title: 'መጽሐፍ ቅዱስ ጥናት', desc: 'የመጽሐፍ ቅዱስ ቃላትንና አስተምህሮዎችን በጥልቀት ማጥናት።' },
-      hymns: { title: 'የመዝሙር ትምህርት', desc: 'የበዓላት እና የክብረ በዓላት መዝሙራትን መማር።' },
-      liturgical: { title: 'የሥርዓተ አምልኮ ትምህርት', desc: 'የቤተ ክርስቲያንን ሥርዓትና የጸሎት መርሃ ግብር ማጥናት።' },
-      ethics: { title: 'ክርስቲያናዊ ሥነ-ምግባር', desc: 'በክርስቲያናዊ ሥነ-ምግባርና ፍቅር ማኅበረሰቡን ማገልገል።' },
-    },
-  },
-};
-
 export default function ChurchSchool({ lang }) {
-  const c = CONTENT[lang] || CONTENT.en;
+  const { content } = useContent();
+  const c = content.churchSchool[lang] || content.churchSchool.en;
 
   return (
     <section id="church-school" className="cs-section">
       {/* Section header */}
-      <div className="cs-header">
+      <Reveal className="cs-header">
         <div className="about-tag-row">
           <span className="about-tag-line" />
           <span className="about-tag">{c.sectionTag}</span>
@@ -160,12 +104,12 @@ export default function ChurchSchool({ lang }) {
         </div>
         <div className="about-ornament"><DiamondOrnament /></div>
         <h2 className="cs-section-title" id="cs-section-title">{c.sectionTitle}</h2>
-      </div>
+      </Reveal>
 
       {/* Two program cards */}
       <div className="cs-grid">
         {/* ─── Abnet School ─── */}
-        <div className="cs-card" id="cs-abnet">
+        <Reveal as="div" className="cs-card" id="cs-abnet" direction="left" delay={80}>
           <div className="cs-card-header">
             <LiturgyIcon />
             <div>
@@ -195,10 +139,10 @@ export default function ChurchSchool({ lang }) {
           <div className="cs-card-actions">
             <a href="#abnet-join" className="cs-btn cs-btn-filled cs-btn-full">{c.abnet.join}</a>
           </div>
-        </div>
+        </Reveal>
 
         {/* ─── Sunday School ─── */}
-        <div className="cs-card" id="cs-sunday-school">
+        <Reveal as="div" className="cs-card" id="cs-sunday-school" direction="right" delay={180}>
           <div className="cs-card-header">
             <BibleIcon />
             <div>
@@ -228,7 +172,7 @@ export default function ChurchSchool({ lang }) {
           <div className="cs-card-actions">
             <a href="#sunday-join" className="cs-btn cs-btn-filled cs-btn-full">{c.sundaySchool.join}</a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

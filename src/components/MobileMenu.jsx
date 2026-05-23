@@ -46,11 +46,15 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeLink, onNa
         </button>
       </div>
 
-      <ul className="mobile-nav-links">
-        {navItems.map((item) => {
+      <ul className={`mobile-nav-links ${isOpen ? 'mobile-nav-links-open' : ''}`}>
+        {navItems.map((item, index) => {
           const IconComponent = MOBILE_ICONS[item.href] || HomeIcon;
           return (
-            <li key={item.href} className={`mobile-nav-item${item.donate ? ' mobile-nav-donate' : ''}`}>
+            <li
+              key={item.href}
+              className={`mobile-nav-item${item.donate ? ' mobile-nav-donate' : ''}`}
+              style={{ '--mobile-item-delay': `${index * 60 + 80}ms` }}
+            >
               <IconComponent />
               <a
                 href={item.href}
