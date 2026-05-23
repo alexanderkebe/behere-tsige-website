@@ -7,9 +7,3 @@ export default async function handler(req, res) {
   // No server-side action needed
   res.json({ ok: true });
 }
-
-export function config() {
-  return {
-    runtime: 'nodejs',
-  };
-}

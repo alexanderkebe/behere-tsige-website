@@ -18,9 +18,3 @@ export default async function handler(req, res) {
   
   res.json({ token });
 }
-
-export function config() {
-  return {
-    runtime: 'nodejs',
-  };
-}
