@@ -1683,6 +1683,166 @@ button {
 }
 
 /* =============================================
+   MEDIA SECTION
+   ============================================= */
+.media-section {
+  background: var(--off-white);
+  padding: 100px 60px;
+  box-sizing: border-box;
+}
+
+.media-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.media-section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 10px;
+  letter-spacing: 0.03em;
+}
+
+.media-intro {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: #4a4a5a;
+  margin-top: 14px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.media-card {
+  display: block;
+  background: var(--white);
+  border: 1px solid rgba(197, 160, 68, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+}
+
+.media-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
+  border-color: rgba(197, 160, 68, 0.35);
+}
+
+.media-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease-smooth);
+}
+
+.media-card:hover .media-thumb img {
+  transform: scale(1.06);
+}
+
+.media-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 27, 61, 0.35), rgba(15, 27, 61, 0) 55%);
+}
+
+.media-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--navy);
+  box-shadow: 0 6px 20px rgba(15, 27, 61, 0.25);
+  transition: transform 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth);
+}
+
+.media-card:hover .media-play {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--gold);
+}
+
+.media-play-icon {
+  width: 26px;
+  height: 26px;
+  margin-left: 3px;
+}
+
+.media-type {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.media-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  padding: 20px 22px 24px;
+  line-height: 1.35;
+}
+
+.media-cta {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.btn-media-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.btn-media-all:hover {
+  background: var(--gold-dark);
+  transform: translateY(-2px);
+}
+
+/* =============================================
    DONATE SECTION
    ============================================= */
 .donate-section {
@@ -1862,6 +2022,7 @@ button {
   .cs-grid,
   .news-grid,
   .events-grid,
+  .media-grid,
   .donate-grid {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -1870,6 +2031,7 @@ button {
   .cs-section,
   .news-section,
   .events-section,
+  .media-section,
   .donate-section {
     padding: 80px 40px;
   }
@@ -1883,6 +2045,7 @@ button {
   .cs-section,
   .news-section,
   .events-section,
+  .media-section,
   .donate-section {
     padding: 60px 20px;
   }

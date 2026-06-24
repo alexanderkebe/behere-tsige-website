@@ -333,6 +333,44 @@ const defaultContent = {
       ],
     },
   },
+  media: {
+    en: {
+      sectionTag: 'Watch & Listen',
+      sectionTitle: 'Media & Sermons',
+      intro: 'Watch divine liturgies, sermons, and spiritual programs from our parish, and follow us for the latest uploads.',
+      viewAll: 'Visit our YouTube Channel',
+    },
+    am: {
+      sectionTag: 'ይመልከቱ እና ያዳምጡ',
+      sectionTitle: 'ሚዲያ እና ስብከት',
+      intro: 'የቅዳሴ ሥርዓት፣ ስብከቶች እና መንፈሳዊ ፕሮግራሞችን ከደብራችን ይመልከቱ፣ አዳዲስ ይዘቶችን ለማግኘት ይከተሉን።',
+      viewAll: 'የዩቱብ ቻናላችንን ይጎብኙ',
+    },
+    channelUrl: 'https://youtube.com/@BehereTsigeMekaneSelamStMary',
+    items: [
+      {
+        id: 'media-1',
+        thumb: '/assets/about-1.jpg.png',
+        href: 'https://youtube.com/@BehereTsigeMekaneSelamStMary',
+        en: { type: 'Video', title: 'Sunday Divine Liturgy (Kidase)' },
+        am: { type: 'ቪዲዮ', title: 'የእሑድ ቅዳሴ' },
+      },
+      {
+        id: 'media-2',
+        thumb: '/assets/about-3.jpg.png',
+        href: 'https://youtube.com/@BehereTsigeMekaneSelamStMary',
+        en: { type: 'Video', title: 'Feast of Hidar Tsige Celebration' },
+        am: { type: 'ቪዲዮ', title: 'የኅዳር ጽጌ በዓል አከባበር' },
+      },
+      {
+        id: 'media-3',
+        thumb: '/assets/about-4.jpg.png',
+        href: 'https://youtube.com/@BehereTsigeMekaneSelamStMary',
+        en: { type: 'Video', title: 'Spiritual Teaching & Sermon' },
+        am: { type: 'ቪዲዮ', title: 'መንፈሳዊ ትምህርትና ስብከት' },
+      },
+    ],
+  },
   footer: {
     en: {
       description:
