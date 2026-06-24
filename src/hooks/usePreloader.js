@@ -4,16 +4,18 @@ import { useState, useEffect } from 'react';
  * Preloads the critical hero assets before the site is revealed.
  *
  * - Only the asset that the current screen actually needs is downloaded:
- *   the looping video on large screens, the matching still image on
- *   tablet / mobile. Phones never pull the heavy video.
+ *   the looping desktop video on large screens, the looping mobile video on
+ *   phones, and the still image on tablet. Each screen pulls just one video.
  * - Progress is driven by real downloaded bytes (via the streamed fetch)
  *   so slow connections see an honest progress bar.
  * - The video is downloaded once and handed back as an object URL, so the
  *   hero plays instantly with no second download.
  * - A safety timeout guarantees the user is never trapped behind the loader.
  */
-const VIDEO_SRC = '/assets/hero-video-desktop.mp4';
+const DESKTOP_VIDEO_SRC = '/assets/hero-video-desktop.mp4';
+const MOBILE_VIDEO_SRC = '/assets/hero-mobile.mp4';
 const LARGE_QUERY = '(min-width: 1181px)';
+const PHONE_QUERY = '(max-width: 752px)';
 const SAFETY_TIMEOUT = 20000;
 
 export function usePreloader() {
@@ -26,19 +28,28 @@ export function usePreloader() {
     let createdUrl = null;
 
     const isLarge = window.matchMedia(LARGE_QUERY).matches;
+    const isPhone = window.matchMedia(PHONE_QUERY).matches;
 
-    // Pick the one hero still that matches this screen.
-    const heroImage = window.matchMedia('(max-width: 752px)').matches
+    // Pick the one hero still (poster) that matches this screen.
+    const heroImage = isPhone
       ? '/assets/hero-mobile.png'
       : window.matchMedia('(max-width: 1180px)').matches
         ? '/assets/hero-tablet.png'
         : '/assets/background.png';
 
+    // Large screens get the desktop video, phones get the mobile video,
+    // tablets stay on the still image (no video).
+    const videoToLoad = isLarge
+      ? DESKTOP_VIDEO_SRC
+      : isPhone
+        ? MOBILE_VIDEO_SRC
+        : null;
+
     const imageSources = [heroImage, '/assets/logo.png'];
 
     // Weighted tasks so the big video dominates the progress bar honestly.
     const tasks = imageSources.map(() => ({ weight: 1, fraction: 0 }));
-    const videoTask = isLarge ? { weight: 6, fraction: 0 } : null;
+    const videoTask = videoToLoad ? { weight: 6, fraction: 0 } : null;
     if (videoTask) tasks.push(videoTask);
 
     const totalWeight = tasks.reduce((sum, t) => sum + t.weight, 0);
@@ -96,7 +107,7 @@ export function usePreloader() {
         });
 
     const jobs = imageSources.map((src, i) => loadImage(src, tasks[i]));
-    if (videoTask) jobs.push(loadVideo(VIDEO_SRC, videoTask));
+    if (videoTask) jobs.push(loadVideo(videoToLoad, videoTask));
 
     const safety = setTimeout(() => {
       if (cancelled) return;

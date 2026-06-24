@@ -2,32 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { TinyCross, DiamondOrnament } from './Icons';
 import { useContent } from '../context/ContentContext';
 
-// True on large screens (> 1180px), where the looping hero video is used.
-function useIsLargeScreen() {
-  const query = '(min-width: 1181px)';
-  const [isLarge, setIsLarge] = useState(() => window.matchMedia(query).matches);
+// Returns the active screen tier: 'large' (> 1180px), 'phone' (<= 752px),
+// or 'tablet' (in between). Large and phone use looping videos; tablet uses
+// the still image.
+function useScreenTier() {
+  const largeQuery = '(min-width: 1181px)';
+  const phoneQuery = '(max-width: 752px)';
+  const resolve = () =>
+    window.matchMedia(largeQuery).matches
+      ? 'large'
+      : window.matchMedia(phoneQuery).matches
+        ? 'phone'
+        : 'tablet';
+  const [tier, setTier] = useState(resolve);
   useEffect(() => {
-    const mq = window.matchMedia(query);
-    const handler = (e) => setIsLarge(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
+    const largeMq = window.matchMedia(largeQuery);
+    const phoneMq = window.matchMedia(phoneQuery);
+    const update = () => setTier(resolve());
+    largeMq.addEventListener('change', update);
+    phoneMq.addEventListener('change', update);
+    return () => {
+      largeMq.removeEventListener('change', update);
+      phoneMq.removeEventListener('change', update);
+    };
   }, []);
-  return isLarge;
+  return tier;
 }
 
 export default function Hero({ lang, videoSrc }) {
   const { content } = useContent();
   const c = content.hero[lang] || content.hero.en;
-  const isLarge = useIsLargeScreen();
+  const tier = useScreenTier();
+  const showVideo = (tier === 'large' || tier === 'phone') && videoSrc;
+  const poster = tier === 'phone' ? '/assets/hero-mobile.png' : '/assets/background.png';
 
   return (
     <section id="home" className="hero">
       <div className="hero-bg hero-bg-animate">
-        {isLarge && videoSrc ? (
+        {showVideo ? (
           <video
             className="hero-bg-video"
             src={videoSrc}
-            poster="/assets/background.png"
+            poster={poster}
             autoPlay
             loop
             muted

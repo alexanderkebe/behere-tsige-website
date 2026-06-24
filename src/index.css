@@ -2242,7 +2242,8 @@ button {
     padding: 14px 20px;
   }
 
-  .hero-bg img {
+  .hero-bg img,
+  .hero-bg video {
     object-position: center center; /* Keep backgrounds centered on tablet and mobile */
   }
 
