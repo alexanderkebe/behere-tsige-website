@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TinyCross, DiamondOrnament } from './Icons';
 import { useContent } from '../context/ContentContext';
 
-export default function Hero({ lang }) {
+// True on large screens (> 1180px), where the looping hero video is used.
+function useIsLargeScreen() {
+  const query = '(min-width: 1181px)';
+  const [isLarge, setIsLarge] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const handler = (e) => setIsLarge(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isLarge;
+}
+
+export default function Hero({ lang, videoSrc }) {
   const { content } = useContent();
   const c = content.hero[lang] || content.hero.en;
+  const isLarge = useIsLargeScreen();
 
   return (
     <section id="home" className="hero">
       <div className="hero-bg hero-bg-animate">
-        <picture>
-          <source media="(max-width: 752px)" srcSet="/assets/hero-mobile.png" />
-          <source media="(max-width: 1180px)" srcSet="/assets/hero-tablet.png" />
-          <img src="/assets/background.png" alt="EOTC Church Background" loading="eager" className="hero-bg-img" />
-        </picture>
+        {isLarge && videoSrc ? (
+          <video
+            className="hero-bg-video"
+            src={videoSrc}
+            poster="/assets/background.png"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          />
+        ) : (
+          <picture>
+            <source media="(max-width: 752px)" srcSet="/assets/hero-mobile.png" />
+            <source media="(max-width: 1180px)" srcSet="/assets/hero-tablet.png" />
+            <img src="/assets/background.png" alt="EOTC Church Background" loading="eager" className="hero-bg-img" />
+          </picture>
+        )}
       </div>
 
       <div className="hero-content">
