@@ -141,7 +141,7 @@ const defaultContent = {
       fatherRole: 'Head Priest',
       fatherMessage:
         '"May the grace of the Holy Trinity — Father, Son, and Holy Spirit — be upon all of you. Our church continues to grow in faith and love, serving as a beacon of hope for our community. Let us walk together in the light of our Lord."',
-      newsTitle: 'Latest News',
+      newsTitle: 'Articles',
       news: [
         {
           id: 'news-1',
@@ -173,7 +173,7 @@ const defaultContent = {
       fatherRole: 'ዋና ካህን',
       fatherMessage:
         '"የቅድስት ሥላሴ — አብ፣ ወልድ እና መንፈስ ቅዱስ — ጸጋ በሁላችሁ ላይ ይሁን። ቤተ ክርስቲያናችን በእምነት እና በፍቅር ማደጉን ቀጥሏል፣ ለማኅበረሰባችን የተስፋ ምሰሶ ሆኖ በማገልገል። በጌታችን ብርሃን አብረን እንጓዝ።"',
-      newsTitle: 'ዜና',
+      newsTitle: 'ከሊቃውንት መጣጥፍ',
       news: [
         {
           id: 'news-1',
@@ -352,7 +352,9 @@ const defaultContent = {
         { label: 'About Us', href: '#about' },
         { label: 'Services', href: '#services' },
         { label: 'Events', href: '#events' },
-        { label: 'News', href: '#news' },
+        { label: 'Media', href: '#media' },
+        { label: 'Articles', href: '#articles' },
+        { label: 'Contact Us', href: '#contact' },
         { label: 'Donate', href: '#donate' },
       ],
     },
@@ -370,12 +372,14 @@ const defaultContent = {
       email: 'ኢሜይል፡ info@beheretsigestmary.org',
       copyright: '© 2026 ብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን። መብቱ በሕግ የተጠበቀ ነው።',
       links: [
-        { label: 'መነሻ', href: '#home' },
-        { label: 'ስለ እኛ', href: '#about' },
-        { label: 'አገልግሎቶች', href: '#services' },
-        { label: 'መርሃ ግብራት', href: '#events' },
-        { label: 'ዜና', href: '#news' },
-        { label: 'ልገሳ', href: '#donate' },
+        { label: 'ዋና ገጽ', href: '#home' },
+        { label: 'ስለ ብሔረ ጽጌ ማርያም', href: '#about' },
+        { label: 'አገልግሎት', href: '#services' },
+        { label: 'ቀጣይ ዝግጅቶች', href: '#events' },
+        { label: 'ሚዲያ', href: '#media' },
+        { label: 'ከሊቃውንት መጣጥፍ', href: '#articles' },
+        { label: 'ያግኙን', href: '#contact' },
+        { label: 'ይለግሱ', href: '#donate' },
       ],
     },
   },

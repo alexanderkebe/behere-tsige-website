@@ -17,7 +17,7 @@ export default function News({ lang }) {
   const c = content.news[lang] || content.news.en;
 
   return (
-    <section id="news" className="news-section">
+    <section id="articles" className="news-section">
       <Reveal className="news-header">
         <div className="about-tag-row">
           <span className="about-tag-line news-tag-line" />

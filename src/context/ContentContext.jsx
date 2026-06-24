@@ -25,8 +25,11 @@ export function ContentProvider({ children }) {
 
   const reload = useCallback(async () => {
     const data = await fetchContent();
-    setContent(data);
-    return data;
+    // Merge over defaults so any section missing from a saved content.json
+    // (e.g. newly added sections) still falls back to its default content.
+    const merged = { ...defaultContent, ...data };
+    setContent(merged);
+    return merged;
   }, []);
 
   useEffect(() => {
