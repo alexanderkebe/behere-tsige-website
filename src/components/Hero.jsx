@@ -33,13 +33,17 @@ export default function Hero({ lang, videoSrc }) {
   const { content } = useContent();
   const c = content.hero[lang] || content.hero.en;
   const tier = useScreenTier();
-  const showVideo = (tier === 'large' || tier === 'phone') && videoSrc;
-  const poster = tier === 'phone' ? '/assets/hero-mobile.png' : '/assets/background.png';
+  const poster =
+    tier === 'phone'
+      ? '/assets/hero-mobile.png'
+      : tier === 'tablet'
+        ? '/assets/hero-tablet.png'
+        : '/assets/background.png';
 
   return (
     <section id="home" className="hero">
       <div className="hero-bg hero-bg-animate">
-        {showVideo ? (
+        {videoSrc ? (
           <video
             className="hero-bg-video"
             src={videoSrc}

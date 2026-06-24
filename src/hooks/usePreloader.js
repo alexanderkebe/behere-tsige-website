@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
  * Preloads the critical hero assets before the site is revealed.
  *
  * - Only the asset that the current screen actually needs is downloaded:
- *   the looping desktop video on large screens, the looping mobile video on
- *   phones, and the still image on tablet. Each screen pulls just one video.
+ *   the desktop video on large screens, the tablet video on tablets, and the
+ *   mobile video on phones. Each screen pulls exactly one video.
  * - Progress is driven by real downloaded bytes (via the streamed fetch)
  *   so slow connections see an honest progress bar.
  * - The video is downloaded once and handed back as an object URL, so the
@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
  * - A safety timeout guarantees the user is never trapped behind the loader.
  */
 const DESKTOP_VIDEO_SRC = '/assets/hero-video-desktop.mp4';
+const TABLET_VIDEO_SRC = '/assets/hero-tablet-video.mp4';
 const MOBILE_VIDEO_SRC = '/assets/hero-mobile.mp4';
 const LARGE_QUERY = '(min-width: 1181px)';
 const PHONE_QUERY = '(max-width: 752px)';
@@ -37,13 +38,12 @@ export function usePreloader() {
         ? '/assets/hero-tablet.png'
         : '/assets/background.png';
 
-    // Large screens get the desktop video, phones get the mobile video,
-    // tablets stay on the still image (no video).
+    // Each screen tier gets its own looping video.
     const videoToLoad = isLarge
       ? DESKTOP_VIDEO_SRC
       : isPhone
         ? MOBILE_VIDEO_SRC
-        : null;
+        : TABLET_VIDEO_SRC;
 
     const imageSources = [heroImage, '/assets/logo.png'];
 
