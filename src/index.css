@@ -465,7 +465,7 @@ button {
 }
 
 .preloader-logo {
-  width: 96px;
+  width: min(480px, 86vw);
   height: auto;
   animation: preloaderPulse 1.8s ease-in-out infinite;
 }
