@@ -7,17 +7,21 @@ const NAV_ITEMS_EN = [
   { label: 'ABOUT US', href: '#about' },
   { label: 'SERVICES', href: '#services' },
   { label: 'EVENTS', href: '#events' },
-  { label: 'NEWS', href: '#news' },
+  { label: 'MEDIA', href: '#media' },
+  { label: 'ARTICLES', href: '#articles' },
+  { label: 'CONTACT US', href: '#contact' },
   { label: 'DONATE', href: '#donate', donate: true },
 ];
 
 const NAV_ITEMS_AM = [
-  { label: 'መነሻ', href: '#home' },
-  { label: 'ስለ እኛ', href: '#about' },
-  { label: 'አገልግሎቶች', href: '#services' },
-  { label: 'መርሃ ግብራት', href: '#events' },
-  { label: 'ዜና', href: '#news' },
-  { label: 'ልገሳ', href: '#donate', donate: true },
+  { label: 'ዋና ገጽ', href: '#home' },
+  { label: 'ስለ ብሔረ ጽጌ ማርያም', href: '#about' },
+  { label: 'አገልግሎት', href: '#services' },
+  { label: 'ቀጣይ ዝግጅቶች', href: '#events' },
+  { label: 'ሚዲያ', href: '#media' },
+  { label: 'ከሊቃውንት መጣጥፍ', href: '#articles' },
+  { label: 'ያግኙን', href: '#contact' },
+  { label: 'ይለግሱ', href: '#donate', donate: true },
 ];
 
 export default function Navbar({ lang, setLang }) {
