@@ -77,6 +77,12 @@ export default function Hero({ lang, videoSrc }) {
             {c.title}
           </h1>
 
+          {c.welcome && (
+            <div className="hero-welcome animate-fade-in-up delay-3">
+              {c.welcome}
+            </div>
+          )}
+
           <p className="hero-description animate-fade-in-up delay-4">
             {c.description}
           </p>

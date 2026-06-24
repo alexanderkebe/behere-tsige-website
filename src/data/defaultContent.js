@@ -5,13 +5,14 @@ const defaultContent = {
       bubble: 'Welcome to Behere Tsige',
       title: 'Mekane Selam St. Mary',
       description:
-        'A sacred place of faith, fellowship, and spiritual growth established in the tradition of the Ethiopian Orthodox Tewahedo Church.',
+        '“Let no foreigner who has joined himself to the Lord say, ‘The Lord will surely separate me from His people.’” — Isaiah 56:3',
     },
     am: {
-      bubble: 'እንኳን ወደ ብሔረ ጽጌ በደህና መጡ',
+      bubble: 'እንኳን ወደ ብሔረ ጽጌ',
       title: 'መካነ ሰላም ቅድስት ድንግል ማርያም',
+      welcome: 'በደህና መጡ',
       description:
-        'በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ወግ የተመሰረተ የእምነት፣ የኅብረት እና የመንፈሳዊ እድገት ቅዱስ ስፍራ',
+        '“ከእግዚአብሔር ጋር የተባበረ መጻተኛ፦ ‘እግዚአብሔር ከሕዝቡ ለይቶ ይለየኛል’ አይበል።” — ኢሳይያስ 56፥3',
     },
   },
   about: {
