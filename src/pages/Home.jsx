@@ -7,6 +7,7 @@ import ChurchSchool from '../components/ChurchSchool';
 import News from '../components/News';
 import Events from '../components/Events';
 import Media from '../components/Media';
+import Contact from '../components/Contact';
 import Donate from '../components/Donate';
 import Footer from '../components/Footer';
 import Preloader from '../components/Preloader';
@@ -27,6 +28,7 @@ export default function Home() {
       <Events lang={lang} />
       <Media lang={lang} />
       <News lang={lang} />
+      <Contact lang={lang} />
       <Donate lang={lang} />
       <Footer lang={lang} />
     </div>
