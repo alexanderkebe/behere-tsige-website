@@ -8,9 +8,10 @@ import { createClient } from '@/lib/supabase/client';
 const T = {
   en: {
     tag: 'Parish Office',
-    title: 'Our Parish Office',
-    intro: 'Meet the team serving our congregation, and connect in confidence with a father confessor.',
-    membersTitle: 'Office Members',
+    title: 'Parish Council',
+    intro1: 'Thank you for visiting the website of Behere Tsige Mekane Selam St. Mary Ethiopian Orthodox Tewahedo Church. Ours is a community standing firm in faith, love, and fellowship — active and welcoming. The members of the parish council dedicate their time to serve, safeguarding our Orthodox Tewahedo Church. If you are new to the area or looking for ways to take part in the parish, you are most welcome! We are ready to serve you in spiritual ministry to the best of our ability.',
+    intro2: 'The members of the Parish Council serve for three years. Three new members are elected from the congregation by a vote of the general assembly; two from the clergy by a vote of the clergy assembly; and one from the Sunday school. Join in membership to grow in faith, to serve, and to carry out the mission of the Church.',
+    membersTitle: 'Parish Council Members',
     confessorTitle: 'Get in Contact with a Father Confessor',
     confessorQuote:
       '“Therefore confess your sins to each other and pray for each other so that you may be healed.” — James 5:16',
@@ -32,9 +33,10 @@ const T = {
   },
   am: {
     tag: 'የደብር ጽ/ቤት',
-    title: 'የደብራችን ጽ/ቤት',
-    intro: 'ማኅበረሰባችንን የሚያገለግለውን ቡድን ይተዋወቁ፣ እንዲሁም በመተማመን ከንስሐ አባት ጋር ይገናኙ።',
-    membersTitle: 'የጽ/ቤት አባላት',
+    title: 'ሰበካ ጉባዔ',
+    intro1: 'የብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን ድህረ ገጽን ስለጎበኙ እናመሰግናለን። ካቴድራላችን በእምነት፣ ፍቅር እና ኅብረት በአላማ የቆመ እንዲሁም ንቁ እና እንግዳ ተቀባይ ማህበረሰብ ያለበት ነው። የሰበካው አባላት ኦርቶዶክሳዊት ተዋህዶ ቤተ ክርስቲያናችንን ጠብቆ ለማስጠበቅ የጊዜ አስራት በማውጣት ለአገልግሎት ቆመናል። ለአካባቢው አዲስ ከሆኑ ወይም የኢት/ኦ/ተ/ቤ/ክርስቲያን አጥቢያ የሚሳተፉበትን መንገድ እየፈለጉ ከሆነ እንኳን ደህና መጡ! ባለን አቅም በመንፈሳዊ አገልግሎት ልናገለግልዎ ዝግጁ ነን።',
+    intro2: 'የሰበካ ጉባዔ አባላት ለሦስት ዓመታት ያገለግላሉ። ከምዕመናን 3 አዲስ ተመራጮች በጠቅላላ ጉባኤ ድምፅ አሰጣጥ፣ ከካህናት 2 ተመራጮች በካህናት ጉባኤ፣ ከሰንበት ትምህርት ቤት 1 ተመራጭ ይመረጣሉ። በእምነት ለማደግና ለማገልገል፣ የቤተ ክርስቲያኑን ተልእኮ ለማስፈጸም በአባልነት ይቀላቀሉ።',
+    membersTitle: 'የሰበካ ጉባዔ አባላት',
     confessorTitle: 'ከንስሐ አባት ጋር ይገናኙ',
     confessorQuote:
       '“እርስ በርሳችሁ ኃጢአታችሁን ተናዘዙ፥ ትፈወሱም ዘንድ እርስ በርሳችሁ ጸልዩ።” — ያዕቆብ 5፥16',
@@ -103,7 +105,10 @@ export default function ParishOffice({ lang, fathers = [], members = [] }) {
         </div>
         <div className="about-ornament"><DiamondOrnament /></div>
         <h2 className="parish-section-title">{t.title}</h2>
-        <p className="parish-intro">{t.intro}</p>
+        <div className="parish-council-intro">
+          <p>{t.intro1}</p>
+          <p>{t.intro2}</p>
+        </div>
       </Reveal>
 
       {/* Office members */}
