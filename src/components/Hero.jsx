@@ -8,17 +8,15 @@ import { useContent } from '../context/ContentContext';
 function useScreenTier() {
   const largeQuery = '(min-width: 1181px)';
   const phoneQuery = '(max-width: 752px)';
-  const resolve = () =>
-    window.matchMedia(largeQuery).matches
-      ? 'large'
-      : window.matchMedia(phoneQuery).matches
-        ? 'phone'
-        : 'tablet';
-  const [tier, setTier] = useState(resolve);
+  // SSR-safe default; corrected on mount once matchMedia is available.
+  const [tier, setTier] = useState('large');
   useEffect(() => {
     const largeMq = window.matchMedia(largeQuery);
     const phoneMq = window.matchMedia(phoneQuery);
+    const resolve = () =>
+      largeMq.matches ? 'large' : phoneMq.matches ? 'phone' : 'tablet';
     const update = () => setTier(resolve());
+    update();
     largeMq.addEventListener('change', update);
     phoneMq.addEventListener('change', update);
     return () => {

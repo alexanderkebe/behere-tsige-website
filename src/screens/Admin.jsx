@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useContent } from '../context/ContentContext';
 import { getToken, login, logout, saveContent, clearToken } from '../admin/api';
 import '../admin.css';
@@ -71,7 +71,7 @@ function LoginScreen({ onLogin }) {
         <button type="submit" className="admin-btn admin-btn-primary" disabled={loading}>
           {loading ? 'Signing in…' : 'Sign In'}
         </button>
-        <Link to="/" className="admin-back-link">← Back to website</Link>
+        <Link href="/" className="admin-back-link">← Back to website</Link>
       </form>
     </div>
   );
@@ -141,7 +141,7 @@ export default function Admin() {
           ))}
         </nav>
         <div className="admin-sidebar-foot">
-          <Link to="/" className="admin-nav-btn">View Site</Link>
+          <Link href="/" className="admin-nav-btn">View Site</Link>
           <button type="button" className="admin-nav-btn" onClick={async () => { await logout(); setAuthed(false); }}>
             Log Out
           </button>

@@ -25,9 +25,9 @@
   --text-muted: #8A8A9A;
 
   /* Typography */
-  --font-heading: 'Cinzel', serif;
-  --font-body: 'Cormorant Garamond', serif;
-  --font-ui: 'Inter', sans-serif;
+  --font-heading: var(--font-cinzel), 'Cinzel', serif;
+  --font-body: var(--font-cormorant), 'Cormorant Garamond', serif;
+  --font-ui: var(--font-inter), 'Inter', sans-serif;
   --font-amharic: 'Benaiah', serif;
 
   /* Spacing */
