@@ -827,9 +827,16 @@ button {
 .about-section {
   background: var(--cream);
   padding: 100px 60px;
-  max-width: 1080px;
+  max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+.about-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
 }
 
 /* ── About: header + expandable accordion ── */
@@ -980,6 +987,149 @@ button {
 
 .about-readmore:hover {
   color: var(--navy);
+}
+
+/* Learn More button + extended reveal */
+.btn-learn-more {
+  cursor: pointer;
+  border: none;
+}
+
+.learn-more-arrow {
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.learn-more-arrow.is-open {
+  transform: rotate(90deg);
+}
+
+.about-extended {
+  margin-top: 64px;
+  border-top: 1px solid rgba(197, 160, 68, 0.25);
+  padding-top: 48px;
+  animation: aboutExtIn 0.45s var(--ease-smooth);
+}
+
+@keyframes aboutExtIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.about-extended-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.about-tag-center {
+  justify-content: center;
+}
+
+.about-extended-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+.about-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.about-feature-card {
+  background: var(--white);
+  border: 1px solid rgba(197, 160, 68, 0.18);
+  border-radius: 12px;
+  padding: 30px;
+  transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+}
+
+.about-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(15, 27, 61, 0.06);
+  border-color: rgba(197, 160, 68, 0.4);
+}
+
+.about-feature-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.about-feature-icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(197, 160, 68, 0.12);
+}
+
+.about-feature-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.about-feature-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.02em;
+}
+
+.about-feature-text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: #4a4a5a;
+  line-height: 1.7;
+}
+
+.about-feature-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.about-feature-thumb {
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(15, 27, 61, 0.05);
+}
+
+.about-feature-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-feature-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(197, 160, 68, 0.5);
+  background: transparent;
+  color: var(--gold-dark);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px;
+}
+
+@media (max-width: 768px) {
+  .about-feature-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Parish Council intro paragraphs */
@@ -1267,9 +1417,11 @@ button {
 
 /* ── Responsive overrides for Carousel ── */
 @media (max-width: 1024px) {
-  .about-section {
+  .about-main {
     grid-template-columns: 1fr;
     gap: 52px;
+  }
+  .about-section {
     padding: 80px 40px;
   }
 }

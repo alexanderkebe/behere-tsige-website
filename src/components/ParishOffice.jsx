@@ -132,6 +132,28 @@ export default function ParishOffice({ lang, fathers = [], members = [] }) {
         ))}
       </div>
 
+      {/* Fathers list */}
+      <Reveal className="parish-subhead" delay={60}>
+        <h3 className="parish-subtitle">{t.fathersTitle}</h3>
+      </Reveal>
+      <div className="fathers-grid">
+        {fathers.length === 0 && <p className="parish-empty">{t.emptyFathers}</p>}
+        {fathers.map((f, i) => (
+          <Reveal className="father-profile-card" key={f.id} delay={i * 80}>
+            <div className="father-profile-avatar">
+              {f.photo_url ? (
+                <img src={f.photo_url} alt={fName(f)} />
+              ) : (
+                <span className="parish-avatar-initial">{(fName(f) || '?').charAt(0)}</span>
+              )}
+            </div>
+            <div className="father-profile-name">{fName(f)}</div>
+            <div className="father-profile-title">{fTitle(f)}</div>
+            {fBio(f) && <p className="father-profile-bio">{fBio(f)}</p>}
+          </Reveal>
+        ))}
+      </div>
+
       {/* Father-Confessor contact — the heart of the page */}
       <Reveal className="confessor-block" delay={80}>
         <div className="confessor-intro-col">
@@ -177,28 +199,6 @@ export default function ParishOffice({ lang, fathers = [], members = [] }) {
           </button>
         </form>
       </Reveal>
-
-      {/* Fathers list */}
-      <Reveal className="parish-subhead" delay={60}>
-        <h3 className="parish-subtitle">{t.fathersTitle}</h3>
-      </Reveal>
-      <div className="fathers-grid">
-        {fathers.length === 0 && <p className="parish-empty">{t.emptyFathers}</p>}
-        {fathers.map((f, i) => (
-          <Reveal className="father-profile-card" key={f.id} delay={i * 80}>
-            <div className="father-profile-avatar">
-              {f.photo_url ? (
-                <img src={f.photo_url} alt={fName(f)} />
-              ) : (
-                <span className="parish-avatar-initial">{(fName(f) || '?').charAt(0)}</span>
-              )}
-            </div>
-            <div className="father-profile-name">{fName(f)}</div>
-            <div className="father-profile-title">{fTitle(f)}</div>
-            {fBio(f) && <p className="father-profile-bio">{fBio(f)}</p>}
-          </Reveal>
-        ))}
-      </div>
     </section>
   );
 }

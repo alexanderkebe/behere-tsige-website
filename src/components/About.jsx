@@ -3,129 +3,175 @@
 import React, { useState } from 'react';
 import { DiamondOrnament } from './Icons';
 import Reveal from './Reveal';
+import { useContent } from '../context/ContentContext';
 
-const HEAD = {
-  en: { tag: 'About Us', title: 'About Behere Tsige St. Mary', readMore: 'Read more', readLess: 'Show less', gallery: 'Add photos' },
-  am: { tag: 'ስለ እኛ', title: 'ስለ ብሔረ ጽጌ ቅድስት ማርያም', readMore: 'ተጨማሪ ያንብቡ', readLess: 'ይዝጉ', gallery: 'ፎቶዎች ጨምሩ' },
+const UI = {
+  en: { showLess: 'Show Less', storyTag: 'Our Story', storyTitle: 'Vision, Mission & Our Journey', gallery: 'Add photos' },
+  am: { showLess: 'ይዝጉ', storyTag: 'ታሪካችን', storyTitle: 'ራዕይ፣ ተልዕኮ እና ጉዟችን', gallery: 'ፎቶዎች ጨምሩ' },
 };
 
-// Boilerplate (generated) content — to be made editable from the admin later.
-const SECTIONS = [
+// Extended "Learn More" content — generated boilerplate, editable from the admin later.
+const EXTENDED = [
   {
     key: 'vision',
     images: ['/assets/about-1.jpg.png', '/assets/about-2.jpg.png'],
-    en: {
-      title: 'Vision',
-      teaser: 'To shine as a beacon of the Ethiopian Orthodox Tewahedo faith for generations to come.',
-      full: 'Our vision is to be a spiritual home where every soul is drawn closer to God — a beacon of the Ethiopian Orthodox Tewahedo faith that preserves the apostolic tradition while embracing every generation. We long to see a community rooted in prayer, strengthened in love, and shining the light of Christ to the world around us.',
-    },
-    am: {
-      title: 'ራዕይ',
-      teaser: 'ለትውልድ የሚተላለፍ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ እምነት ብርሃን ሆኖ መቆም።',
-      full: 'ራዕያችን እያንዳንዱ ነፍስ ወደ እግዚአብሔር የሚቀርብበት መንፈሳዊ ቤት መሆን ነው — ሐዋርያዊ ትውፊትን ጠብቆ ለሁሉም ትውልድ የሚደርስ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ እምነት ብርሃን። በጸሎት የጸና፣ በፍቅር የበረታ፣ የክርስቶስን ብርሃን ለአካባቢው የሚያበራ ማኅበረሰብ ለማየት እንናፍቃለን።',
-    },
+    en: { title: 'Vision', full: 'To be a spiritual home where every soul is drawn closer to God — a beacon of the Ethiopian Orthodox Tewahedo faith that preserves the apostolic tradition while embracing every generation, rooted in prayer and shining the light of Christ to the world around us.' },
+    am: { title: 'ራዕይ', full: 'እያንዳንዱ ነፍስ ወደ እግዚአብሔር የሚቀርብበት መንፈሳዊ ቤት መሆን — ሐዋርያዊ ትውፊትን ጠብቆ ለሁሉም ትውልድ የሚደርስ፣ በጸሎት የጸና፣ የክርስቶስን ብርሃን ለአካባቢው የሚያበራ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ እምነት ብርሃን መሆን።' },
   },
   {
     key: 'mission',
     images: ['/assets/about-3.jpg.png', '/assets/about-4.jpg.png'],
-    en: {
-      title: 'Mission',
-      teaser: 'To preserve the faith, teach the Gospel, and serve our community in love.',
-      full: 'Our mission is to preserve the apostolic faith and the sacred traditions of the Ethiopian Orthodox Tewahedo Church, to teach the Gospel to all ages, to administer the holy sacraments, and to serve our community and those in need with the love of Christ.',
-    },
-    am: {
-      title: 'ተልዕኮ',
-      teaser: 'እምነትን መጠበቅ፣ ወንጌልን ማስተማር እና ማኅበረሰብን በፍቅር ማገልገል።',
-      full: 'ተልዕኮአችን የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያንን ሐዋርያዊ እምነትና ቅዱስ ትውፊት መጠበቅ፣ ለሁሉም ዕድሜ ወንጌልን ማስተማር፣ ቅዱሳት ምሥጢራትን ማከናወን፣ እንዲሁም ማኅበረሰባችንንና ችግረኞችን በክርስቶስ ፍቅር ማገልገል ነው።',
-    },
+    en: { title: 'Mission', full: 'To preserve the apostolic faith and sacred traditions of the Ethiopian Orthodox Tewahedo Church, to teach the Gospel to all ages, to administer the holy sacraments, and to serve our community and those in need with the love of Christ.' },
+    am: { title: 'ተልዕኮ', full: 'የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያንን ሐዋርያዊ እምነትና ቅዱስ ትውፊት መጠበቅ፣ ለሁሉም ዕድሜ ወንጌልን ማስተማር፣ ቅዱሳት ምሥጢራትን ማከናወን፣ እንዲሁም ማኅበረሰባችንንና ችግረኞችን በክርስቶስ ፍቅር ማገልገል።' },
   },
   {
     key: 'community',
     images: ['/assets/about-2.jpg.png', '/assets/about-3.jpg.png'],
-    en: {
-      title: 'Our Community',
-      teaser: 'A welcoming family of believers from every walk of life.',
-      full: 'Our community is a welcoming family of believers — families, youth, elders, and newcomers — united in worship and fellowship. From Sunday school to choir, from charitable outreach to feast-day celebrations, there is a place for everyone to belong, to grow, and to serve.',
-    },
-    am: {
-      title: 'የእኛ ማህበረሰብ',
-      teaser: 'ከየአቅጣጫው የተሰባሰበ እንግዳ ተቀባይ የምእመናን ቤተሰብ።',
-      full: 'ማኅበረሰባችን እንግዳ ተቀባይ የምእመናን ቤተሰብ ነው — ቤተሰቦች፣ ወጣቶች፣ አረጋውያንና አዲስ መጤዎች በአምልኮና በኅብረት የተሰባሰቡበት። ከሰንበት ትምህርት ቤት እስከ መዘምራን፣ ከበጎ አድራጎት እስከ የበዓላት አከባበር — ለሁሉም የሚሆን ቦታ፣ የማደግና የማገልገል ዕድል አለ።',
-    },
+    en: { title: 'Our Community', full: 'A welcoming family of believers — families, youth, elders, and newcomers — united in worship and fellowship. From Sunday school to choir, from charitable outreach to feast-day celebrations, there is a place for everyone to belong, to grow, and to serve.' },
+    am: { title: 'የእኛ ማህበረሰብ', full: 'እንግዳ ተቀባይ የምእመናን ቤተሰብ — ቤተሰቦች፣ ወጣቶች፣ አረጋውያንና አዲስ መጤዎች በአምልኮና በኅብረት የተሰባሰቡበት። ከሰንበት ትምህርት ቤት እስከ መዘምራን፣ ከበጎ አድራጎት እስከ የበዓላት አከባበር — ለሁሉም የሚሆን ቦታ አለ።' },
   },
   {
     key: 'history',
     images: ['/assets/about-1.jpg.png', '/assets/about-4.jpg.png'],
-    en: {
-      title: 'History',
-      teaser: 'Grown over five decades from a small congregation into a thriving parish.',
-      full: 'Established over five decades ago by a small group of faithful believers, our parish has grown into a thriving spiritual home for thousands. Through years of dedication, our community has built and renovated its sanctuary, expanded its schools, and carried forward the ancient traditions of the Ethiopian Orthodox Tewahedo Church.',
-    },
-    am: {
-      title: 'ታሪክ',
-      teaser: 'ከትንሽ ጉባኤ ተነስቶ በአምስት አስርት ዓመታት ያደገ ደብር።',
-      full: 'ከአምስት አስርት ዓመታት በፊት በጥቂት ምእመናን የተመሰረተው ደብራችን ዛሬ ለሺዎች መንፈሳዊ ቤት ሆኖ አድጓል። በዓመታት ጥረት ማኅበረሰባችን ቤተ መቅደሱን ሠርቶና አድሶ፣ ትምህርት ቤቶቹን አስፍቶ፣ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያንን ጥንታዊ ትውፊት አስቀጥሏል።',
-    },
+    en: { title: 'History', full: 'Established over five decades ago by a small group of faithful believers, our parish has grown into a thriving spiritual home for thousands. Through years of dedication, our community has built and renovated its sanctuary, expanded its schools, and carried forward the ancient traditions of the Church.' },
+    am: { title: 'ታሪክ', full: 'ከአምስት አስርት ዓመታት በፊት በጥቂት ምእመናን የተመሰረተው ደብራችን ዛሬ ለሺዎች መንፈሳዊ ቤት ሆኖ አድጓል። በዓመታት ጥረት ማኅበረሰባችን ቤተ መቅደሱን ሠርቶና አድሶ፣ ትምህርት ቤቶቹን አስፍቶ፣ የቤተ ክርስቲያንን ጥንታዊ ትውፊት አስቀጥሏል።' },
   },
 ];
 
 export default function About({ lang }) {
-  const h = HEAD[lang] || HEAD.en;
-  const [open, setOpen] = useState({});
-  const toggle = (key) => setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+  const { content } = useContent();
+  const c = content.about[lang] || content.about.en;
+  const GALLERY_IMAGES = content.about.gallery;
+  const ui = UI[lang] || UI.en;
+
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+
+  const prevSlide = () =>
+    setSlideIdx((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  const nextSlide = () =>
+    setSlideIdx((i) => (i + 1) % GALLERY_IMAGES.length);
 
   return (
     <section id="about" className="about-section">
-      <Reveal className="about-head">
-        <div className="about-tag-row">
-          <span className="about-tag-line" />
-          <span className="about-tag">{h.tag}</span>
-          <span className="about-tag-line" />
-        </div>
-        <div className="about-ornament"><DiamondOrnament /></div>
-        <h2 className="about-x-title">{h.title}</h2>
-      </Reveal>
+      <div className="about-main">
+        {/* ── Text column ── */}
+        <Reveal className="about-text-col" direction="left">
+          <div className="about-tag-row">
+            <span className="about-tag-line" />
+            <span className="about-tag">{c.tag}</span>
+            <span className="about-tag-line" />
+          </div>
 
-      <div className="about-accordion">
-        {SECTIONS.map((s, i) => {
-          const c = s[lang] || s.en;
-          const isOpen = !!open[s.key];
-          return (
-            <Reveal className={`about-acc-item ${isOpen ? 'open' : ''}`} key={s.key} delay={i * 70}>
-              <button
-                className="about-acc-header"
-                onClick={() => toggle(s.key)}
-                aria-expanded={isOpen}
-              >
-                <span className="about-acc-title">{c.title}</span>
-                <span className="about-acc-chevron">{isOpen ? '−' : '+'}</span>
-              </button>
+          <div className="about-ornament">
+            <DiamondOrnament />
+          </div>
 
-              <p className="about-acc-teaser">{c.teaser}</p>
+          <h2 className="about-heading" id="about-heading">{c.heading}</h2>
 
-              {isOpen && (
-                <div className="about-acc-body">
-                  <p className="about-acc-full">{c.full}</p>
-                  <div className="about-acc-gallery">
+          <p className="about-body">{c.body1}</p>
+          <p className="about-body">{c.body2}</p>
+
+          <button
+            type="button"
+            className="btn-learn-more"
+            id="btn-learn-more"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((e) => !e)}
+          >
+            {expanded ? ui.showLess : c.learnMore}
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round"
+              className={`learn-more-arrow ${expanded ? 'is-open' : ''}`}>
+              <path d="M4 10h12M11 5l5 5-5 5" />
+            </svg>
+          </button>
+        </Reveal>
+
+        {/* ── Parish Life Gallery carousel ── */}
+        <Reveal className="about-gallery-carousel-wrap" direction="right" delay={120}>
+          <h3 className="carousel-section-title">{c.galleryTitle}</h3>
+
+          <div className="about-carousel" id="about-gallery-carousel">
+            <button className="carousel-arrow carousel-arrow-prev" onClick={prevSlide} aria-label="Previous slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+
+            <button className="carousel-arrow carousel-arrow-next" onClick={nextSlide} aria-label="Next slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+
+            <div className="carousel-slides-container">
+              {GALLERY_IMAGES.map((img, i) => (
+                <div
+                  key={i}
+                  className={`carousel-slide ${i === slideIdx ? 'active' : ''}`}
+                  aria-hidden={i !== slideIdx}
+                >
+                  <img src={img.src} alt={lang === 'am' ? img.am : img.en} className="carousel-img" loading="lazy" />
+                  <div className="carousel-caption">
+                    <p>{lang === 'am' ? img.am : img.en}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="carousel-indicators">
+              {GALLERY_IMAGES.map((_, i) => (
+                <button
+                  key={i}
+                  className={`carousel-dot ${i === slideIdx ? 'active' : ''}`}
+                  onClick={() => setSlideIdx(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* ── Extended content, revealed by "Learn More" ── */}
+      {expanded && (
+        <div className="about-extended" id="about-more">
+          <Reveal className="about-extended-head">
+            <div className="about-tag-row about-tag-center">
+              <span className="about-tag-line" />
+              <span className="about-tag">{ui.storyTag}</span>
+              <span className="about-tag-line" />
+            </div>
+            <h3 className="about-extended-title">{ui.storyTitle}</h3>
+          </Reveal>
+
+          <div className="about-feature-grid">
+            {EXTENDED.map((s, i) => {
+              const t = s[lang] || s.en;
+              return (
+                <Reveal className="about-feature-card" key={s.key} delay={i * 80}>
+                  <div className="about-feature-head">
+                    <span className="about-feature-icon"><DiamondOrnament /></span>
+                    <h4 className="about-feature-title">{t.title}</h4>
+                  </div>
+                  <p className="about-feature-text">{t.full}</p>
+                  <div className="about-feature-gallery">
                     {s.images.map((src, idx) => (
-                      <div className="about-acc-slot" key={idx}>
+                      <div className="about-feature-thumb" key={idx}>
                         <img src={src} alt="" loading="lazy" />
                       </div>
                     ))}
-                    <div className="about-acc-slot about-acc-add" aria-hidden="true">
-                      <span>＋ {h.gallery}</span>
+                    <div className="about-feature-thumb about-feature-add" aria-hidden="true">
+                      <span>＋ {ui.gallery}</span>
                     </div>
                   </div>
-                </div>
-              )}
-
-              <button className="about-readmore" onClick={() => toggle(s.key)}>
-                {isOpen ? h.readLess : h.readMore}
-              </button>
-            </Reveal>
-          );
-        })}
-      </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
