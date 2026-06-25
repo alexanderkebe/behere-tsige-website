@@ -1,11 +1,13 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
 import {
   HomeIcon,
   PersonIcon,
   ChurchIcon,
   NewsIcon,
   CalendarIcon,
-  GlobeIcon,
 } from './Icons';
 
 /* Heart-with-cross donate icon */
@@ -18,15 +20,28 @@ const DonateIcon = () => (
 );
 
 const MOBILE_ICONS = {
-  '#home': HomeIcon,
-  '#about': PersonIcon,
-  '#services': ChurchIcon,
-  '#events': CalendarIcon,
-  '#news': NewsIcon,
-  '#donate': DonateIcon,
+  '/': HomeIcon,
+  '/#about': PersonIcon,
+  '/services': ChurchIcon,
+  '/events': CalendarIcon,
+  '/media': NewsIcon,
+  '/articles': NewsIcon,
+  '/contact': PersonIcon,
+  '/donate': DonateIcon,
 };
 
-export default function MobileMenu({ isOpen, onClose, navItems, activeLink, onNavClick }) {
+function basePath(href) {
+  const path = href.split('#')[0];
+  return path === '' ? '/' : path;
+}
+
+export default function MobileMenu({ isOpen, onClose, navItems, pathname, onNavClick }) {
+  const isActive = (href) => {
+    const base = basePath(href);
+    if (base === '/') return pathname === '/';
+    return pathname === base || pathname.startsWith(base + '/');
+  };
+
   return (
     <div className={`mobile-overlay ${isOpen ? 'open' : ''}`} id="mobile-menu-overlay">
       <div className="mobile-overlay-header">
@@ -56,13 +71,13 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeLink, onNa
               style={{ '--mobile-item-delay': `${index * 60 + 80}ms` }}
             >
               <IconComponent />
-              <a
+              <Link
                 href={item.href}
-                className={`mobile-nav-link ${activeLink === item.href ? 'active' : ''}`}
-                onClick={() => onNavClick(item.href)}
+                className={`mobile-nav-link ${isActive(item.href) ? 'active' : ''}`}
+                onClick={onNavClick}
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           );
         })}
@@ -70,4 +85,3 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeLink, onNa
     </div>
   );
 }
-

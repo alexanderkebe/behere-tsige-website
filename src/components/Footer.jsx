@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import Reveal from './Reveal';
 import { useContent } from '../context/ContentContext';
+import { useLanguage } from '../context/LanguageContext';
 import {
   FacebookIcon,
   TelegramIcon,
@@ -25,7 +28,8 @@ const SOCIAL_ICONS = {
   'social-linkedin': LinkedInIcon,
 };
 
-export default function Footer({ lang }) {
+export default function Footer() {
+  const { lang } = useLanguage();
   const { content } = useContent();
   const c = content.footer[lang] || content.footer.en;
   const socials = content.socials;
