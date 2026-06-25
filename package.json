@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:link": "supabase link --project-ref tozstfdnhjtldigdiscv",
+    "db:push": "supabase db push",
+    "db:diff": "supabase db diff",
+    "db:pull": "supabase db pull"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
@@ -17,6 +21,7 @@
   },
   "devDependencies": {
     "eslint": "^9.17.0",
-    "eslint-config-next": "^15.1.0"
+    "eslint-config-next": "^15.1.0",
+    "supabase": "^2.108.0"
   }
 }

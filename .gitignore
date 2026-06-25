@@ -21,6 +21,11 @@ public/content.json
 /out/
 next-env.d.ts
 
+# Supabase CLI (local state — never commit)
+supabase/.temp/
+supabase/.branches/
+.branches/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
