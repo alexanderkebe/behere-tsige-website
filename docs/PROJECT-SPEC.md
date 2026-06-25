@@ -27,9 +27,9 @@ Transform the current single marketing page into a complete parish platform with
 |---|---|
 | Framework | **Next.js (App Router)** — replaces the current Vite SPA |
 | Database / Auth / Storage / Realtime | **Supabase** (Postgres) |
-| Payments | **Chapa** (ETB) — international/US cards may add Stripe/PayPal later |
+| Payments | **Chapa** (ETB) at launch + copy-paste bank details (incl. US); Stripe/PayPal for international cards in a later phase |
 | Localization | next-intl — `am`, `en`, `ge'ez` (coming soon) |
-| Chat | Embedded Crisp or Tawk.to (free) — revisit self-build later |
+| Chat | **Crisp** (free) — embedded on all pages |
 | Hosting | Vercel (Next.js + Supabase + Chapa webhooks) |
 | Email notifications | Resend (form/admin notifications) |
 | Anti-abuse | Cloudflare Turnstile captcha + rate limiting on public forms |
@@ -200,5 +200,6 @@ role management. Audit-friendly.
   [~$99/yr Apple Developer], Meta/Facebook), Resend.
 - **Content:** father profiles + photos, weekly schedules, sermon links, project
   details, real bank details (placeholders used until then).
-- **Decisions pending:** chat provider (Crisp vs Tawk.to); whether US/intl card
-  payments are needed at launch (Chapa-only vs +Stripe/PayPal).
+- **Decisions locked:** Chat = **Crisp**. Payments = **Chapa-only at launch**
+  (+ copy-paste bank details incl. US; Stripe/PayPal in a later phase). Account
+  setup = **guided step-by-step**.
