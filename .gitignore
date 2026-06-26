@@ -26,6 +26,11 @@ supabase/.temp/
 supabase/.branches/
 .branches/
 
+# Transient debug artifacts
+build_error.txt
+dev_logs.txt
+error.html
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
