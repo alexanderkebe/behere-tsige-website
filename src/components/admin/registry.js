@@ -9,6 +9,7 @@ import RegistrationsInbox from './RegistrationsInbox';
 import EventsManager from './EventsManager';
 import MediaLinksManager from './MediaLinksManager';
 import MessagesInbox from './MessagesInbox';
+import ArticlesManager from './ArticlesManager';
 
 export const adminRegistry = [
   { id: 'fathers', label: 'Fathers', Component: FathersManager },
@@ -22,4 +23,5 @@ export const adminRegistry = [
   { id: 'events', label: 'Events', Component: EventsManager },
   { id: 'media', label: 'Media Links', Component: MediaLinksManager },
   { id: 'contact', label: 'Contact Messages', Component: MessagesInbox },
+  { id: 'articles', label: 'Articles', Component: ArticlesManager },
 ];
