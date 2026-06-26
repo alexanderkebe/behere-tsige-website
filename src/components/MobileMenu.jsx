@@ -21,7 +21,6 @@ const DonateIcon = () => (
 
 const MOBILE_ICONS = {
   '/': HomeIcon,
-  '/#about': PersonIcon,
   '/services': ChurchIcon,
   '/events': CalendarIcon,
   '/media': NewsIcon,

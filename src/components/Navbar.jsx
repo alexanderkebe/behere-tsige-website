@@ -9,7 +9,6 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const NAV_ITEMS_EN = [
   { label: 'HOME', href: '/' },
-  { label: 'ABOUT US', href: '/#about' },
   { label: 'SERVICES', href: '/services' },
   { label: 'EVENTS', href: '/events' },
   { label: 'MEDIA', href: '/media' },
@@ -20,13 +19,12 @@ const NAV_ITEMS_EN = [
 
 const NAV_ITEMS_AM = [
   { label: 'ዋና ገጽ', href: '/' },
-  { label: 'ስለ ብሔረ ጽጌ ማርያም', href: '/#about' },
   { label: 'አገልግሎት', href: '/services' },
   { label: 'ቀጣይ ዝግጅቶች', href: '/events' },
   { label: 'ሚዲያ', href: '/media' },
-  { label: 'ከሊቃውንት መጣጥፍ', href: '/articles' },
+  { label: 'ጽሑፎች', href: '/articles' },
   { label: 'ያግኙን', href: '/contact' },
-  { label: 'ይለግሱ', href: '/donate', donate: true },
+  { label: 'ለግሱ', href: '/donate', donate: true },
 ];
 
 // '/services' -> '/services' ; '/#about' -> '/' ; '/' -> '/'

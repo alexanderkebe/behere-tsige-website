@@ -62,17 +62,17 @@ const defaultContent = {
   services: {
     en: {
       title: 'OUR SERVICES',
-      worship: { title: 'WORSHIP', description: 'Experience the joy of worship and connect with God.' },
-      teaching: { title: 'TEACHING', description: 'Growing in faith through the Word of God.' },
-      serving: { title: 'SERVING', description: 'Serving our community with love and compassion.' },
-      fellowship: { title: 'FELLOWSHIP', description: 'Building relationships and growing together.' },
+      worship: { title: 'LITURGY & PRAYER', description: 'Join our daily prayers, Mahlet, and Sunday Kidase.' },
+      teaching: { title: 'SACRAMENTS', description: 'Baptism, Catechism, and Penance services.' },
+      serving: { title: 'CHURCH EDUCATION', description: 'Sunday School and traditional Abnet classes.' },
+      fellowship: { title: 'EVANGELISM', description: 'Spiritual teachings and outreach programs.' },
     },
     am: {
       title: 'አገልግሎቶቻችን',
-      worship: { title: 'አምልኮ', description: 'የአምልኮን ደስታ ይለማመዱ እና ከእግዚአብሔር ጋር ይገናኙ።' },
-      teaching: { title: 'ትምህርት', description: 'በእግዚአብሔር ቃል በኩል በእምነት ማደግ።' },
-      serving: { title: 'ማኅበረሰብ አገልግሎት', description: 'ማኅበረሰባችንን በፍቅር እና በራኅራኄ ማገልገል።' },
-      fellowship: { title: 'ኅብረት', description: 'ግንኙነቶችን መገንባት እና አብሮ ማደግ።' },
+      worship: { title: 'ቅዳሴ እና ጸሎት', description: 'በዕለታዊ ጸሎቶች፣ ማኅሌት እና የእሑድ ቅዳሴ ላይ ይሳተፉ።' },
+      teaching: { title: 'ምሥጢራት', description: 'የጥምቀት፣ ትምህርተ ሃይማኖት እና የንስሐ አገልግሎቶች።' },
+      serving: { title: 'የቤተ ክርስቲያን ትምህርት', description: 'የሰንበት ትምህርት ቤት እና የባህላዊ አብነት ትምህርቶች።' },
+      fellowship: { title: 'ስብከተ ወንጌል', description: 'መንፈሳዊ ትምህርቶች እና የማኅበረሰብ ተደራሽነት ፕሮግራሞች።' },
     },
   },
   churchSchool: {
