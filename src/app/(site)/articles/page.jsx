@@ -1,13 +1,9 @@
-'use client';
+import { getPublishedArticles } from '@/lib/data/articles';
+import ArticlesView from '@/screens/ArticlesView';
 
-import { useLanguage } from '@/context/LanguageContext';
-import News from '@/components/News';
+export const dynamic = 'force-dynamic';
 
-export default function ArticlesPage() {
-  const { lang } = useLanguage();
-  return (
-    <main className="site-page">
-      <News lang={lang} />
-    </main>
-  );
+export default async function ArticlesPage() {
+  const articles = await getPublishedArticles();
+  return <ArticlesView articles={articles} />;
 }
