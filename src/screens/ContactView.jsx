@@ -9,24 +9,24 @@ import { createClient } from '@/lib/supabase/client';
 import '@/styles/contact.css';
 
 const PinIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg" aria-hidden="true">
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
     <circle cx="12" cy="10" r="3" />
   </svg>
 );
 const PhoneIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg" aria-hidden="true">
     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
   </svg>
 );
 const MailIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg" aria-hidden="true">
     <rect x="2" y="4" width="20" height="16" rx="2" />
     <path d="M22 7l-10 6L2 7" />
   </svg>
 );
 const ClockIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="contact-icon-svg" aria-hidden="true">
     <circle cx="12" cy="12" r="9" />
     <path d="M12 7v5l3 3" />
   </svg>
@@ -128,7 +128,13 @@ export default function ContactView() {
                   <div className="contact-icon-frame"><PhoneIcon /></div>
                   <div className="contact-text-frame">
                     <span className="contact-item-label">{t.phoneLabel}</span>
-                    <a className="contact-item-value" href={`tel:${t.phone.replace(/\s+/g, '')}`}>{t.phone}</a>
+                    <a 
+                      className="contact-item-value" 
+                      href={`tel:${t.phone.replace(/\s+/g, '')}`}
+                      aria-label={isAm ? `ስልክ ቁጥር ይደውሉ፡ ${t.phone}` : `Call phone number: ${t.phone}`}
+                    >
+                      {t.phone}
+                    </a>
                   </div>
                 </li>
 
@@ -136,7 +142,13 @@ export default function ContactView() {
                   <div className="contact-icon-frame"><MailIcon /></div>
                   <div className="contact-text-frame">
                     <span className="contact-item-label">{t.emailLabel}</span>
-                    <a className="contact-item-value" href={`mailto:${t.email}`}>{t.email}</a>
+                    <a 
+                      className="contact-item-value" 
+                      href={`mailto:${t.email}`}
+                      aria-label={isAm ? `ኢሜይል ይላኩ፡ ${t.email}` : `Send email to: ${t.email}`}
+                    >
+                      {t.email}
+                    </a>
                   </div>
                 </li>
 
@@ -151,7 +163,7 @@ export default function ContactView() {
 
               <div className="contact-map-frame">
                 <iframe
-                  title="Church Location Map"
+                  title={isAm ? "የቤተክርስቲያን መገኛ ካርታ" : "Church Location Map"}
                   src={mapSrc}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -163,11 +175,13 @@ export default function ContactView() {
             <Reveal className="contact-form-panel" direction="right" as="form" onSubmit={handleSubmit}>
               <h3 className="contact-subhead">{t.formHeading}</h3>
 
-              <label className="form-label-field">
+              <label htmlFor="contact-name" className="form-label-field">
                 <span>{t.nameLabel} *</span>
                 <input
+                  id="contact-name"
                   type="text"
                   required
+                  aria-required="true"
                   value={form.name}
                   onChange={handleChange('name')}
                   placeholder={t.namePlaceholder}
@@ -176,11 +190,13 @@ export default function ContactView() {
               </label>
 
               <div className="contact-form-row">
-                <label className="form-label-field">
+                <label htmlFor="contact-email" className="form-label-field">
                   <span>{t.emailFieldLabel} *</span>
                   <input
+                    id="contact-email"
                     type="email"
                     required
+                    aria-required="true"
                     value={form.email}
                     onChange={handleChange('email')}
                     placeholder={t.emailPlaceholder}
@@ -188,9 +204,10 @@ export default function ContactView() {
                   />
                 </label>
 
-                <label className="form-label-field">
+                <label htmlFor="contact-phone" className="form-label-field">
                   <span>{t.phoneLabelField}</span>
                   <input
+                    id="contact-phone"
                     type="tel"
                     value={form.phone}
                     onChange={handleChange('phone')}
@@ -200,9 +217,10 @@ export default function ContactView() {
                 </label>
               </div>
 
-              <label className="form-label-field">
+              <label htmlFor="contact-subject" className="form-label-field">
                 <span>{t.subjectFieldLabel}</span>
                 <input
+                  id="contact-subject"
                   type="text"
                   value={form.subject}
                   onChange={handleChange('subject')}
@@ -211,10 +229,12 @@ export default function ContactView() {
                 />
               </label>
 
-              <label className="form-label-field">
+              <label htmlFor="contact-message" className="form-label-field">
                 <span>{t.messageLabel} *</span>
                 <textarea
+                  id="contact-message"
                   required
+                  aria-required="true"
                   rows={5}
                   value={form.message}
                   onChange={handleChange('message')}

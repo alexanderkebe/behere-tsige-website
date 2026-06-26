@@ -62,7 +62,16 @@ export default function MediaView({ initialMediaLinks = [] }) {
                   <div className="media-live-badge-overlay">{t.liveBadge}</div>
                   <div className="media-live-content">
                     <h3>{isAm ? stream.title_am || stream.title_en : stream.title_en}</h3>
-                    <a href={stream.url} target="_blank" rel="noopener noreferrer" className="media-live-btn">
+                    <a 
+                      href={stream.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="media-live-btn" 
+                      aria-label={isAm 
+                        ? `የ${stream.title_am || stream.title_en} ቀጥታ ስርጭት ይመልከቱ (በአዲስ መስኮት ይከፈታል)` 
+                        : `Watch live stream of ${stream.title_en} (opens in a new window)`
+                      }
+                    >
                       {t.viewChannel} &rarr;
                     </a>
                   </div>
@@ -88,13 +97,26 @@ export default function MediaView({ initialMediaLinks = [] }) {
 
           <div className="media-channels-grid">
             {socialChannels.map((chan, idx) => (
-              <Reveal key={chan.id} delay={idx * 80} className={`media-channel-card platform-${chan.platform}`} as="a" href={chan.url} target="_blank" rel="noopener noreferrer" direction="up">
-                <div className="media-channel-icon">
+              <Reveal 
+                key={chan.id} 
+                delay={idx * 80} 
+                className={`media-channel-card platform-${chan.platform}`} 
+                as="a" 
+                href={chan.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                direction="up" 
+                aria-label={isAm 
+                  ? `የ${chan.title_am || chan.title_en} የ${chan.platform} ገጽ (በአዲስ መስኮት ይከፈታል)` 
+                  : `Visit ${chan.title_en} on ${chan.platform} (opens in a new window)`
+                }
+              >
+                <div className="media-channel-icon" aria-hidden="true">
                   {getPlatformIcon(chan.platform)}
                 </div>
                 <h3>{isAm ? chan.title_am || chan.title_en : chan.title_en}</h3>
                 <span className="media-channel-badge">{chan.platform.toUpperCase()}</span>
-                <span className="media-channel-action-label">{t.viewChannel} &rarr;</span>
+                <span className="media-channel-action-label" aria-hidden="true">{t.viewChannel} &rarr;</span>
               </Reveal>
             ))}
           </div>

@@ -80,8 +80,16 @@ export default function EventsView({ initialEvents = [] }) {
                   </div>
                   <div className="event-card-content">
                     <div className="event-date-row">
-                      <span className="event-date-text">📅 {formatDate(event.event_date)}</span>
-                      {event.start_time && <span className="event-time-text">⏰ {formatTime(event.start_time)}</span>}
+                      <span className="event-date-text">
+                        <span aria-hidden="true">📅 </span>
+                        {formatDate(event.event_date)}
+                      </span>
+                      {event.start_time && (
+                        <span className="event-time-text">
+                          <span aria-hidden="true">⏰ </span>
+                          {formatTime(event.start_time)}
+                        </span>
+                      )}
                     </div>
                     <h3 className="event-title-highlight">{isAm ? event.title_am || event.title_en : event.title_en}</h3>
                     <p className="event-desc-text">{isAm ? event.description_am || event.description_en : event.description_en}</p>
@@ -89,14 +97,21 @@ export default function EventsView({ initialEvents = [] }) {
                     <div className="event-details-meta">
                       {event.location_en && (
                         <div className="event-meta-item">
-                          <strong>📍 {t.location}:</strong> {isAm ? event.location_am || event.location_en : event.location_en}
+                          <strong><span aria-hidden="true">📍 </span>{t.location}:</strong> {isAm ? event.location_am || event.location_en : event.location_en}
                         </div>
                       )}
                     </div>
                   </div>
                   {event.poster_url && (
                     <div className="event-poster-wrapper">
-                      <img src={event.poster_url} alt="" className="event-poster-img" />
+                      <img 
+                        src={event.poster_url} 
+                        alt={isAm 
+                          ? `የ${event.title_am || event.title_en} መርሃ ግብር መግለጫ ፖስተር` 
+                          : `Poster for ${event.title_en} event`
+                        } 
+                        className="event-poster-img" 
+                      />
                     </div>
                   )}
                 </Reveal>
@@ -109,7 +124,13 @@ export default function EventsView({ initialEvents = [] }) {
                     <Reveal key={event.id} delay={idx * 80} className="event-card secondary-event" as="div" direction="up">
                       {event.poster_url && (
                         <div className="event-secondary-poster">
-                          <img src={event.poster_url} alt="" />
+                          <img 
+                            src={event.poster_url} 
+                            alt={isAm 
+                              ? `የ${event.title_am || event.title_en} መርሃ ግብር መግለጫ ፖስተር` 
+                              : `Poster for ${event.title_en} event`
+                            } 
+                          />
                         </div>
                       )}
                       <div className="event-secondary-content">
@@ -122,7 +143,7 @@ export default function EventsView({ initialEvents = [] }) {
                         
                         {(event.location_en || event.location_am) && (
                           <div className="event-card-location">
-                            <span>📍 {isAm ? event.location_am || event.location_en : event.location_en}</span>
+                            <span><span aria-hidden="true">📍 </span>{isAm ? event.location_am || event.location_en : event.location_en}</span>
                           </div>
                         )}
                       </div>

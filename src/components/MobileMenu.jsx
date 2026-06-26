@@ -45,7 +45,7 @@ export default function MobileMenu({ isOpen, onClose, navItems, pathname, onNavC
     <div className={`mobile-overlay ${isOpen ? 'open' : ''}`} id="mobile-menu-overlay">
       <div className="mobile-overlay-header">
         <div className="nav-logo">
-          <img src="/assets/logo.png" alt="Logo" className="logo-img" />
+          <img src="/assets/logo.png" alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
         </div>
         <button
           className="mobile-close-btn"
@@ -53,7 +53,7 @@ export default function MobileMenu({ isOpen, onClose, navItems, pathname, onNavC
           aria-label="Close menu"
           onClick={onClose}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <line x1="4" y1="4" x2="20" y2="20" />
             <line x1="20" y1="4" x2="4" y2="20" />
           </svg>
@@ -69,7 +69,7 @@ export default function MobileMenu({ isOpen, onClose, navItems, pathname, onNavC
               className={`mobile-nav-item${item.donate ? ' mobile-nav-donate' : ''}`}
               style={{ '--mobile-item-delay': `${index * 60 + 80}ms` }}
             >
-              <IconComponent />
+              <IconComponent aria-hidden="true" />
               <Link
                 href={item.href}
                 className={`mobile-nav-link ${isActive(item.href) ? 'active' : ''}`}
