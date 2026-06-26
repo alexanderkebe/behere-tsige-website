@@ -5,11 +5,21 @@ import Link from 'next/link';
 import FathersManager from './FathersManager';
 import MembersManager from './MembersManager';
 import RequestsManager from './RequestsManager';
+import LiturgyManager from './LiturgyManager';
+import MemorialManager from './MemorialManager';
+import SermonsManager from './SermonsManager';
+import SchoolsManager from './SchoolsManager';
+import RegistrationsInbox from './RegistrationsInbox';
 
 const TABS = [
   { id: 'fathers', label: 'Fathers' },
   { id: 'members', label: 'Parish Council' },
   { id: 'requests', label: 'Confessor Requests' },
+  { id: 'liturgy', label: 'Liturgy Schedule' },
+  { id: 'memorial', label: 'Memorial Services' },
+  { id: 'sermons', label: 'Sermons & Programs' },
+  { id: 'schools', label: 'Schools & Config' },
+  { id: 'registrations', label: 'Registrations Inbox' },
 ];
 
 export default function AdminDashboard({ supabase, user, onSignOut }) {
@@ -23,7 +33,7 @@ export default function AdminDashboard({ supabase, user, onSignOut }) {
           <span>Behere Tsige Admin</span>
         </div>
 
-        <nav className="admin-nav">
+        <nav className="admin-nav" style={{ overflowY: 'auto' }}>
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -46,6 +56,11 @@ export default function AdminDashboard({ supabase, user, onSignOut }) {
         {tab === 'fathers' && <FathersManager supabase={supabase} />}
         {tab === 'members' && <MembersManager supabase={supabase} />}
         {tab === 'requests' && <RequestsManager supabase={supabase} />}
+        {tab === 'liturgy' && <LiturgyManager supabase={supabase} />}
+        {tab === 'memorial' && <MemorialManager supabase={supabase} />}
+        {tab === 'sermons' && <SermonsManager supabase={supabase} />}
+        {tab === 'schools' && <SchoolsManager supabase={supabase} />}
+        {tab === 'registrations' && <RegistrationsInbox supabase={supabase} />}
       </main>
     </div>
   );
