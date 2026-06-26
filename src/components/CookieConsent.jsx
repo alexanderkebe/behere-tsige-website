@@ -20,6 +20,9 @@ export default function CookieConsent() {
 
   const accept = () => {
     localStorage.setItem('cookie-consent', 'accepted');
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('cookie-consent-accepted'));
+    }
     setShow(false);
   };
 
