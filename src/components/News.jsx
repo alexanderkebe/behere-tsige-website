@@ -2,6 +2,7 @@ import React from 'react';
 import { DiamondOrnament } from './Icons';
 import Reveal from './Reveal';
 import { useContent } from '../context/ContentContext';
+import PageHero from './PageHero';
 
 const QuoteMark = () => (
   <svg viewBox="0 0 40 32" fill="none" className="quote-mark-svg">
@@ -16,17 +17,16 @@ export default function News({ lang }) {
   const { content } = useContent();
   const c = content.news[lang] || content.news.en;
 
+  const isAm = lang === 'am';
+  const heroTitle = isAm ? 'መንፈሳዊ ጽሑፎች እና ትምህርቶች' : 'Spiritual Articles & Homilies';
+  const heroSubtitle = isAm ? 'ከደብራችን አባቶች እና መምህራን የተዘጋጁ መንፈሳዊ ትምህርቶች እና መጣጥፎች' : 'Read teachings and articles from our parish fathers and teachers.';
+
   return (
-    <section id="articles" className="news-section">
-      <Reveal className="news-header">
-        <div className="about-tag-row">
-          <span className="about-tag-line news-tag-line" />
-          <span className="about-tag news-tag">{c.sectionTag}</span>
-          <span className="about-tag-line news-tag-line" />
-        </div>
-        <div className="about-ornament"><DiamondOrnament /></div>
-        <h2 className="news-section-title" id="news-section-title">{c.sectionTitle}</h2>
-      </Reveal>
+    <div className="articles-container-wrapper">
+      <PageHero title={heroTitle} subtitle={heroSubtitle} />
+      
+      <section id="articles" className="news-section" style={{ paddingTop: '4rem' }}>
+
 
       <Reveal className="father-card" id="father-message" delay={100}>
         <div className="father-quote-col">
@@ -60,5 +60,6 @@ export default function News({ lang }) {
         ))}
       </div>
     </section>
+    </div>
   );
 }

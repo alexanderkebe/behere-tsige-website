@@ -39,7 +39,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = lang === 'am' ? NAV_ITEMS_AM : NAV_ITEMS_EN;
+  const navItems = (lang === 'am' || lang === 'gez') ? NAV_ITEMS_AM : NAV_ITEMS_EN;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -59,7 +59,11 @@ export default function Navbar() {
     return pathname === base || pathname.startsWith(base + '/');
   };
 
-  const toggleLang = () => setLang(lang === 'am' ? 'en' : 'am');
+  const toggleLang = () => {
+    if (lang === 'en') setLang('am');
+    else if (lang === 'am') setLang('gez');
+    else setLang('en');
+  };
   const handleNavClick = () => setMobileOpen(false);
 
   return (
@@ -67,7 +71,7 @@ export default function Navbar() {
       <header className={`header header-entrance ${scrolled ? 'scrolled' : ''}`} id="main-header">
         <nav className="nav" id="main-nav">
           <Link href="/" className="nav-logo nav-logo-entrance" id="nav-logo" onClick={handleNavClick}>
-            <img src="/assets/logo.png" alt="Logo" className="logo-img" />
+            <img src="/assets/logo.png" alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
           </Link>
 
           <ul className="nav-links" id="nav-links">
@@ -88,17 +92,18 @@ export default function Navbar() {
             <button
               className="btn-lang"
               onClick={toggleLang}
-              aria-label="Toggle Language"
+              aria-label={`Toggle language. Current: ${lang === 'am' ? 'Amharic' : lang === 'gez' ? "Ge'ez" : 'English'}`}
               id="btn-lang"
             >
-              <GlobeIcon size={16} />
-              <span>{lang === 'am' ? 'EN' : 'አማ'}</span>
+              <GlobeIcon size={16} aria-hidden="true" />
+              <span>{lang === 'en' ? 'አማርኛ' : lang === 'am' ? 'ግዕዝ' : 'English'}</span>
             </button>
 
             <button
               className={`mobile-menu-toggle ${mobileOpen ? 'is-open' : ''}`}
               id="mobile-menu-toggle"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
             >
               <span className="hamburger-line"></span>

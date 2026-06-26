@@ -10,6 +10,9 @@ import EventsManager from './EventsManager';
 import MediaLinksManager from './MediaLinksManager';
 import MessagesInbox from './MessagesInbox';
 import ArticlesManager from './ArticlesManager';
+import ProjectsManager from './ProjectsManager';
+import BankAccountsManager from './BankAccountsManager';
+import ContributionsInbox from './ContributionsInbox';
 
 export const adminRegistry = [
   { id: 'fathers', label: 'Fathers', Component: FathersManager },
@@ -24,4 +27,7 @@ export const adminRegistry = [
   { id: 'media', label: 'Media Links', Component: MediaLinksManager },
   { id: 'contact', label: 'Contact Messages', Component: MessagesInbox },
   { id: 'articles', label: 'Articles', Component: ArticlesManager },
+  { id: 'donation-projects', label: 'Donation Projects', Component: ProjectsManager },
+  { id: 'bank-accounts', label: 'Bank Accounts', Component: BankAccountsManager },
+  { id: 'contributions', label: 'Contributions Inbox', Component: ContributionsInbox },
 ];

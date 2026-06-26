@@ -1,13 +1,12 @@
-'use client';
+import { getDonationProjects, getBankAccounts } from '@/lib/data/donations';
+import DonateView from '@/screens/DonateView';
 
-import { useLanguage } from '@/context/LanguageContext';
-import Donate from '@/components/Donate';
+export const dynamic = 'force-dynamic';
 
-export default function DonatePage() {
-  const { lang } = useLanguage();
-  return (
-    <main className="site-page">
-      <Donate lang={lang} />
-    </main>
-  );
+export default async function DonatePage() {
+  const [projects, bankAccounts] = await Promise.all([
+    getDonationProjects(),
+    getBankAccounts(),
+  ]);
+  return <DonateView projects={projects} bankAccounts={bankAccounts} />;
 }
