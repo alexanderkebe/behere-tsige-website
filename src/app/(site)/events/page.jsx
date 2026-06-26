@@ -1,13 +1,9 @@
-'use client';
+import { getEvents } from '@/lib/data/events';
+import EventsView from '@/screens/EventsView';
 
-import { useLanguage } from '@/context/LanguageContext';
-import Events from '@/components/Events';
+export const dynamic = 'force-dynamic';
 
-export default function EventsPage() {
-  const { lang } = useLanguage();
-  return (
-    <main className="site-page">
-      <Events lang={lang} />
-    </main>
-  );
+export default async function EventsPage() {
+  const events = await getEvents();
+  return <EventsView initialEvents={events} />;
 }

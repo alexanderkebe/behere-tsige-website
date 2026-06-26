@@ -2,28 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import FathersManager from './FathersManager';
-import MembersManager from './MembersManager';
-import RequestsManager from './RequestsManager';
-import LiturgyManager from './LiturgyManager';
-import MemorialManager from './MemorialManager';
-import SermonsManager from './SermonsManager';
-import SchoolsManager from './SchoolsManager';
-import RegistrationsInbox from './RegistrationsInbox';
-
-const TABS = [
-  { id: 'fathers', label: 'Fathers' },
-  { id: 'members', label: 'Parish Council' },
-  { id: 'requests', label: 'Confessor Requests' },
-  { id: 'liturgy', label: 'Liturgy Schedule' },
-  { id: 'memorial', label: 'Memorial Services' },
-  { id: 'sermons', label: 'Sermons & Programs' },
-  { id: 'schools', label: 'Schools & Config' },
-  { id: 'registrations', label: 'Registrations Inbox' },
-];
+import { adminRegistry } from './registry';
 
 export default function AdminDashboard({ supabase, user, onSignOut }) {
-  const [tab, setTab] = useState('fathers');
+  const [tab, setTab] = useState(adminRegistry[0]?.id || 'fathers');
 
   return (
     <div className="admin-layout">
@@ -34,7 +16,7 @@ export default function AdminDashboard({ supabase, user, onSignOut }) {
         </div>
 
         <nav className="admin-nav" style={{ overflowY: 'auto' }}>
-          {TABS.map((t) => (
+          {adminRegistry.map((t) => (
             <button
               key={t.id}
               className={`admin-nav-btn ${tab === t.id ? 'active' : ''}`}
@@ -53,14 +35,12 @@ export default function AdminDashboard({ supabase, user, onSignOut }) {
       </aside>
 
       <main className="admin-main">
-        {tab === 'fathers' && <FathersManager supabase={supabase} />}
-        {tab === 'members' && <MembersManager supabase={supabase} />}
-        {tab === 'requests' && <RequestsManager supabase={supabase} />}
-        {tab === 'liturgy' && <LiturgyManager supabase={supabase} />}
-        {tab === 'memorial' && <MemorialManager supabase={supabase} />}
-        {tab === 'sermons' && <SermonsManager supabase={supabase} />}
-        {tab === 'schools' && <SchoolsManager supabase={supabase} />}
-        {tab === 'registrations' && <RegistrationsInbox supabase={supabase} />}
+        {adminRegistry.map((t) => {
+          const ActiveComponent = t.Component;
+          return tab === t.id ? (
+            <ActiveComponent key={t.id} supabase={supabase} user={user} />
+          ) : null;
+        })}
       </main>
     </div>
   );

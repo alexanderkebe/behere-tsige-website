@@ -1,13 +1,5 @@
-'use client';
-
-import { useLanguage } from '@/context/LanguageContext';
-import Contact from '@/components/Contact';
+import ContactView from '@/screens/ContactView';
 
 export default function ContactPage() {
-  const { lang } = useLanguage();
-  return (
-    <main className="site-page">
-      <Contact lang={lang} />
-    </main>
-  );
+  return <ContactView />;
 }

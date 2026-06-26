@@ -1,13 +1,9 @@
-'use client';
+import { getMediaLinks } from '@/lib/data/media';
+import MediaView from '@/screens/MediaView';
 
-import { useLanguage } from '@/context/LanguageContext';
-import Media from '@/components/Media';
+export const dynamic = 'force-dynamic';
 
-export default function MediaPage() {
-  const { lang } = useLanguage();
-  return (
-    <main className="site-page">
-      <Media lang={lang} />
-    </main>
-  );
+export default async function MediaPage() {
+  const mediaLinks = await getMediaLinks();
+  return <MediaView initialMediaLinks={mediaLinks} />;
 }

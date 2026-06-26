@@ -4,6 +4,8 @@ import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ChatBubble from './ChatBubble';
+import CookieConsent from './CookieConsent';
 
 /** Shared chrome for all public pages: navbar, page content, footer, wrapped
  *  in the active-language class that drives Amharic/English typography. */
@@ -14,6 +16,8 @@ export default function SiteChrome({ children }) {
       <Navbar />
       {children}
       <Footer />
+      <ChatBubble />
+      <CookieConsent />
     </div>
   );
 }
