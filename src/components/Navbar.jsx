@@ -104,7 +104,7 @@ export default function Navbar() {
               id="mobile-menu-toggle"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(true)}
+              onClick={() => setMobileOpen(!mobileOpen)}
             >
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
