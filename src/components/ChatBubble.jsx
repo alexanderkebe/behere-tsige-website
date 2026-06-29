@@ -7,7 +7,7 @@ export default function ChatBubble() {
     const loadCrisp = () => {
       if (window.$crisp) return;
       window.$crisp = [];
-      window.CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID || "3ad9b794-c2c3-4d4b-ae7f-5d4653556d11"; // Default fallbacks or env
+      window.CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID || "e20af823-5e2f-431a-810a-ff799e285ad8";
 
       (function () {
         const d = document;

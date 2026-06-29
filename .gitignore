@@ -41,3 +41,5 @@ error.html
 *.njsproj
 *.sln
 *.sw?
+
+.vercel

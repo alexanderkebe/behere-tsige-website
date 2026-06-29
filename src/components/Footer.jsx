@@ -39,7 +39,7 @@ export default function Footer() {
       <div className="footer-top">
         {/* Col 1: About Church */}
         <Reveal className="footer-col footer-col-about" direction="up" delay={0}>
-          <img src="/assets/logo.png" alt="Church Logo" className="footer-logo" />
+          <img src="/assets/logo-v2.png" alt="Church Logo" className="footer-logo" />
           <h3 className="footer-church-title">
             {lang === 'am'
               ? 'ብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን'
