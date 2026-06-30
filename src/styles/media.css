@@ -7,7 +7,7 @@
 .media-content-wrapper {
   max-width: 850px;
   margin: 0 auto;
-  padding: 4rem 1.5rem 6rem;
+  padding: 8rem 1.5rem 6rem;
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
@@ -624,7 +624,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .media-content-wrapper {
-    padding: 2.5rem 1.25rem 4rem;
+    padding: 6.5rem 1.25rem 4rem;
     gap: 2.5rem;
   }
 

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import PageHero from '@/components/PageHero';
 import Reveal from '@/components/Reveal';
 import { useLanguage } from '@/context/LanguageContext';
 import {
@@ -94,7 +93,7 @@ export default function MediaView({ initialMediaLinks = [] }) {
     liveNotice: isAm ? 'በአሁኑ ጊዜ የሚተላለፍ ቀጥታ ስርጭት የለም።' : 'No active live broadcast at the moment.',
     liveBadge: isAm ? 'ቀጥታ ስርጭት' : 'LIVE',
     viewChannel: isAm ? 'ቻናሉን ይጎብኙ' : 'Visit Channel',
-    profileTitle: isAm ? 'መካነ ሰላም ብሔረ ጽጌ ቅድስት ማርያም ይፋዊ ሚዲያ' : "Mekane Selam Behere Tsege St. Mary's Official Media",
+    profileTitle: isAm ? 'መካነ ሰላም ብሔረ ጽጌ ቅድስት ማርያም ይፋዊ ሚዲያ' : "Mekane Selam Behere Tsige St. Mary's Official Media",
     profileSubtitle: isAm ? 'ቤተሰብ በመሆን ይተባበሩን።' : 'Partner with us by staying connected.',
     scriptureQuote: isAm ? '"ሁለት ወይም ሦስት በስሜ በሚሰበሰቡበት በዚያ በመካከላቸው እሆናለሁና።"' : '"For where two or three are gathered in my name, there am I among them."',
     scriptureRef: isAm ? '— ማቴዎስ 18፥20' : '— Matthew 18:20',
@@ -144,11 +143,6 @@ export default function MediaView({ initialMediaLinks = [] }) {
 
   return (
     <div className="media-page-view">
-      <PageHero
-        title={t.title}
-        subtitle={t.subtitle}
-      />
-
       <div className="media-content-wrapper">
         {/* Profile Card & Scripture Quote - Inspired by Socials App */}
         <div className="media-profile-section-container">
