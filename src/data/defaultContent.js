@@ -468,12 +468,11 @@ const defaultContent = {
     },
   },
   socials: [
-    { id: 'social-youtube', label: 'YouTube', href: 'https://youtube.com/@BehereTsigeMekaneSelamStMary' },
-    { id: 'social-facebook', label: 'Facebook', href: 'https://facebook.com/BehereTsigeMekaneSelamStMary' },
-    { id: 'social-telegram', label: 'Telegram', href: 'https://t.me/BehereTsigeMekaneSelam' },
-    { id: 'social-instagram', label: 'Instagram', href: 'https://instagram.com/behere.tsige.st.mary' },
-    { id: 'social-tiktok', label: 'TikTok', href: 'https://tiktok.com/@beheretsige.st.mary' },
-    { id: 'social-linkedin', label: 'LinkedIn', href: 'https://linkedin.com/company/beheretsige-st-mary' },
+    { id: 'social-youtube', label: 'YouTube', href: 'https://www.youtube.com/@%E1%89%A5%E1%88%94%E1%88%A8%E1%8C%BD%E1%8C%8C%E1%88%9B%E1%88%AD%E1%8B%AB%E1%88%9D' },
+    { id: 'social-facebook', label: 'Facebook', href: 'https://web.facebook.com/?_rdc=1&_rdr' },
+    { id: 'social-telegram', label: 'Telegram', href: 'https://t.me/Behere_tsege_mariam' },
+    { id: 'social-instagram', label: 'Instagram', href: 'https://www.instagram.com/behere_tsege_mariam_official/?hl=en' },
+    { id: 'social-tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@beheretsegemariam' },
   ],
 };
 

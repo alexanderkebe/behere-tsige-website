@@ -4,8 +4,28 @@ import React from 'react';
 import PageHero from '@/components/PageHero';
 import Reveal from '@/components/Reveal';
 import { useLanguage } from '@/context/LanguageContext';
-import { DiamondOrnament } from '@/components/Icons';
+import {
+  DiamondOrnament,
+  FacebookIcon,
+  TelegramIcon,
+  InstagramIcon,
+  TikTokIcon,
+} from '@/components/Icons';
 import '@/styles/media.css';
+
+const YoutubeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true">
+    <path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.53 3.545 12 3.545 12 3.545s-7.53 0-9.388.508a3.003 3.003 0 00-2.11 2.11C0 8.018 0 12 0 12s0 3.982.502 5.837a3.003 3.003 0 002.11 2.11c1.858.508 9.388.508 9.388.508s7.53 0 9.388-.508a3.003 3.003 0 002.11-2.11C24 15.982 24 12 24 12s0-3.982-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
+
+const PLATFORM_ICONS = {
+  youtube: YoutubeIcon,
+  facebook: FacebookIcon,
+  telegram: TelegramIcon,
+  instagram: InstagramIcon,
+  tiktok: TikTokIcon,
+};
 
 export default function MediaView({ initialMediaLinks = [] }) {
   const { lang } = useLanguage();
@@ -21,15 +41,6 @@ export default function MediaView({ initialMediaLinks = [] }) {
     liveBadge: isAm ? 'ቀጥታ ስርጭት' : 'LIVE',
     viewChannel: isAm ? 'ቻናሉን ይጎብኙ' : 'Visit Channel',
     platformText: isAm ? 'ማህበረሰብ' : 'Platform'
-  };
-
-  const getPlatformIcon = (platform) => {
-    switch (platform?.toLowerCase()) {
-      case 'youtube': return '🔴';
-      case 'facebook': return '🔵';
-      case 'telegram': return '✈️';
-      default: return '🌐';
-    }
   };
 
   // Group by live status
@@ -96,29 +107,34 @@ export default function MediaView({ initialMediaLinks = [] }) {
           </Reveal>
 
           <div className="media-channels-grid">
-            {socialChannels.map((chan, idx) => (
-              <Reveal 
-                key={chan.id} 
-                delay={idx * 80} 
-                className={`media-channel-card platform-${chan.platform}`} 
-                as="a" 
-                href={chan.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                direction="up" 
-                aria-label={isAm 
-                  ? `የ${chan.title_am || chan.title_en} የ${chan.platform} ገጽ (በአዲስ መስኮት ይከፈታል)` 
-                  : `Visit ${chan.title_en} on ${chan.platform} (opens in a new window)`
-                }
-              >
-                <div className="media-channel-icon" aria-hidden="true">
-                  {getPlatformIcon(chan.platform)}
-                </div>
-                <h3>{isAm ? chan.title_am || chan.title_en : chan.title_en}</h3>
-                <span className="media-channel-badge">{chan.platform.toUpperCase()}</span>
-                <span className="media-channel-action-label" aria-hidden="true">{t.viewChannel} &rarr;</span>
-              </Reveal>
-            ))}
+            {socialChannels.map((chan, idx) => {
+              const Icon = PLATFORM_ICONS[chan.platform?.toLowerCase()] || YoutubeIcon;
+              return (
+                <Reveal
+                  key={chan.id}
+                  delay={idx * 70}
+                  className={`media-channel-card platform-${chan.platform}`}
+                  as="a"
+                  href={chan.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  direction="up"
+                  aria-label={isAm
+                    ? `የ${chan.title_am || chan.title_en} የ${chan.platform} ገጽ (በአዲስ መስኮት ይከፈታል)`
+                    : `Visit ${chan.title_en} on ${chan.platform} (opens in a new window)`
+                  }
+                >
+                  <div className="media-channel-icon" aria-hidden="true">
+                    <Icon />
+                  </div>
+                  <div className="media-channel-info">
+                    <h3>{isAm ? chan.title_am || chan.title_en : chan.title_en}</h3>
+                    {chan.handle && <span className="media-channel-handle">{chan.handle}</span>}
+                  </div>
+                  <span className="media-channel-action-label" aria-hidden="true">{t.viewChannel} &rarr;</span>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
