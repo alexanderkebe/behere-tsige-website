@@ -146,27 +146,29 @@ export default function About({ lang }) {
             <h3 className="about-extended-title">{ui.storyTitle}</h3>
           </Reveal>
 
-          <div className="about-feature-grid">
+          <div className="about-extended-list" style={{ display: 'flex', flexDirection: 'column', gap: '100px', marginTop: '60px' }}>
             {EXTENDED.map((s, i) => {
               const t = s[lang] || s.en;
               return (
-                <Reveal className="about-feature-card" key={s.key} delay={i * 80}>
-                  <div className="about-feature-head">
-                    <span className="about-feature-icon"><DiamondOrnament /></span>
-                    <h4 className="about-feature-title">{t.title}</h4>
-                  </div>
-                  <p className="about-feature-text">{t.full}</p>
-                  <div className="about-feature-gallery">
-                    {s.images.map((src, idx) => (
-                      <div className="about-feature-thumb" key={idx}>
-                        <img src={src} alt="" loading="lazy" />
-                      </div>
-                    ))}
-                    <div className="about-feature-thumb about-feature-add" aria-hidden="true">
-                      <span>＋ {ui.gallery}</span>
+                <div className="about-main" key={s.key}>
+                  <Reveal className="about-text-col" direction="left" delay={i * 80}>
+                    <div className="about-ornament">
+                      <DiamondOrnament />
                     </div>
-                  </div>
-                </Reveal>
+                    <h3 className="about-heading" style={{ fontSize: '2.2rem', marginTop: '0.5rem', marginBottom: '1.5rem' }}>{t.title}</h3>
+                    <p className="about-body">{t.full}</p>
+                  </Reveal>
+
+                  <Reveal className="about-gallery-carousel-wrap" direction="right" delay={i * 80 + 120}>
+                    <div className="about-feature-gallery" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginTop: 0 }}>
+                      {s.images.map((src, idx) => (
+                        <div className="about-feature-thumb" key={idx} style={{ aspectRatio: '4 / 5', borderRadius: '16px', boxShadow: '0 10px 30px rgba(15, 27, 61, 0.08)' }}>
+                          <img src={src} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                      ))}
+                    </div>
+                  </Reveal>
+                </div>
               );
             })}
           </div>
