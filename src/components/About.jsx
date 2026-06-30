@@ -146,12 +146,13 @@ export default function About({ lang }) {
             <h3 className="about-extended-title">{ui.storyTitle}</h3>
           </Reveal>
 
-          <div className="about-extended-list" style={{ display: 'flex', flexDirection: 'column', gap: '100px', marginTop: '60px' }}>
+          <div className="about-extended-list" style={{ display: 'flex', flexDirection: 'column', gap: '120px', marginTop: '60px' }}>
             {EXTENDED.map((s, i) => {
               const t = s[lang] || s.en;
+              const isReversed = i % 2 === 1;
               return (
-                <div className="about-main" key={s.key}>
-                  <Reveal className="about-text-col" direction="left" delay={i * 80}>
+                <div className={`about-main ${isReversed ? 'about-main-reverse' : ''}`} key={s.key}>
+                  <Reveal className="about-text-col" direction={isReversed ? "right" : "left"} delay={i * 80}>
                     <div className="about-ornament">
                       <DiamondOrnament />
                     </div>
@@ -159,13 +160,16 @@ export default function About({ lang }) {
                     <p className="about-body">{t.full}</p>
                   </Reveal>
 
-                  <Reveal className="about-gallery-carousel-wrap" direction="right" delay={i * 80 + 120}>
-                    <div className="about-feature-gallery" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginTop: 0 }}>
-                      {s.images.map((src, idx) => (
-                        <div className="about-feature-thumb" key={idx} style={{ aspectRatio: '4 / 5', borderRadius: '16px', boxShadow: '0 10px 30px rgba(15, 27, 61, 0.08)' }}>
-                          <img src={src} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <Reveal className="about-gallery-carousel-wrap" direction={isReversed ? "left" : "right"} delay={i * 80 + 120}>
+                    <div className="about-overlap-gallery">
+                      <div className="about-overlap-bg">
+                        <img src={s.images[0]} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </div>
+                      {s.images[1] && (
+                        <div className="about-overlap-fg">
+                          <img src={s.images[1]} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
-                      ))}
+                      )}
                     </div>
                   </Reveal>
                 </div>
