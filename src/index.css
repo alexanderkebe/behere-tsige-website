@@ -99,7 +99,9 @@ button {
   right: 0;
   z-index: 1000;
   transition: background var(--transition-base), box-shadow var(--transition-base);
-  background: rgba(255, 255, 255, 0.0);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .header-entrance {
