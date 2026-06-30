@@ -557,7 +557,7 @@ button {
 
 .hero-title {
   font-family: var(--font-amharic);
-  font-size: clamp(2.4rem, 6vw, 3.8rem); /* big text, starr of the hero section */
+  font-size: clamp(1.8rem, 4.5vw, 3.0rem); /* slightly decreased to fit longer title */
   font-weight: 800;
   color: var(--navy);
   line-height: 1.25;
