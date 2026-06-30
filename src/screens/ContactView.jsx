@@ -38,6 +38,7 @@ export default function ContactView() {
 
   const [form, setForm] = useState({ name: '', phone: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [toastMessage, setToastMessage] = useState('');
 
   const t = {
     tag: isAm ? 'ያግኙን' : 'Reach Us',
@@ -66,7 +67,21 @@ export default function ContactView() {
     sendLabel: isAm ? 'መልእክት ላክ' : 'Submit Message',
     sending: isAm ? 'በመላክ ላይ...' : 'Sending Message...',
     success: isAm ? 'ስለ ላኩልን እናመሰግናለን! መልእክትዎ ደርሶናል፤ በቅርቡ እናገኝዎታለን።' : 'Thank you for reaching out! Your message has been received, and we will contact you shortly.',
-    errorMsg: isAm ? 'የሆነ ስህተት ተፈጥሯል፤ እባክዎን እንደገና ይሞክሩ።' : 'An error occurred while sending your message. Please try again.'
+    errorMsg: isAm ? 'የሆነ ስህተት ተፈጥሯል፤ እባክዎን እንደገና ይሞክሩ።' : 'An error occurred while sending your message. Please try again.',
+    callBtn: isAm ? 'ይደውሉ' : 'Call',
+    smsBtn: isAm ? 'መልዕክት' : 'SMS',
+    writeBtn: isAm ? 'ይጻፉ' : 'Email',
+    copyBtn: isAm ? 'ይቅዱ' : 'Copy',
+    copiedText: isAm ? 'ኮፒ ተደርጓል!' : 'Copied to clipboard!'
+  };
+
+  const handleCopyLink = (text, label) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setToastMessage(`${label ? label + ': ' : ''}${t.copiedText}`);
+      setTimeout(() => setToastMessage(''), 3000);
+    }).catch(err => {
+      console.error('Could not copy text: ', err);
+    });
   };
 
   const handleChange = (field) => (e) =>
@@ -109,6 +124,55 @@ export default function ContactView() {
 
       <section className="contact-main-section">
         <div className="contact-container">
+          
+          {/* Glassmorphic Contact Cards */}
+          <div className="contact-cards-grid">
+            {/* Phone Card */}
+            <Reveal className="contact-card-glass" direction="up" delay={0}>
+              <div className="contact-card-header">
+                <div className="contact-icon-circle phone">
+                  <PhoneIcon />
+                </div>
+                <div className="contact-info-text">
+                  <h3>{t.phoneLabel}</h3>
+                  <p>{t.phone}</p>
+                </div>
+              </div>
+              <div className="contact-card-actions">
+                <a href={`tel:${t.phone.replace(/\\s+/g, '')}`} className="contact-btn-action call">
+                  {t.callBtn}
+                </a>
+                <a href={`sms:${t.phone.replace(/\\s+/g, '')}`} className="contact-btn-action sms">
+                  {t.smsBtn}
+                </a>
+              </div>
+            </Reveal>
+
+            {/* Email Card */}
+            <Reveal className="contact-card-glass" direction="up" delay={60}>
+              <div className="contact-card-header">
+                <div className="contact-icon-circle email">
+                  <MailIcon />
+                </div>
+                <div className="contact-info-text">
+                  <h3>{t.emailLabel}</h3>
+                  <p className="email-text">{t.email}</p>
+                </div>
+              </div>
+              <div className="contact-card-actions">
+                <a href={`mailto:${t.email}`} className="contact-btn-action email-btn">
+                  {t.writeBtn}
+                </a>
+                <button 
+                  onClick={() => handleCopyLink(t.email, t.emailLabel)} 
+                  className="contact-btn-action copy"
+                >
+                  {t.copyBtn}
+                </button>
+              </div>
+            </Reveal>
+          </div>
+
           <div className="contact-grid">
             
             {/* Left: Info Card & Map */}
@@ -121,34 +185,6 @@ export default function ContactView() {
                   <div className="contact-text-frame">
                     <span className="contact-item-label">{t.addressLabel}</span>
                     <span className="contact-item-value">{t.address}</span>
-                  </div>
-                </li>
-
-                <li className="contact-detail-item">
-                  <div className="contact-icon-frame"><PhoneIcon /></div>
-                  <div className="contact-text-frame">
-                    <span className="contact-item-label">{t.phoneLabel}</span>
-                    <a 
-                      className="contact-item-value" 
-                      href={`tel:${t.phone.replace(/\s+/g, '')}`}
-                      aria-label={isAm ? `ስልክ ቁጥር ይደውሉ፡ ${t.phone}` : `Call phone number: ${t.phone}`}
-                    >
-                      {t.phone}
-                    </a>
-                  </div>
-                </li>
-
-                <li className="contact-detail-item">
-                  <div className="contact-icon-frame"><MailIcon /></div>
-                  <div className="contact-text-frame">
-                    <span className="contact-item-label">{t.emailLabel}</span>
-                    <a 
-                      className="contact-item-value" 
-                      href={`mailto:${t.email}`}
-                      aria-label={isAm ? `ኢሜይል ይላኩ፡ ${t.email}` : `Send email to: ${t.email}`}
-                    >
-                      {t.email}
-                    </a>
                   </div>
                 </li>
 
@@ -254,6 +290,14 @@ export default function ContactView() {
           </div>
         </div>
       </section>
+
+      {/* Copy Toast Alert */}
+      {toastMessage && (
+        <div className="contact-toast-alert">
+          <span className="toast-check-icon">✓</span>
+          <span>{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

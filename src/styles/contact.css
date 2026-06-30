@@ -164,3 +164,154 @@ a.contact-item-value:hover {
     gap: 1.5rem;
   }
 }
+
+/* Glassmorphism Contact Cards */
+.contact-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.contact-card-glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(197, 160, 68, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(9, 16, 38, 0.03);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.contact-card-glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(9, 16, 38, 0.08);
+}
+
+.contact-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.contact-icon-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.contact-icon-circle.phone {
+  background: #34c759;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.25);
+}
+
+.contact-icon-circle.email {
+  background: #007aff;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+}
+
+.contact-card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.contact-btn-action {
+  flex: 1;
+  padding: 0.55rem 0.5rem;
+  border-radius: 10px;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+  border: none;
+}
+
+.contact-btn-action.call,
+.contact-btn-action.email-btn {
+  background: var(--navy, #0F1B3D);
+  color: #ffffff;
+  border: 1.5px solid var(--navy, #0F1B3D);
+}
+
+.contact-btn-action.call:hover {
+  background: #34c759;
+  border-color: #34c759;
+}
+
+.contact-btn-action.email-btn:hover {
+  background: #007aff;
+  border-color: #007aff;
+}
+
+.contact-btn-action.sms,
+.contact-btn-action.copy {
+  background: #ffffff;
+  color: var(--navy, #0F1B3D);
+  border: 1.5px solid rgba(15, 27, 61, 0.15);
+}
+
+.contact-btn-action.sms:hover,
+.contact-btn-action.copy:hover {
+  background: rgba(197, 160, 68, 0.08);
+  border-color: var(--gold, #C5A044);
+  color: var(--gold-dark, #A47E2F);
+}
+
+/* Toast Alert Popup */
+.contact-toast-alert {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy, #0F1B3D);
+  color: #ffffff;
+  border: 1px solid var(--gold, #C5A044);
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  animation: toastSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-check-icon {
+  color: var(--gold, #C5A044);
+  font-weight: bold;
+}
+
+@keyframes toastSlideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
