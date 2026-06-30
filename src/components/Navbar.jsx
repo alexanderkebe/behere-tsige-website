@@ -70,6 +70,10 @@ export default function Navbar() {
     <>
       <header className={`header header-entrance ${scrolled ? 'scrolled' : ''}`} id="main-header">
         <nav className="nav" id="main-nav">
+          <Link href="/" className="nav-logo nav-logo-entrance" id="nav-logo" onClick={handleNavClick}>
+            <img src="/assets/logo.png" alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
+          </Link>
+
           <ul className="nav-links" id="nav-links">
             {navItems.map((item) => (
               <li key={item.href}>
