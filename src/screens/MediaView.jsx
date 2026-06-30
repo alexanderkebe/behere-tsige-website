@@ -172,15 +172,27 @@ export default function MediaView({ initialMediaLinks = [] }) {
           </Reveal>
         </div>
 
-        {/* Live Stream Section */}
-        {liveStreams.length > 0 && (
-          <section className="media-live-section">
-            <div className="media-container">
-              <Reveal className="media-section-header">
-                <span className="live-status-dot"></span>
-                <h2>{t.liveTitle}</h2>
-              </Reveal>
+        {/* Live Stream / Latest Video Section */}
+        <section className="media-live-section">
+          <div className="media-container">
+            <Reveal className="media-section-header">
+              {liveStreams.length > 0 && <span className="live-status-dot"></span>}
+              <h2>{liveStreams.length > 0 ? t.liveTitle : (isAm ? 'የቅርብ ጊዜ ቪዲዮ' : 'Latest Video')}</h2>
+            </Reveal>
 
+            {liveStreams.length === 0 ? (
+              <Reveal className="media-youtube-latest-card-glass" direction="up">
+                <div className="media-youtube-embed-container">
+                  <iframe
+                    src="https://www.youtube.com/embed?listType=playlist&list=UU6y3U09CboUBl6GdPxLlevw"
+                    title="Latest YouTube Upload"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </Reveal>
+            ) : (
               <div className="media-live-grid">
                 {liveStreams.map((stream, idx) => (
                   <Reveal key={stream.id} delay={idx * 100} className="media-live-card-glass" as="div" direction="up">
@@ -201,9 +213,9 @@ export default function MediaView({ initialMediaLinks = [] }) {
                   </Reveal>
                 ))}
               </div>
-            </div>
-          </section>
-        )}
+            )}
+          </div>
+        </section>
 
         {/* Share & Support Widget - Inspired by Socials App */}
         <div className="media-container">
@@ -334,62 +346,6 @@ export default function MediaView({ initialMediaLinks = [] }) {
                   </Reveal>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Us Section - Inspired by Socials App */}
-        <section className="media-contact-section">
-          <div className="media-container">
-            <Reveal className="media-section-header">
-              <h2>{t.contactTitle}</h2>
-            </Reveal>
-
-            <div className="media-contact-grid-glass">
-              {/* Phone Card */}
-              <Reveal className="media-contact-card-glass" direction="up" delay={0}>
-                <div className="contact-card-header">
-                  <div className="contact-icon-circle phone">
-                    <PhoneIcon />
-                  </div>
-                  <div className="contact-info-text">
-                    <h3>{t.phoneLabel}</h3>
-                    <p>+251 959 172 939</p>
-                  </div>
-                </div>
-                <div className="contact-card-actions">
-                  <a href="tel:+251959172939" className="contact-btn-action call">
-                    {t.callBtn}
-                  </a>
-                  <a href="sms:+251959172939" className="contact-btn-action sms">
-                    {t.smsBtn}
-                  </a>
-                </div>
-              </Reveal>
-
-              {/* Email Card */}
-              <Reveal className="media-contact-card-glass" direction="up" delay={60}>
-                <div className="contact-card-header">
-                  <div className="contact-icon-circle email">
-                    <MailIcon />
-                  </div>
-                  <div className="contact-info-text">
-                    <h3>{t.emailLabel}</h3>
-                    <p className="email-text">beheretsegemariam@gmail.com</p>
-                  </div>
-                </div>
-                <div className="contact-card-actions">
-                  <a href="mailto:beheretsegemariam@gmail.com" className="contact-btn-action email-btn">
-                    {t.writeBtn}
-                  </a>
-                  <button 
-                    onClick={() => handleCopyLink('beheretsegemariam@gmail.com', t.emailLabel)} 
-                    className="contact-btn-action copy"
-                  >
-                    {t.copyBtn}
-                  </button>
-                </div>
-              </Reveal>
             </div>
           </div>
         </section>
