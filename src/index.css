@@ -2907,6 +2907,77 @@ a.contact-info-value:hover {
   margin-bottom: 12px;
 }
 
+/* Fathers intro section (Bible verse & Priesthood) */
+.fathers-intro-section {
+  max-width: 800px;
+  margin: 0 auto 48px;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.fathers-verse-quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--gold-dark);
+  line-height: 1.75;
+  position: relative;
+  margin: 0 0 24px 0;
+  padding: 0 40px;
+  border: none;
+}
+
+.fathers-verse-quote::before,
+.fathers-verse-quote::after {
+  color: rgba(197, 160, 68, 0.25);
+  font-size: 3.5rem;
+  position: absolute;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.fathers-verse-quote::before {
+  content: "“";
+  left: 0;
+  top: -12px;
+}
+
+.fathers-verse-quote::after {
+  content: "”";
+  right: 0;
+  bottom: -32px;
+}
+
+.fathers-intro-paragraph {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: #4a4a5a;
+  line-height: 1.75;
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .fathers-verse-quote {
+    font-size: 1rem;
+    padding: 0 20px;
+  }
+  .fathers-verse-quote::before,
+  .fathers-verse-quote::after {
+    font-size: 2.5rem;
+  }
+  .fathers-verse-quote::before {
+    left: -5px;
+    top: -8px;
+  }
+  .fathers-verse-quote::after {
+    right: -5px;
+    bottom: -24px;
+  }
+  .fathers-intro-paragraph {
+    font-size: 0.95rem;
+  }
+}
+
 /* Fathers list */
 .fathers-grid {
   display: grid;

@@ -18,6 +18,8 @@ const T = {
     confessorIntro:
       'Reach out in confidence. A father confessor will contact you to guide you in the sacrament of penance.',
     fathersTitle: 'Our Fathers',
+    fathersIntroVerse: 'And I tell you that you are Peter, and on this rock I will build my church, and the gates of Hades will not overcome it. I will give you the keys of the kingdom of heaven; whatever you bind on earth will be bound in heaven, and whatever you loose on earth will be loosed in heaven. — Matthew 16:18-19',
+    fathersIntroText: 'In accordance with this divine commission and the sacred tradition of apostolic succession, our spiritual fathers carry the grace of the holy priesthood. They shepherd the flock, administer the holy sacraments, and guide our community in the path of salvation and spiritual judgment.',
     name: 'Your Name',
     phone: 'Phone',
     email: 'Email',
@@ -43,6 +45,8 @@ const T = {
     confessorIntro:
       'በመተማመን ያግኙን። የንስሐ አባት በንስሐ ሥርዓት ሊመሩዎት ያገኙዎታል።',
     fathersTitle: 'አባቶቻችን',
+    fathersIntroVerse: 'እኔም እልሃለሁ፥ አንተ ጴጥሮስ ነህ፥ በዚህችም ዓለት ላይ ቤተ ክርስቲያኔን እሠራታለሁ፥ የገሃነም ደጆችም አይችሏትም። የመንግሥተ ሰማያትንም መክፈቻዎች እሰጥሃለሁ፤ በምድር የምታስረው ሁሉ በሰማይ የታሰረ ይሆናል፥ በምድርም የምትፈታው ሁሉ በሰማይ የተፈታ ይሆናል — ማቴዎስ ፲፮፥፲፰-፲፱',
+    fathersIntroText: 'በዚህ መለኮታዊ አደራና በሐዋርያዊ ሥልጣን ተተኪነት ቅዱስ ትውፊት መሠረት፥ መንፈሳዊ አባቶቻችን የቅዱስ ክህነትን ጸጋ ተሸክመው ያገለግላሉ። መንጋውን ይጠብቃሉ፣ ቅዱሳት ምሥጢራትን ይፈጽማሉ፣ እንዲሁም ማኅበረሰባችንን በድኅነትና በመንፈሳዊ ፍርድ መንገድ ይመራሉ።',
     name: 'ስምዎ',
     phone: 'ስልክ',
     email: 'ኢሜይል',
@@ -54,7 +58,7 @@ const T = {
     success: 'እናመሰግናለን። ጥያቄዎ ደርሶናል — አባት ያገኙዎታል።',
     error: 'የሆነ ስህተት ተፈጥሯል። እባክዎን እንደገና ይሞክሩ።',
     emptyFathers: 'የአባቶች መረጃ በቅርቡ ይታያል።',
-    emptyMembers: 'የጽ/ቤት አባላት በቅርቡ ይታያሉ።',
+    emptyMembers: 'የጽ/ቤት አባላት በቅርቡ ይታያል።',
   },
 };
 
@@ -136,6 +140,12 @@ export default function ParishOffice({ lang, fathers = [], members = [] }) {
       <Reveal className="parish-subhead" delay={60}>
         <h3 className="parish-subtitle">{t.fathersTitle}</h3>
       </Reveal>
+
+      <Reveal className="fathers-intro-section" delay={80}>
+        <blockquote className="fathers-verse-quote">{t.fathersIntroVerse}</blockquote>
+        <p className="fathers-intro-paragraph">{t.fathersIntroText}</p>
+      </Reveal>
+
       <div className="fathers-grid">
         {fathers.length === 0 && <p className="parish-empty">{t.emptyFathers}</p>}
         {fathers.map((f, i) => (
