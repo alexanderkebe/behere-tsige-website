@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import LiturgySchedule from '@/components/LiturgySchedule';
 import Evangelism from '@/components/Evangelism';
@@ -27,6 +27,17 @@ export default function ServicesView({
 }) {
   const { lang } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
+  const [videoSrc, setVideoSrc] = useState(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const updateSrc = () => {
+      setVideoSrc(mq.matches ? '/assets/services-hero-mobile.mp4' : '/assets/services-hero-pc.mp4');
+    };
+    updateSrc();
+    mq.addEventListener('change', updateSrc);
+    return () => mq.removeEventListener('change', updateSrc);
+  }, []);
 
   const isAm = lang === 'am';
 
@@ -99,6 +110,18 @@ export default function ServicesView({
     return (
       <main className="services-page-main overflow-hidden">
         <section className="services-hero">
+          {videoSrc && (
+            <div className="services-hero-bg">
+              <video
+                src={videoSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+              />
+            </div>
+          )}
           <div className="services-hero-overlay"></div>
           <Reveal className="services-hero-content" direction="up">
             <span className="services-hero-tag">
