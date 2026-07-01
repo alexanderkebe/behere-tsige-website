@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-export default function ScrollIndicator() {
+export default function ScrollIndicator({ hideOnTouch = false }) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
@@ -14,6 +14,11 @@ export default function ScrollIndicator() {
     };
     checkTouch();
   }, []);
+
+  // Hide entirely on touch devices when requested (e.g. home hero)
+  if (hideOnTouch && isTouchDevice) {
+    return null;
+  }
 
   return (
     <div className="scroll-indicator-container">
@@ -46,3 +51,4 @@ export default function ScrollIndicator() {
     </div>
   );
 }
+

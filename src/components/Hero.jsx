@@ -95,7 +95,7 @@ export default function Hero({ lang, videoSrc }) {
       </div>
 
       <div className="hero-scroll-indicator-wrapper animate-fade-in delay-5">
-        <ScrollIndicator />
+        <ScrollIndicator hideOnTouch />
       </div>
 
       <div className="hero-bottom-shape hero-shape-entrance">
