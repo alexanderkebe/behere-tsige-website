@@ -9,7 +9,7 @@ const T = {
   en: {
     tag: 'Parish Office',
     title: 'Parish Council',
-    intro1: 'Thank you for visiting the website of Behere Tsige Mekane Selam St. Mary Ethiopian Orthodox Tewahedo Church. Ours is a community standing firm in faith, love, and fellowship — active and welcoming. The members of the parish council dedicate their time to serve, safeguarding our Orthodox Tewahedo Church. If you are new to the area or looking for ways to take part in the parish, you are most welcome! We are ready to serve you in spiritual ministry to the best of our ability.',
+    intro1: 'Thank you for visiting the website of Behere Tsige Mekane Selam St. Mary Ethiopian Orthodox Tewahedo Church. Ours is a community standing firm in faith, love, and fellowship — active and welcoming. The members of the parish council dedicate their time to serve and safeguarding Church. If you are new to the area or looking for ways to take part in the parish, you are most welcome! We are ready to serve you in spiritual ministry to the best of our ability.',
     intro2: 'The members of the Parish Council serve for three years. Three new members are elected from the congregation by a vote of the general assembly; two from the clergy by a vote of the clergy assembly; and one from the Sunday school. Join in membership to grow in faith, to serve, and to carry out the mission of the Church.',
     membersTitle: 'Parish Council Members',
     confessorTitle: 'Get in Contact with a Father Confessor',
@@ -36,7 +36,7 @@ const T = {
   am: {
     tag: 'የደብር ጽ/ቤት',
     title: 'ሰበካ ጉባዔ',
-    intro1: 'የብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን ድህረ ገጽን ስለጎበኙ እናመሰግናለን። ካቴድራላችን በእምነት፣ ፍቅር እና ኅብረት በአላማ የቆመ እንዲሁም ንቁ እና እንግዳ ተቀባይ ማህበረሰብ ያለበት ነው። የሰበካው አባላት ኦርቶዶክሳዊት ተዋህዶ ቤተ ክርስቲያናችንን ጠብቆ ለማስጠበቅ የጊዜ አስራት በማውጣት ለአገልግሎት ቆመናል። ለአካባቢው አዲስ ከሆኑ ወይም የኢት/ኦ/ተ/ቤ/ክርስቲያን አጥቢያ የሚሳተፉበትን መንገድ እየፈለጉ ከሆነ እንኳን ደህና መጡ! ባለን አቅም በመንፈሳዊ አገልግሎት ልናገለግልዎ ዝግጁ ነን።',
+    intro1: 'የብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን ድህረ ገጽን ስለጎበኙ እናመሰግናለን። ካቴድራላችን በእምነት፣ ፍቅር እና ኅብረት በአላማ የቆመ እንዲሁም ንቁ እና እንግዳ ተቀባይ ማህበረሰብ ያለበት ነው። የሰበካ ጉባዔው አባላት ቤተ ክርስቲያናችንን ጠብቆ ለማስቀጠል ቆመናል። ለአካባቢው አዲስ ከሆኑ ወይም የኢት/ኦ/ተ/ቤ/ክርስቲያን አጥቢያ የሚሳተፉበትን መንገድ እየፈለጉ ከሆነ እንኳን ደህና መጡ! ባለን አቅም ልናገለግልዎ ዝግጁ ነን።',
     intro2: 'የሰበካ ጉባዔ አባላት ለሦስት ዓመታት ያገለግላሉ። ከምዕመናን 3 አዲስ ተመራጮች በጠቅላላ ጉባኤ ድምፅ አሰጣጥ፣ ከካህናት 2 ተመራጮች በካህናት ጉባኤ፣ ከሰንበት ትምህርት ቤት 1 ተመራጭ ይመረጣሉ። በእምነት ለማደግና ለማገልገል፣ የቤተ ክርስቲያኑን ተልእኮ ለማስፈጸም በአባልነት ይቀላቀሉ።',
     membersTitle: 'የሰበካ ጉባዔ አባላት',
     confessorTitle: 'ከንስሐ አባት ጋር ይገናኙ',
