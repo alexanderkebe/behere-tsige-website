@@ -34,7 +34,7 @@ export default function ServicesView({
     {
       id: 'liturgy',
       labelEn: 'Liturgy & Worship',
-      labelAm: 'ቅዳሴ እና ጸሎት',
+      labelAm: 'ቅዳሴና አምልኮ',
       descEn: 'Join our daily prayers, Mahlet, and Sunday Divine Liturgy services.',
       descAm: 'በዕለታዊ ጸሎቶች፣ ማኅሌት እና በደማቁ የእሑድ ቅዳሴ መርሃ ግብር ላይ ይሳተፉ።',
       subLabelEn: 'Daily Prayers & Sunday Kidase',
@@ -45,7 +45,7 @@ export default function ServicesView({
     {
       id: 'evangelism',
       labelEn: 'Gospel & Sermons',
-      labelAm: 'ስብከተ ወንጌል',
+      labelAm: 'ወንጌልና ስብከቶች',
       descEn: 'Explore our nightly gospel teachings, seasonal sermons, and youth programs.',
       descAm: 'የዕለት ማታ የወንጌል ትምህርቶች፣ ወቅታዊ ስብከቶች እና መዝሙራት መርሃ ግብር።',
       subLabelEn: 'Nightly Teachings & Sermons',
@@ -56,7 +56,7 @@ export default function ServicesView({
     {
       id: 'dejeselam',
       labelEn: 'Project Dejeselam',
-      labelAm: 'ፕሮጀክት ደጀሰላም',
+      labelAm: 'የደጀ ሰላም ፕሮጀክት',
       descEn: 'Join our daily charity feeding program, sponsor meals, and select available dates.',
       descAm: 'በቤተ ክርስቲያን ደጃፍ የሚገኙ የተቸገሩ ወገኖችን በዕለት ማዕድ ለመደገፍ የበረከት ቀን ይምረጡ።',
       subLabelEn: 'Feed the Needy (Matthew 25)',
@@ -67,7 +67,7 @@ export default function ServicesView({
     {
       id: 'sacraments',
       labelEn: 'Holy Sacraments',
-      labelAm: 'ምሥጢራተ ቤተ ክርስቲያን',
+      labelAm: 'ቅዱሳት ምስጢራት',
       descEn: 'Register and request for Holy Baptism, Catechism, Confession, and Memorial services.',
       descAm: 'የጥምቀት፣ የትምህርተ ሃይማኖት፣ የንስሐ አባቶች እና የፍትሐት ጸሎት አገልግሎት መጠየቂያ ቅጾች።',
       subLabelEn: 'Baptism, Penance, Fithat',
@@ -78,11 +78,11 @@ export default function ServicesView({
     {
       id: 'school',
       labelEn: 'Church Education',
-      labelAm: 'የቤተ ክርስቲያን ትምህርት',
+      labelAm: 'የቤተክርስቲያን ትምህርት',
       descEn: 'Discover traditional Abnet (Ge\'ez poetry, hymns) and modern Sunday School classes.',
       descAm: 'የፊደል፣ የዜማ፣ የቅኔ የአብነት ትምህርት እና የህፃናት/ወጣቶች ሰንበት ትምህርት ቤቶች።',
       subLabelEn: 'Abnet & Sunday School',
-      subLabelAm: 'ባህላዊ አብነትና ሰንበት ትምህርት',
+      subLabelAm: 'የአብነትና የሰንበት ትምህርት ቤት',
       icon: TeachingIcon,
       component: <ChurchSchool lang={lang} />
     }

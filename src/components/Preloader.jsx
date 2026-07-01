@@ -32,7 +32,7 @@ export default function Preloader({ progress, done }) {
     >
       <div className="preloader-inner" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
         <img src="/assets/logo.png" alt="" className="preloader-logo" style={{ marginBottom: '5px' }} />
-        <div style={{ width: '130px', height: '130px' }}>
+        <div className="lottie-golden" style={{ width: '130px', height: '130px' }}>
           <DotLottieReact
             src="https://lottie.host/4cb383b7-968d-4393-a253-53f10e722ec9/jrE6AvzmWd.lottie"
             loop

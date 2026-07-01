@@ -12,19 +12,19 @@ delete from public.fathers;
 insert into public.fathers
   (full_name_en, full_name_am, title_en, title_am, role, bio_en, bio_am, photo_url, is_confessor, is_penance_father, phone, email, display_order)
 values
-  ('Melake Genet Memhir Habtewold Tegegn', 'መልዓከ ገነት መምህር ሃብተወልድ ተገኝ',
+  ('Melake Genet Memhir Habtewold Tegegn', 'መልአከ ገነት መምህር ሀብተወልድ ተገኝ',
    'Head Priest', 'ዋና ካህን', 'head_priest',
    'Head priest of the parish for over two decades, leading the congregation in worship, teaching, and pastoral care.',
    'ከሁለት አስርት ዓመታት በላይ የደብሩ ዋና ካህን ሆነው ምዕመናንን በአምልኮ፣ በትምህርትና በመንፈሳዊ እንክብካቤ ይመራሉ።',
    '/assets/profile-pic-preist.png', true, true, '+251 911 100 101', 'habtewold@beheretsigestmary.org', 1),
 
-  ('Kesis Tesfaye Bekele', 'ቄስ ተስፋዬ በቀለ',
+  ('Kesis Tesfaye Bekele', 'ቀሲስ ተስፋዬ በቀለ',
    'Priest & Confessor', 'ካህንና የንስሐ አባት', 'confessor',
    'A devoted confessor who guides the faithful through the sacrament of penance with patience and compassion.',
    'ምዕመናንን በትዕግሥትና በርኅራኄ በንስሐ ሥርዓት የሚመሩ ቅን የንስሐ አባት።',
    '/assets/profile-pic-preist.png', true, true, '+251 911 100 102', null, 2),
 
-  ('Kesis Gebremariam Asfaw', 'ቄስ ገብረማርያም አስፋው',
+  ('Kesis Gebremariam Asfaw', 'ቀሲስ ገብረማርያም አስፋው',
    'Priest', 'ካህን', 'confessor',
    'Serves in the Divine Liturgy and accompanies young families in their spiritual journey.',
    'በቅዳሴ ሥርዓት የሚያገለግሉና ወጣት ቤተሰቦችን በመንፈሳዊ ጉዟቸው የሚያጅቡ ካህን።',
@@ -36,7 +36,7 @@ values
    'የደብሩ ሊቀ ካህናትና ሽማግሌ፤ በቤተ ክርስቲያን ሕግጋትና ወግ ጥልቅ ዕውቀታቸው የተከበሩ።',
    '/assets/profile-pic-preist.png', true, true, '+251 911 100 104', null, 4),
 
-  ('Kesis Tekle Haymanot Mengistu', 'ቄስ ተክለ ሃይማኖት መንግስቱ',
+  ('Kesis Tekle Haymanot Mengistu', 'ቀሲስ ተክለ ሃይማኖት መንግስቱ',
    'Priest & Spiritual Father', 'ካህንና መንፈሳዊ አባት', 'confessor',
    'A spiritual father known for his counsel to the youth and his teaching in the Sunday school.',
    'ለወጣቶች በሚሰጡት ምክርና በሰንበት ትምህርት ቤት በሚያስተምሩት ትምህርት የሚታወቁ መንፈሳዊ አባት።',
@@ -48,7 +48,7 @@ values
    'በቅዳሴ ሥርዓት የሚያግዙና መዘምራንን በቅዱስ ዝማሬ የሚመሩ ዲያቆን።',
    '/assets/profile-pic-preist.png', false, false, '+251 911 100 106', null, 6),
 
-  ('Kesis Berhanu Kidane', 'ቄስ ብርሃኑ ኪዳኔ',
+  ('Kesis Berhanu Kidane', 'ቀሲስ ብርሃኑ ኪዳኔ',
    'Priest', 'ካህን', 'confessor',
    'Ministers to the sick and the elderly, bringing prayer and communion to those who cannot attend.',
    'ለታማሚዎችና ለአረጋውያን አገልግሎት የሚሰጡ፣ ጸሎትና ቍርባን ለማይገኙ የሚያደርሱ ካህን።',

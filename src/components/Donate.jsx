@@ -182,7 +182,7 @@ export default function Donate({ lang }) {
 
         {loading ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', gap: '15px', color: 'var(--text-muted)' }}>
-            <div style={{ width: '110px', height: '110px' }}>
+            <div className="lottie-golden" style={{ width: '110px', height: '110px' }}>
               <DotLottieReact
                 src="https://lottie.host/4cb383b7-968d-4393-a253-53f10e722ec9/jrE6AvzmWd.lottie"
                 loop

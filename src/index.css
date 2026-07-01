@@ -5380,3 +5380,18 @@ a.contact-info-value:hover {
   opacity: 0.85;
 }
 
+/* ── Golden Lottie Loader filter ── */
+.lottie-golden {
+  filter: sepia(1) saturate(6) hue-rotate(10deg) brightness(0.95) contrast(1.1);
+}
+
+/* ── Confessor Form Title ── */
+.confessor-form-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--navy);
+  margin: 0 0 1.5rem 0;
+  font-weight: 700;
+  text-align: left;
+}
+

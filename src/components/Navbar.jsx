@@ -18,13 +18,13 @@ const NAV_ITEMS_EN = [
 ];
 
 const NAV_ITEMS_AM = [
-  { label: 'ዋና ገጽ', href: '/' },
-  { label: 'አገልግሎት', href: '/services' },
-  { label: 'ቀጣይ ዝግጅቶች', href: '/events' },
+  { label: 'መነሻ ገጽ', href: '/' },
+  { label: 'አገልግሎቶች', href: '/services' },
+  { label: 'መርሐ ግብራት', href: '/events' },
   { label: 'ሚዲያ', href: '/media' },
   { label: 'ጽሑፎች', href: '/articles' },
   { label: 'ያግኙን', href: '/contact' },
-  { label: 'ለግሱ', href: '/donate', donate: true },
+  { label: 'መባዕ', href: '/donate', donate: true },
 ];
 
 const LANGS = [

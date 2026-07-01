@@ -14,19 +14,20 @@ const T = {
     membersTitle: 'Parish Council Members',
     confessorTitle: 'Get in Contact with a Father Confessor',
     confessorQuote:
-      '“Therefore confess your sins to each other and pray for each other so that you may be healed.” — James 5:16',
+      '“I will arise and go to my father, and will say to him, ‘Father, I have sinned against heaven and before you...’” — Luke 15:18',
     confessorIntro:
-      'Reach out in confidence. A father confessor will contact you to guide you in the sacrament of penance.',
+      'Come and relieve your burden. Reach out here to connect privately with a spiritual father who will help you find peace.',
+    confessorFormTitle: 'Request a Father Confessor',
     fathersTitle: 'Our Fathers',
     fathersIntroVerse: 'And I tell you that you are Peter, and on this rock I will build my church, and the gates of Hades will not overcome it. I will give you the keys of the kingdom of heaven; whatever you bind on earth will be bound in heaven, and whatever you loose on earth will be loosed in heaven. — Matthew 16:18-19',
     fathersIntroText: 'In accordance with this divine commission, our fathers carry the grace of the holy priesthood. They shepherd the flock, administer the holy sacraments, and guide our community in the path of salvation.',
-    name: 'Your Name',
+    name: 'Name',
     phone: 'Phone',
     email: 'Email',
-    preferred: 'Preferred Father (optional)',
+    preferred: 'Spiritual Father (Optional)',
     anyFather: 'No preference',
     message: 'Message',
-    send: 'Send Request',
+    send: 'Begin My Journey',
     sending: 'Sending…',
     success: 'Thank you. Your request has been received — a father will be in touch.',
     error: 'Something went wrong. Please try again.',
@@ -39,21 +40,22 @@ const T = {
     intro1: 'የብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን ድህረ ገጽን ስለጎበኙ እናመሰግናለን። ካቴድራላችን በእምነት፣ ፍቅር እና ኅብረት በአላማ የቆመ እንዲሁም ንቁ እና እንግዳ ተቀባይ ማህበረሰብ ያለበት ነው። የሰበካ ጉባዔው አባላት ቤተ ክርስቲያናችንን ጠብቆ ለማስቀጠል ቆመናል። ለአካባቢው አዲስ ከሆኑ ወይም የኢት/ኦ/ተ/ቤ/ክርስቲያን አጥቢያ የሚሳተፉበትን መንገድ እየፈለጉ ከሆነ እንኳን ደህና መጡ! ባለን አቅም ልናገለግልዎ ዝግጁ ነን።',
     intro2: 'የሰበካ ጉባዔ አባላት ለሦስት ዓመታት ያገለግላሉ። ከምዕመናን 3 አዲስ ተመራጮች በጠቅላላ ጉባኤ ድምፅ አሰጣጥ፣ ከካህናት 2 ተመራጮች በካህናት ጉባኤ፣ ከሰንበት ትምህርት ቤት 1 ተመራጭ ይመረጣሉ። በእምነት ለማደግና ለማገልገል፣ የቤተ ክርስቲያኑን ተልእኮ ለማስፈጸም በአባልነት ይቀላቀሉ።',
     membersTitle: 'የሰበካ ጉባዔ አባላት',
-    confessorTitle: 'ከንስሐ አባት ጋር ይገናኙ',
+    confessorTitle: 'ወደ አባትህ ተመለስ',
     confessorQuote:
-      '“እርስ በርሳችሁ ኃጢአታችሁን ተናዘዙ፥ ትፈወሱም ዘንድ እርስ በርሳችሁ ጸልዩ።” — ያዕቆብ 5፥16',
+      '“ተነስቼ ወደ አባቴ እሄዳለሁና፦ አባቴ ሆይ፥ በሰማይና በፊቴ በደልሁ እለዋለሁ…” — ሉቃስ 15:18',
     confessorIntro:
-      'በመተማመን ያግኙን። የንስሐ አባት በንስሐ ሥርዓት ሊመሩዎት ያገኙዎታል።',
+      'ኑ፣ የልብዎን ሸክም ያቅልሉ። የንስሐ አባት ጋር ለመገናኘት ቅጹን ይሙሉ::',
+    confessorFormTitle: 'የንስሐ አባት ይጠይቁ',
     fathersTitle: 'አባቶቻችን',
     fathersIntroVerse: 'እኔም እልሃለሁ፥ አንተ ጴጥሮስ ነህ፥ በዚህችም ዓለት ላይ ቤተ ክርስቲያኔን እሠራታለሁ፥ የገሃነም ደጆችም አይችሏትም። የመንግሥተ ሰማያትንም መክፈቻዎች እሰጥሃለሁ፤ በምድር የምታስረው ሁሉ በሰማይ የታሰረ ይሆናል፥ በምድርም የምትፈታው ሁሉ በሰማይ የተፈታ ይሆናል — ማቴዎስ ፲፮፥፲፰-፲፱',
     fathersIntroText: 'በዚህ መለኮታዊ አደራ መሠረት፥ አባቶቻችን የክህነትን ጸጋ ተሸክመው ያገለግላሉ። መንጋውን ይጠብቃሉ፣ ቅዱሳት ምሥጢራትን ይፈጽማሉ፣ እንዲሁም ማኅበረሰባችንን በድኅነት መንገድ ይመራሉ።',
-    name: 'ስምዎ',
-    phone: 'ስልክ',
+    name: 'ስም',
+    phone: 'ስልክ ቁጥር',
     email: 'ኢሜይል',
-    preferred: 'የሚመርጡት አባት (በፈቃደኝነት)',
+    preferred: 'የንስሐ አባት ይምረጡ (አማራጭ)',
     anyFather: 'ምርጫ የለኝም',
     message: 'መልእክት',
-    send: 'ጥያቄ ላክ',
+    send: 'ጉዞዬን እጀምራለሁ',
     sending: 'በመላክ ላይ…',
     success: 'እናመሰግናለን። ጥያቄዎ ደርሶናል — አባት ያገኙዎታል።',
     error: 'የሆነ ስህተት ተፈጥሯል። እባክዎን እንደገና ይሞክሩ።',
@@ -173,6 +175,7 @@ export default function ParishOffice({ lang, fathers = [], members = [] }) {
         </div>
 
         <form className="confessor-form" onSubmit={submit}>
+          <h4 className="confessor-form-title">{t.confessorFormTitle}</h4>
           <label className="contact-field">
             <span className="contact-field-label">{t.name}</span>
             <input className="contact-input" type="text" required value={form.requester_name} onChange={change('requester_name')} />

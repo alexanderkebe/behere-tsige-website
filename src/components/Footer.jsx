@@ -42,7 +42,7 @@ export default function Footer() {
           <img src="/assets/logo-footer.png" alt="Church Logo" className="footer-logo" />
           <h3 className="footer-church-title">
             {lang === 'am'
-              ? 'ብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን'
+              ? 'የብሔረ ጽጌ መካነ ሰላም ቅድስት ማርያም ቤተክርስቲያን'
               : 'Bihere Tsige Mekane Selam St. Mary Church'}
           </h3>
           <p className="footer-church-desc">{c.description}</p>
