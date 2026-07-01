@@ -104,8 +104,10 @@ button {
   left: 0;
   right: 0;
   z-index: 1000;
-  transition: background var(--transition-base), box-shadow var(--transition-base);
+  transition: background var(--transition-base), box-shadow var(--transition-base), backdrop-filter var(--transition-base), -webkit-backdrop-filter var(--transition-base);
   background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 }
 
 .header-entrance {
@@ -128,7 +130,29 @@ button {
 }
 
 .header.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 20px rgba(15, 27, 61, 0.08);
+}
+
+/* Reset outline stroke styling when navbar is scrolled and has white background */
+.header.scrolled .logo-img {
+  filter: none;
+}
+
+.header.scrolled .nav-link {
+  text-shadow: none;
+}
+
+.header.scrolled .nav-link-donate {
+  border-color: var(--gold);
+  box-shadow: none;
   background: transparent;
+  text-shadow: none;
+}
+
+.header.scrolled .hamburger-line {
   box-shadow: none;
 }
 
@@ -3852,9 +3876,10 @@ a.contact-info-value:hover {
 
 /* Scrolled state adjustments for language switcher */
 .header.scrolled .btn-lang {
-  background: rgba(255, 255, 255, 0.45);
-  border-color: #fff;
-  box-shadow: 0 0 0 0.5px #fff;
+  background: rgba(15, 27, 61, 0.03);
+  border-color: rgba(15, 27, 61, 0.1);
+  box-shadow: none;
+  text-shadow: none;
 }
 
 .header.scrolled .btn-lang:hover {
@@ -4663,7 +4688,7 @@ a.contact-info-value:hover {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
 }
 .services-hero-overlay {
   position: absolute;
