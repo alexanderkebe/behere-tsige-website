@@ -176,7 +176,7 @@ button {
   height: 40px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: drop-shadow(-1px -1px 0 #fff) drop-shadow(1px -1px 0 #fff) drop-shadow(-1px 1px 0 #fff) drop-shadow(1px 1px 0 #fff);
+  filter: drop-shadow(-0.5px -0.5px 0 #fff) drop-shadow(0.5px -0.5px 0 #fff) drop-shadow(-0.5px 0.5px 0 #fff) drop-shadow(0.5px 0.5px 0 #fff);
 }
 
 .logo-text {
@@ -206,7 +206,7 @@ button {
   position: relative;
   padding: 4px 0;
   transition: color var(--transition-base);
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff;
+  text-shadow: -0.5px -0.5px 0 #fff, 0.5px -0.5px 0 #fff, -0.5px 0.5px 0 #fff, 0.5px 0.5px 0 #fff;
 }
 
 .nav-link::after {
@@ -233,14 +233,13 @@ button {
 /* DONATE as a styled nav link — subtle gold pill */
 .nav-link-donate {
   color: var(--gold-dark);
-  border: 1.5px solid #fff;
+  border: 1px solid #fff;
   padding: 5px 14px !important;
   border-radius: 2px;
   letter-spacing: 0.14em;
   transition: all var(--transition-base);
-  box-shadow: 0 0 0 1px #fff;
   background: rgba(255, 255, 255, 0.45);
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: -0.5px -0.5px 0 #fff, 0.5px -0.5px 0 #fff, -0.5px 0.5px 0 #fff, 0.5px 0.5px 0 #fff;
 }
 .nav-link-donate::after {
   display: none; /* no underline sweep — border does the job */
@@ -300,7 +299,7 @@ button {
   background: var(--navy);
   transition: all var(--transition-base);
   transform-origin: center;
-  box-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff;
+  box-shadow: -0.5px -0.5px 0 #fff, 0.5px -0.5px 0 #fff, -0.5px 0.5px 0 #fff, 0.5px 0.5px 0 #fff;
 }
 
 .mobile-menu-toggle.is-open .hamburger-line:nth-child(1) {
@@ -3761,7 +3760,7 @@ a.contact-info-value:hover {
   font-weight: 600;
   letter-spacing: 0.03em;
   color: var(--navy);
-  border: 1.5px solid #fff;
+  border: 1px solid #fff;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(8px);
@@ -3769,8 +3768,7 @@ a.contact-info-value:hover {
   transition: all var(--transition-base);
   cursor: pointer;
   z-index: 1001;
-  box-shadow: 0 0 0 0.5px #fff;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: -0.5px -0.5px 0 #fff, 0.5px -0.5px 0 #fff, -0.5px 0.5px 0 #fff, 0.5px 0.5px 0 #fff;
 }
 
 .btn-lang:hover,
