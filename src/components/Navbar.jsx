@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { GlobeIcon } from './Icons';
+import { Globe, ChevronDown, Check } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -27,6 +27,12 @@ const NAV_ITEMS_AM = [
   { label: 'ለግሱ', href: '/donate', donate: true },
 ];
 
+const LANGS = [
+  { code: 'en', label: 'English', native: 'English' },
+  { code: 'am', label: 'Amharic', native: 'አማርኛ' },
+  { code: 'gez', label: 'Ge\'ez', native: 'ግዕዝ' },
+];
+
 // '/services' -> '/services' ; '/#about' -> '/' ; '/' -> '/'
 function basePath(href) {
   const path = href.split('#')[0];
@@ -38,8 +44,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const navItems = (lang === 'am' || lang === 'gez') ? NAV_ITEMS_AM : NAV_ITEMS_EN;
+  const activeLang = LANGS.find((l) => l.code === lang) || LANGS[0];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -53,17 +62,22 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const isActive = (href) => {
     const base = basePath(href);
     if (base === '/') return pathname === '/';
     return pathname === base || pathname.startsWith(base + '/');
   };
 
-  const toggleLang = () => {
-    if (lang === 'en') setLang('am');
-    else if (lang === 'am') setLang('gez');
-    else setLang('en');
-  };
   const handleNavClick = () => setMobileOpen(false);
 
   return (
@@ -89,15 +103,41 @@ export default function Navbar() {
           </ul>
 
           <div className="nav-actions">
-            <button
-              className="btn-lang"
-              onClick={toggleLang}
-              aria-label={`Toggle language. Current: ${lang === 'am' ? 'Amharic' : lang === 'gez' ? "Ge'ez" : 'English'}`}
-              id="btn-lang"
-            >
-              <GlobeIcon size={16} aria-hidden="true" />
-              <span>{lang === 'en' ? 'አማርኛ' : lang === 'am' ? 'ግዕዝ' : 'English'}</span>
-            </button>
+            <div className="lang-dropdown-container" ref={dropdownRef}>
+              <button
+                type="button"
+                className={`btn-lang ${dropdownOpen ? 'is-active' : ''}`}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-expanded={dropdownOpen}
+                aria-haspopup="listbox"
+                aria-label={`Select language. Current: ${activeLang.label}`}
+                id="btn-lang"
+              >
+                <Globe size={15} className="lang-globe-icon" />
+                <span>{activeLang.native}</span>
+                <ChevronDown size={11} className={`lang-chevron-icon ${dropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {dropdownOpen && (
+                <ul className="lang-dropdown-menu" role="listbox" aria-label="Language options">
+                  {LANGS.map((l) => (
+                    <li key={l.code} role="option" aria-selected={l.code === lang}>
+                      <button
+                        type="button"
+                        className={`lang-dropdown-item ${l.code === lang ? 'selected' : ''}`}
+                        onClick={() => {
+                          setLang(l.code);
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        <span className="lang-item-text">{l.native}</span>
+                        {l.code === lang && <Check size={13} className="lang-check-icon" />}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             <button
               className={`mobile-menu-toggle ${mobileOpen ? 'is-open' : ''}`}

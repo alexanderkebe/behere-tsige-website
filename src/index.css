@@ -66,6 +66,12 @@ body {
   line-height: 1.6;
 }
 
+/* Force Amharic and Ge'ez text to consistently use Benaiah */
+.lang-am,
+.lang-am * {
+  font-family: var(--font-amharic) !important;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -3710,39 +3716,131 @@ a.contact-info-value:hover {
   gap: 16px;
 }
 
+/* ── Redesigned Dropdown Language Selector ── */
+.lang-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
 .btn-lang {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
+  gap: 8px;
+  padding: 8px 16px;
   font-family: var(--font-ui);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   color: var(--navy);
-  border: 1px solid rgba(15, 27, 61, 0.15);
+  border: 1.5px solid rgba(15, 27, 61, 0.12);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: all var(--transition-base);
   cursor: pointer;
   z-index: 1001;
 }
 
-.btn-lang:hover {
-  background: var(--navy);
-  color: var(--white);
-  border-color: var(--navy);
+.btn-lang:hover,
+.btn-lang.is-active {
+  background: var(--white);
+  border-color: var(--gold);
+  box-shadow: 0 4px 15px rgba(197, 160, 68, 0.15);
 }
 
-.btn-lang svg {
+.lang-globe-icon {
+  color: var(--gold-dark);
+  transition: transform var(--transition-base);
+}
+
+.btn-lang:hover .lang-globe-icon,
+.btn-lang.is-active .lang-globe-icon {
+  transform: scale(1.1);
+}
+
+.lang-chevron-icon {
+  color: rgba(15, 27, 61, 0.4);
+  transition: transform var(--transition-base);
+}
+
+.btn-lang.is-active .lang-chevron-icon {
+  color: var(--gold-dark);
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid rgba(15, 27, 61, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 27, 61, 0.08);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 130px;
+  z-index: 1010;
+  list-style: none;
+  margin: 0;
+  animation: langDropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top right;
+}
+
+@keyframes langDropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lang-dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-base);
+}
+
+.lang-dropdown-item:hover {
+  background: rgba(197, 160, 68, 0.08);
+  color: var(--gold-dark);
+}
+
+.lang-dropdown-item.selected {
+  background: rgba(15, 27, 61, 0.04);
+  color: var(--navy);
+}
+
+.lang-check-icon {
+  color: var(--gold);
   flex-shrink: 0;
-  transition: transform var(--transition-slow);
 }
 
-.btn-lang:hover svg {
-  transform: rotate(20deg);
+/* Explicit font fallback to keep selector dropdown UI readable */
+.lang-dropdown-container,
+.lang-dropdown-container * {
+  font-family: var(--font-ui) !important;
 }
 
 /* Scrolled state adjustments for language switcher */
