@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { GridLoader } from 'react-spinners';
 
 /**
  * Full-screen branded loading overlay. Stays on top of the site while the
@@ -29,12 +30,10 @@ export default function Preloader({ progress, done }) {
       aria-live="polite"
       aria-label="Loading"
     >
-      <div className="preloader-inner">
-        <img src="/assets/logo.png" alt="" className="preloader-logo" />
-        <div className="preloader-bar">
-          <div className="preloader-bar-fill" style={{ width: `${progress}%` }} />
-        </div>
-        <div className="preloader-pct">{progress}%</div>
+      <div className="preloader-inner" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+        <img src="/assets/logo.png" alt="" className="preloader-logo" style={{ marginBottom: '10px' }} />
+        <GridLoader color="#C5A044" size={15} margin={3} speedMultiplier={0.8} />
+        <div className="preloader-pct" style={{ marginTop: '10px', fontSize: '1rem', fontWeight: 600, color: 'var(--navy)' }}>{progress}%</div>
       </div>
     </div>
   );

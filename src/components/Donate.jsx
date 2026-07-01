@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { RingLoader } from 'react-spinners';
 import PageHero from './PageHero';
 import Reveal from './Reveal';
 import { DiamondOrnament } from './Icons';
@@ -180,9 +181,11 @@ export default function Donate({ lang }) {
         </h2>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-            <div className="spinner" style={{ margin: '0 auto 1rem auto', borderTopColor: 'var(--gold)' }}></div>
-            <p>{isAm ? 'በመጫን ላይ...' : 'Loading projects...'}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', gap: '20px', color: 'var(--text-muted)' }}>
+            <RingLoader color="#C5A044" size={50} />
+            <p style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, color: 'var(--navy)' }}>
+              {isAm ? 'በመጫን ላይ...' : 'Loading projects...'}
+            </p>
           </div>
         ) : (
           <div className="projects-grid">

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BeatLoader } from 'react-spinners';
 import Reveal from './Reveal';
 import { DiamondOrnament } from './Icons';
 import { useLanguage } from '../context/LanguageContext';
@@ -261,7 +262,7 @@ export default function Memorial({ services = [] }) {
               <button type="submit" className="btn-contact-send" disabled={loading} style={{ 
                 backgroundColor: 'var(--navy)', color: 'white', border: 'none', padding: '1rem 2.5rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem'
               }}>
-                {loading && <div className="spinner" style={{ width: '16px', height: '16px', borderTopColor: 'white' }}></div>}
+                {loading && <BeatLoader size={8} color="#ffffff" style={{ display: 'inline-block', verticalAlign: 'middle' }} />}
                 <span>
                   {form.paymentMethod === 'chapa'
                     ? (isAm ? 'ክፍያ ቀጥል' : 'Proceed to Payment')
