@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TinyCross, DiamondOrnament } from './Icons';
 import { useContent } from '../context/ContentContext';
+import ScrollIndicator from './ScrollIndicator';
 
 // Returns the active screen tier: 'large' (> 1180px), 'phone' (<= 752px),
 // or 'tablet' (in between). Large and phone use looping videos; tablet uses
@@ -91,6 +92,10 @@ export default function Hero({ lang, videoSrc }) {
             <span className="divider-line"></span>
           </div>
         </div>
+      </div>
+
+      <div className="hero-scroll-indicator-wrapper animate-fade-in delay-5">
+        <ScrollIndicator />
       </div>
 
       <div className="hero-bottom-shape hero-shape-entrance">

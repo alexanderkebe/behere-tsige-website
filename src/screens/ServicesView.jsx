@@ -8,6 +8,7 @@ import ProjectDejeselam from '@/components/ProjectDejeselam';
 import SacramentsHub from '@/components/SacramentsHub';
 import ChurchSchool from '@/components/ChurchSchool';
 import Reveal from '@/components/Reveal';
+import ScrollIndicator from '@/components/ScrollIndicator';
 import {
   WorshipIcon,
   FellowshipIcon,
@@ -139,6 +140,9 @@ export default function ServicesView({
               <DiamondOrnament />
             </div>
           </Reveal>
+          <div className="services-hero-scroll-wrapper">
+            <ScrollIndicator />
+          </div>
         </section>
 
         <section className="services-overview-grid-section">
