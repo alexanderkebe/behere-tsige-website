@@ -56,45 +56,53 @@ export default function SacramentsHub({ settings, services }) {
 
   const isAm = lang === 'am';
 
-  const title = isAm ? 'ምሥጢራተ ቤተ ክርስቲያን' : 'Holy Sacraments';
+  const title = isAm ? 'ቅዱሳት ምስጢራት' : 'Holy Sacraments';
   const subtitle = isAm 
-    ? 'በደብራችን የሚሰጡ የቤተ ክርስቲያን ምስጢራት እና መንፈሳዊ አገልግሎቶች' 
+    ? 'በአጥቢያ ቤተክርስቲያናችን የሚሰጡ ቅዱሳት ምስጢራትና መንፈሳዊ አገልግሎቶች' 
     : 'Sacramental and spiritual services offered at our parish';
 
   const sacraments = [
     {
       id: 'baptism',
       titleEn: 'Baptism',
-      titleAm: 'ጥምቀት',
-      descEn: 'Holy Sacrament of regeneration, marking entry into the Christian life.',
-      descAm: 'ወደ ክርስቲያናዊ ሕይወት መግቢያ የሆነው እና አዲስ ፍጥረት የሚያደርገው ቅዱስ ምስጢር።',
+      titleAm: 'ምስጢረ ጥምቀት',
+      descEn: 'Sacrament of regeneration, ranking vastly in the Christian life',
+      descAm: 'ዳግም ከውኃና ከመንፈስ ቅዱስ የምንወለድበት፣ በክርስትና ሕይወታችን ውስጥ የመጀመሪያውና መሠረታዊው ቅዱስ ምስጢር።',
+      linkEn: 'LEARN MORE & REQUEST',
+      linkAm: 'በዝርዝር ይረዱ እና አገልግሎቱን ይጠይቁ',
       icon: BaptismIcon,
       component: <Baptism />
     },
     {
       id: 'catechism',
       titleEn: 'Catechism',
-      titleAm: 'ትምህርተ ሃይማኖት',
-      descEn: 'Foundational programs and Bible studies designed for spiritual growth.',
-      descAm: 'የእምነት መሠረቶችን እና ክርስቲያናዊ ህይወትን በጥልቀት የሚማሩበት የስልጠና ክፍል።',
+      titleAm: 'መሠረታዊ የሃይማኖት ትምህርት / ትምህርተ ክርስቶስ',
+      descEn: 'Foundational programs and Bible studies designed for spiritual growth',
+      descAm: 'ለምዕመናን መንፈሳዊ ዕድገትና ጥንካሬ ተብለው የተዘጋጁ መሠረታዊ የሃይማኖት መርሃ ግብሮችና የመጽሐፍ ቅዱስ ጥናቶች።',
+      linkEn: 'LEARN MORE & REQUEST',
+      linkAm: 'በዝርዝር ይረዱ እና አገልግሎቱን ይጠይቁ',
       icon: CatechismIcon,
       component: <Catechism />
     },
     {
       id: 'penance',
       titleEn: 'Penance & Confession',
-      titleAm: 'ንስሐ',
-      descEn: 'Spiritual healing and reconciliation with God under a Penance Father.',
-      descAm: 'ኃጢአትን ለካህን በመናዘዝ ሥርየት እና መንፈሳዊ ምክር የሚቀበሉበት ምስጢር።',
+      titleAm: 'ምስጢረ ንስሐና ኑዛዜ',
+      descEn: 'Spiritual healing and reconciliation with God under a Penance Father',
+      descAm: 'በንስሐ አባት መሪነት የሚገኝ መንፈሳዊ ፈውስና ከእግዚአብሔር ጋር የመታረቂያ መንገድ።',
+      linkEn: 'LEARN MORE & REQUEST',
+      linkAm: 'በዝርዝር ይውረዱ እና አገልግሎቱን ይጠይቁ',
       icon: PenanceIcon,
       component: <Penance settings={settings} />
     },
     {
       id: 'memorial',
       titleEn: 'Memorial Services',
-      titleAm: 'ፍትሐት',
-      descEn: 'Fithat prayers and support for families commemorating departed loved ones.',
-      descAm: 'በሞት ከተለዩ ወገኖች ነፍስ ጋር የሚደረግ የፍትሐት ጸሎት እና የመታሰቢያ ሥርዓት።',
+      titleAm: 'ጸሎተ ፍትሐትና መታሰቢያ',
+      descEn: 'Funeral prayers and support for families commemorating departed loved ones.',
+      descAm: 'ያረፉ ወገኖቻቸውን በጸሎት ለሚያስቡ ቤተሰቦች የሚደረግ የፍትሐት ጸሎትና መንፈሳዊ ድጋፍ።',
+      linkEn: 'LEARN MORE & REQUEST',
+      linkAm: 'በዝርዝር ይውረዱ እና አገልግሎቱን ይጠይቁ',
       icon: MemorialIcon,
       component: <Memorial services={services} />
     }
@@ -109,7 +117,7 @@ export default function SacramentsHub({ settings, services }) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span>{isAm ? 'ወደ ምስጢራት ተመለስ' : 'Back to Sacraments'}</span>
+            <span>{isAm ? 'ወደ ቅዱሳት ምስጢራት ይመለሱ' : 'Back to Sacraments'}</span>
           </button>
         </Reveal>
         <div className="sacrament-component-wrapper">
@@ -125,14 +133,28 @@ export default function SacramentsHub({ settings, services }) {
         <div className="section-ornament">
           <DiamondOrnament />
         </div>
+        <span className="services-section-tag" style={{
+          display: 'block',
+          fontFamily: 'var(--font-ui)',
+          fontSize: '0.8rem',
+          letterSpacing: '0.2em',
+          color: 'var(--gold-light)',
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: '0.5rem',
+          textTransform: 'uppercase'
+        }}>
+          {isAm ? 'የብሔረ ጽጌ መካነ ሰላም ቅድስት ማርያም ቤተክርስቲያን' : 'BIHERE TSIGE MEKANE SELAM ST. MARY CHURCH'}
+        </span>
         <h2 className="services-title">{title}</h2>
         <p className="services-subtitle-text" style={{ 
           color: 'var(--text-muted)', 
           textAlign: 'center', 
-          maxWidth: '600px', 
+          maxWidth: '650px', 
           margin: '10px auto 0 auto',
           fontSize: '1.1rem',
-          fontFamily: 'var(--font-body)'
+          fontFamily: 'var(--font-body)',
+          lineHeight: '1.6'
         }}>
           {subtitle}
         </p>
@@ -155,7 +177,7 @@ export default function SacramentsHub({ settings, services }) {
                     {isAm ? s.descAm : s.descEn}
                   </p>
                   <span className="sacrament-card-link">
-                    {isAm ? 'ተጨማሪ ያንብቡ' : 'Learn More & Request'} &rarr;
+                    {isAm ? s.linkAm : s.linkEn} &rarr;
                   </span>
                 </button>
               </Reveal>
