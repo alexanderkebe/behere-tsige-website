@@ -17,22 +17,20 @@ const defaultContent = {
   },
   about: {
     en: {
-      tag: 'Our Heritage',
-      heading: 'About Us & History',
+      tag: 'Our Journey',
+      heading: 'Our Journey',
       body1:
-        'Bihere Tsige Mekane Selam Kidist Dengel Mariam Church stands as a beacon of Ethiopian Orthodox Tewahedo faith. Established over five decades ago, our parish has been a spiritual home for thousands of faithful believers.',
-      body2:
-        'The name "Bihere Tsige" (Land of Grace) reflects our mission to be a place where God\'s grace flows abundantly. Our church preserves the ancient traditions of the Ethiopian Orthodox Tewahedo Church while nurturing the spiritual growth of our community.',
+        'Nestled within the Addis Ababa Diocese near the beautiful Behire Tsegie Park sits Behire Tsegie Mekane Selam Kidist Mariam Church. While it stands today as a peaceful sanctuary in Ethiopia, the church\'s sacred foundation was forged through a miraculous journey of migration, survival, and profound healing across borders.',
+      body2: '',
       learnMore: 'Learn More',
       galleryTitle: 'Parish Life Gallery',
     },
     am: {
-      tag: 'ታሪካችን',
-      heading: 'ስለ እኛ እና ታሪካችን',
+      tag: 'ከጉዞዋችን',
+      heading: 'ከጉዞዋችን',
       body1:
-        'ብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተ ክርስቲያን የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ እምነት ምሰሶ ሆና ትቆማለች። ከሃምሳ ዓመት በፊት የተቋቋመ ደብራችን ለሺዎች ምዕመናን መንፈሳዊ ቤት ሆኖ አገልግሏል።',
-      body2:
-        '"ብሔረ ጽጌ" (የጸጋ ምድር) የሚለው ስም የእግዚአብሔር ጸጋ በብዛት የሚፈስበት ስፍራ ለመሆን ያለንን ተልዕኮ ያንጸባርቃል። ቤተ ክርስቲያናችን የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ጥንታዊ ወጎችን እየጠበቀ ማኅበረሰባችንን መንፈሳዊ እድገት ያሳድጋል።',
+        'ዛሬ በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ምእመናን ዘንድ ታዋቂ የሆነችው እና በአዲስ አበባ በብሔረ ጽጌ ፓርክ አጠገብ የምትገኘው የብሔረ ጽጌ መካነ ሰላም ቅድስት ማርያም ቤተክርስቲያን ታሪክ፤ ከስደት፣ እና ከታላቅ ተአምርት ጋር የተያያዘ ነው። ዛሬ በግርማ ሞገስ ብትቆምም፣ መንፈሳዊ መሰረቷ ግን ድንበር የተሻገረ የሕዝብ መከራ እና መለኮታዊ ጥበቃ ውጤት ነው።',
+      body2: '',
       learnMore: 'ተጨማሪ ይወቁ',
       galleryTitle: 'የመካነ ሰላም ምስሎች',
     },
