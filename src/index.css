@@ -105,9 +105,7 @@ button {
   right: 0;
   z-index: 1000;
   transition: background var(--transition-base), box-shadow var(--transition-base);
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: transparent;
 }
 
 .header-entrance {
@@ -130,9 +128,8 @@ button {
 }
 
 .header.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 2px 20px rgba(15, 27, 61, 0.08);
+  background: transparent;
+  box-shadow: none;
 }
 
 .nav {
@@ -155,6 +152,7 @@ button {
   height: 40px;
   object-fit: contain;
   flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 4px rgba(255, 255, 255, 0.95));
 }
 
 .logo-text {
@@ -178,12 +176,13 @@ button {
 .nav-link {
   font-family: var(--font-ui);
   font-size: 0.78rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.12em;
   color: var(--navy);
   position: relative;
   padding: 4px 0;
   transition: color var(--transition-base);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 4px rgba(255, 255, 255, 0.95);
 }
 
 .nav-link::after {
@@ -215,6 +214,8 @@ button {
   border-radius: 2px;
   letter-spacing: 0.14em;
   transition: all var(--transition-base);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.45);
 }
 .nav-link-donate::after {
   display: none; /* no underline sweep — border does the job */
@@ -272,6 +273,7 @@ button {
   background: var(--navy);
   transition: all var(--transition-base);
   transform-origin: center;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.95), 0 0 1px rgba(255, 255, 255, 0.95);
 }
 
 .mobile-menu-toggle.is-open .hamburger-line:nth-child(1) {
@@ -3732,14 +3734,16 @@ a.contact-info-value:hover {
   font-weight: 600;
   letter-spacing: 0.03em;
   color: var(--navy);
-  border: 1.5px solid rgba(15, 27, 61, 0.12);
+  border: 1.5px solid rgba(15, 27, 61, 0.22);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: all var(--transition-base);
   cursor: pointer;
   z-index: 1001;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.95);
 }
 
 .btn-lang:hover,
@@ -3845,8 +3849,9 @@ a.contact-info-value:hover {
 
 /* Scrolled state adjustments for language switcher */
 .header.scrolled .btn-lang {
-  background: rgba(15, 27, 61, 0.03);
-  border-color: rgba(15, 27, 61, 0.1);
+  background: rgba(255, 255, 255, 0.45);
+  border-color: rgba(15, 27, 61, 0.22);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95);
 }
 
 .header.scrolled .btn-lang:hover {
