@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { RingLoader } from 'react-spinners';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import PageHero from './PageHero';
 import Reveal from './Reveal';
 import { DiamondOrnament } from './Icons';
@@ -181,8 +181,14 @@ export default function Donate({ lang }) {
         </h2>
 
         {loading ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', gap: '20px', color: 'var(--text-muted)' }}>
-            <RingLoader color="#C5A044" size={50} />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', gap: '15px', color: 'var(--text-muted)' }}>
+            <div style={{ width: '110px', height: '110px' }}>
+              <DotLottieReact
+                src="https://lottie.host/4cb383b7-968d-4393-a253-53f10e722ec9/jrE6AvzmWd.lottie"
+                loop
+                autoplay
+              />
+            </div>
             <p style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, color: 'var(--navy)' }}>
               {isAm ? 'በመጫን ላይ...' : 'Loading projects...'}
             </p>
