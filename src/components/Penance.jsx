@@ -6,11 +6,15 @@ import { useLanguage } from '../context/LanguageContext';
 const PENANCE_STEPS = [
   {
     title: 'Find a Penance Father',
+    titleAm: 'የንስሐ አባት ይያዙ',
     desc: 'In the Ethiopian Orthodox Tewahedo Church, the "Penance Father" is often referred to as the priest or father-confessor. This priest plays a crucial role in the sacrament of Penance, where he listens to the penitent\'s confession, offers spiritual guidance, and grants absolution in the name of the Holy Trinity. If you don\'t have a penance father, the church highly recommends to explore and get your own penance father from your parish.',
+    descAm: 'በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን "የንስሐ አባት" ብዙ ጊዜ ካህን ወይም የነፍስ-አባት ተብሎ ይጠራል። ይህ ካህን የንስሐን ኑዛዜ በሚያዳምጥበት፣ መንፈሳዊ መመሪያ ለንስሃ ልጁ በሚሰጥበት እና በቅድስት ሥላሴ ስም የጸሎት ፍጻሜ በሚሰጥበት የንስሐ ቁርባን ውስጥ ጉልህ ሚና ይጫወታል። የንስሐ አባት ከሌልዎት፣ ዛሬውኑ እንዲኖርዎት ቤተ ክርስቲያኒቱ አጥብቃ ትመክራለች እናም የአጥቢያው አባል ወይም ተገልጋይ ምዕመን ከሆኑ የራስዎን የንስሐ አባት ከካቴድራሉ ይያዙ።',
   },
   {
     title: 'Confess Sins',
+    titleAm: 'ሃጢአትን ይናዘዙ',
     desc: 'The penitent confesses their sins to the priest, acknowledging their wrongdoings and expressing genuine remorse.',
+    descAm: 'ንስሐ የገቡ ሰዎች ኃጢአታቸውን ለካህኑ ይናዘዛሉ፣ ስህተታቸውን አምነው እውነተኛ ጸጸታቸውን ይገልጻሉ። «መንግሥተ ሰማያት ቀርባለችና ንስሐ ግቡ» የማቴዎስ ወንጌል ምዕራፍ ፫፥፩',
     links: [
       { label: '📱 Use this app as a guide (for first-timers)', url: 'https://www.confessionplanner.copticcollection.com/' },
       { label: '📄 Download the Confession Guide PDF', url: '/assets/confession pdf.pdf' },
@@ -19,19 +23,27 @@ const PENANCE_STEPS = [
   },
   {
     title: 'Get a Prayer of Repentance',
-    desc: 'The priest leads the penitent in a prayer asking for God\'s forgiveness. This prayer often includes asking for the Holy Spirit to guide and strengthen the penitent in their journey of repentance.'
+    titleAm: 'ጸሎተ ንስሃ ይቀበሉ',
+    desc: 'The priest leads the penitent in a prayer asking for God\'s forgiveness. This prayer often includes asking for the Holy Spirit to guide and strengthen the penitent in their journey of repentance.',
+    descAm: 'የንስሃ አባትዎ የእግዚአብሔርን ምህረት እና ይቅርታ በመጠየቅ በጸሎተ ንስሃ ይመራል። ይህ ጸሎት ብዙውን ጊዜ በቅዳሴ መካከል ሲጸለይ ሰምተዋል። በጸሎቱ ንስሃ የገቡ/የሚገቡ ሰዎች መንፈስ ቅዱስ እንዲመራቸው እና ሃጢአታቸውን ይቅር እንዲላቸው ካህኑ በተደጋጋሚ ያሳስባል።'
   },
   {
     title: 'Get Absolution',
-    desc: 'The priest pronounces absolution, declaring that the penitent\'s sins are forgiven in the name of the Holy Trinity.'
+    titleAm: 'ኑዛዜ ይቀበሉ',
+    desc: 'The priest pronounces absolution, declaring that the penitent\'s sins are forgiven in the name of the Holy Trinity.',
+    descAm: 'በንስሃ ህይወት ለቀረቡ ሰዎች ካህኑ የኃጢያታቸው ማስተስረያ በኢየሱስ ክርስቶስ ስም እንደተሰረየላቸው በመግለጽ ይናገራል።'
   },
   {
     title: 'Receive a Penitential Acts',
-    desc: 'The penitent may be assigned certain acts of penance, such as fasting, prayer, or almsgiving, to demonstrate their commitment to turning away from sin and living a more righteous life.'
+    titleAm: 'ቀኖና ይቀበሉ',
+    desc: 'The penitent may be assigned certain acts of penance, such as fasting, prayer, or almsgiving, to demonstrate their commitment to turning away from sin and living a more righteous life.',
+    descAm: 'ንስሐ የገቡ ሰዎች ከኃጢአት ለመራቅ እና ዳግም ላለመበደል የበለጠ በጽድቅ ሕይወት ለመኖር ያላቸውን ቁርጠኝነት ለማሳየት እንደ ቤተ ክርስቲያኒቱ ስርዓት መሠረት ካህኑ ቀኖና ይሰጣል። ከነዚህም መካከል ጾም፣ ጸሎት ወይም እንደ ምጽዋት ያሉ አንዳንድ የንስሐ ሥራዎችን ንስሃ ለገባው ሰው ካህኑ ሊሰጥ ይችላል።'
   },
   {
     title: 'Get Blessed',
-    desc: 'The priest concludes the sacrament with a blessing, encouraging the penitent to continue their spiritual journey with faith and devotion.'
+    titleAm: 'ቡራኬ ይቀበሉ',
+    desc: 'The priest concludes the sacrament with a blessing, encouraging the penitent to continue their spiritual journey with faith and devotion.',
+    descAm: 'ንስሃ አባትዎ በንስሃ ህይወት በመመለስዎ የተሰማውን ደስታ ይገልጻል የንስሃ ሂደቱን በቡራኬ ያጠናቅቃል። በቀጣይም በእምነት እና በታማኝነት መንፈሳዊ ጉዞዎን እንዲቀጥሉ ያበረታታል።'
   }
 ];
 
@@ -77,7 +89,7 @@ export default function Penance({ settings = {} }) {
         {/* Process Steps */}
         <div style={{ position: 'relative' }}>
           <h3 style={{ textAlign: 'center', color: 'var(--navy)', fontFamily: 'var(--font-heading)', fontSize: '1.8rem', marginBottom: '2.5rem' }}>
-            {isAm ? 'የንስሐ ሂደት (Penance Process)' : 'Penance Process'}
+            {isAm ? 'የንስሃ ሂደቶች' : 'Penance Process'}
           </h3>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -104,8 +116,8 @@ export default function Penance({ settings = {} }) {
                   {index + 1}
                 </div>
                 <div>
-                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.25rem', color: 'var(--navy)', fontFamily: 'var(--font-heading)' }}>{step.title}</h4>
-                  <p style={{ margin: '0', lineHeight: '1.7', color: 'var(--text-dark)', opacity: 0.85 }}>{step.desc}</p>
+                  <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1.25rem', color: 'var(--navy)', fontFamily: 'var(--font-heading)' }}>{isAm ? step.titleAm : step.title}</h4>
+                  <p style={{ margin: '0', lineHeight: '1.7', color: 'var(--text-dark)', opacity: 0.85 }}>{isAm ? step.descAm : step.desc}</p>
                   
                   {step.links && (
                     <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
