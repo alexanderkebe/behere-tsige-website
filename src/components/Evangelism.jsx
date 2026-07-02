@@ -41,7 +41,7 @@ export default function Evangelism({ data }) {
         
         <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--text-dark)', opacity: 0.85 }}>
           {lang === 'am'
-            ? 'በእምነት ጉዞዎ ላይ ጀማሪም ሆኑ የእግዚአብሔርን ቃል በጥልቀት ለመረዳት የሚሹ፣ ከእኛ ጋር እንዲቀላቀሉ በደስታ ተጋብዘዋል። መጥተው ወንጌልን ይማሩ፣ ከቤተ ክርስቲያን ጋር ያምልኩ፣ እንዲሁም በጌታችን ጸጋ እና እውቀት ያድጉ።'
+            ? 'በእምነት ጉዞዎ ላይ ጀማሪም ሆኑ የእግዚአብሔርን ቃል በጥልቀት ለመረዳት የሚሹ፣ ከእኛ ጋር እንዲቀላቀሉ በደስታ ተጋብዘዋል። መጥተው ወንጌልን ይማሩ፣ ከቤተ ክርስቲያን ጋር ያምልኩ፣ እንዲሁም በጌታችን ጸጋ እና እውቀት ይደጉ።'
             : 'Whether you are beginning your journey of faith or seeking to deepen your understanding of God\'s Word, you are warmly invited to join us. Come, learn the Gospel, worship with the Church, and grow in the grace and knowledge of our Lord.'}
         </p>
       </Reveal>
