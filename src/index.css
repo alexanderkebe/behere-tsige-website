@@ -137,41 +137,41 @@ button {
 }
 
 /* Transparent Header Styling (before scroll is activated) */
-.header:not(.scrolled) .nav-link {
+.header.transparent-white-theme .nav-link {
   color: #ffffff;
 }
 
-.header:not(.scrolled) .nav-link:hover,
-.header:not(.scrolled) .nav-link.active {
+.header.transparent-white-theme .nav-link:hover,
+.header.transparent-white-theme .nav-link.active {
   color: var(--gold);
 }
 
-.header:not(.scrolled) .nav-link-donate {
+.header.transparent-white-theme .nav-link-donate {
   color: #ffffff;
   border-color: #ffffff;
   background: transparent;
 }
 
-.header:not(.scrolled) .nav-link-donate:hover,
-.header:not(.scrolled) .nav-link-donate.active {
+.header.transparent-white-theme .nav-link-donate:hover,
+.header.transparent-white-theme .nav-link-donate.active {
   background: #ffffff;
   color: var(--navy) !important;
   border-color: #ffffff;
 }
 
-.header:not(.scrolled) .btn-lang {
+.header.transparent-white-theme .btn-lang {
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.1);
 }
 
-.header:not(.scrolled) .btn-lang:hover {
+.header.transparent-white-theme .btn-lang:hover {
   background: #ffffff;
   color: var(--navy);
   border-color: #ffffff;
 }
 
-.header:not(.scrolled) .hamburger-line {
+.header.transparent-white-theme .hamburger-line {
   background: #ffffff;
 }
 

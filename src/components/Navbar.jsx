@@ -96,14 +96,15 @@ export default function Navbar() {
 
   const handleNavClick = () => setMobileOpen(false);
 
-  const showScrolled = scrolled || !hasHero || mobileOpen;
+  const isHeaderScrolled = scrolled || mobileOpen;
+  const showWhiteElements = !scrolled && !mobileOpen && hasHero;
 
   return (
     <>
-      <header className={`header header-entrance ${showScrolled ? 'scrolled' : ''}`} id="main-header">
+      <header className={`header header-entrance ${isHeaderScrolled ? 'scrolled' : ''} ${showWhiteElements ? 'transparent-white-theme' : ''}`} id="main-header">
         <nav className="nav" id="main-nav">
           <Link href="/" className="nav-logo nav-logo-entrance" id="nav-logo" onClick={handleNavClick}>
-            <img src={showScrolled ? "/assets/logo.png" : "/assets/logo-footer.png"} alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
+            <img src={showWhiteElements ? "/assets/logo-footer.png" : "/assets/logo.png"} alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
           </Link>
 
           <ul className="nav-links" id="nav-links">
