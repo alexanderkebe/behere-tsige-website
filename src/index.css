@@ -4804,38 +4804,34 @@ a.contact-info-value:hover {
   font-weight: 700;
 }
 
-.dejeselam-slot-dots {
-  display: flex;
-  gap: 3px;
-  margin-top: 4px;
+.dejeselam-day-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+  transition: width 0.3s ease;
 }
 
-.dejeselam-slot-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(15, 27, 61, 0.05);
-  border: 1px solid rgba(15, 27, 61, 0.1);
-}
-
-.dejeselam-slot-dot.filled {
-  background: var(--gold);
-  border-color: var(--gold);
-}
-
-.dejeselam-day-btn.fully-sponsored .dejeselam-slot-dot.filled {
-  background: var(--navy);
-  border-color: var(--navy);
-}
-
-.dejeselam-day-btn.selected .dejeselam-slot-dot {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-.dejeselam-day-btn.selected .dejeselam-slot-dot.filled {
+.dejeselam-day-btn.selected .dejeselam-day-progress-bar {
   background: var(--white) !important;
-  border-color: var(--white) !important;
+}
+
+.dejeselam-cost-badge {
+  background: rgba(197, 160, 68, 0.08);
+  border: 1px solid rgba(197, 160, 68, 0.2);
+  color: var(--gold-dark);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  font-family: monospace, var(--font-heading);
 }
 
 .dejeselam-details-panel {
