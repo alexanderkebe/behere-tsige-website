@@ -45,6 +45,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [hasHero, setHasHero] = useState(true);
   const dropdownRef = useRef(null);
 
   const navItems = (lang === 'am' || lang === 'gez') ? NAV_ITEMS_AM : NAV_ITEMS_EN;
@@ -56,6 +57,21 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const checkHero = () => {
+      const isDashboardActive = document.body.classList.contains('services-dashboard-active');
+      const isHeroPath = pathname === '/' || pathname === '/events' || pathname === '/contact' || (pathname === '/services' && !isDashboardActive);
+      setHasHero(isHeroPath);
+    };
+
+    checkHero();
+
+    const observer = new MutationObserver(checkHero);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -80,12 +96,14 @@ export default function Navbar() {
 
   const handleNavClick = () => setMobileOpen(false);
 
+  const showScrolled = scrolled || !hasHero || mobileOpen;
+
   return (
     <>
-      <header className={`header header-entrance ${scrolled ? 'scrolled' : ''}`} id="main-header">
+      <header className={`header header-entrance ${showScrolled ? 'scrolled' : ''}`} id="main-header">
         <nav className="nav" id="main-nav">
           <Link href="/" className="nav-logo nav-logo-entrance" id="nav-logo" onClick={handleNavClick}>
-            <img src="/assets/logo.png" alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
+            <img src={showScrolled ? "/assets/logo.png" : "/assets/logo-footer.png"} alt="Bihere Tsige Mekane Selam Kidist Dengel Mariam Church logo" className="logo-img" />
           </Link>
 
           <ul className="nav-links" id="nav-links">
