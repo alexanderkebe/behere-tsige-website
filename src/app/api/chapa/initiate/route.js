@@ -64,7 +64,8 @@ export async function POST(request) {
         callback_url: `${origin}/api/chapa/webhook`,
         return_url: `${origin}/donate?status=success&tx_ref=${txRef}`,
         customization: {
-          title: 'Parish Contribution',
+          // Chapa limits the title to 16 characters.
+          title: 'Contribution',
           description: projectId ? 'Donation to specific sanctuary project' : 'General sanctuary support'
         }
       };
@@ -112,7 +113,8 @@ export async function POST(request) {
         callback_url: `${origin}/api/chapa/webhook`,
         return_url: `${origin}/services?status=success&tx_ref=${txRef}`,
         customization: {
-          title: 'Memorial Service Request',
+          // Chapa limits the title to 16 characters.
+          title: 'Memorial Prayer',
           description: `Memorial prayer for departed soul: ${departedName}`
         }
       };
