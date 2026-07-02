@@ -1,7 +1,7 @@
 .page-hero {
   position: relative;
-  height: 40vh;
-  min-height: 320px;
+  height: 100vh;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,8 +60,8 @@
 
 @media (max-width: 768px) {
   .page-hero {
-    height: 30vh;
-    min-height: 250px;
+    height: 100vh;
+    min-height: 400px;
     padding-top: 75px; /* Adjust for mobile fixed navbar */
   }
 
@@ -94,15 +94,13 @@
   object-position: center top; /* Crop from the bottom, not the top */
 }
 
-/* When video is present, make the hero taller */
+/* When video is present — same height, already 100vh */
 .page-hero--has-video {
-  height: 55vh;
-  min-height: 400px;
+  /* inherits 100vh from .page-hero */
 }
 
 @media (max-width: 768px) {
   .page-hero--has-video {
-    height: 40vh;
-    min-height: 300px;
+    /* inherits 100vh from .page-hero */
   }
 }
