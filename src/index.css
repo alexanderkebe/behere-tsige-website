@@ -4654,59 +4654,57 @@ a.contact-info-value:hover {
   border-color: rgba(15, 27, 61, 0.12);
 }
 
-.dejeselam-months-scroll-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 2rem;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 1rem 0.25rem;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.dejeselam-months-scroll-container::-webkit-scrollbar {
-  display: none;
-}
-
-.dejeselam-month-card {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
+.dejeselam-single-month-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
   background: var(--white);
   border: 1px solid rgba(197, 160, 68, 0.15);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(9, 16, 38, 0.02);
-}
-
-@media (min-width: 992px) {
-  .dejeselam-month-card {
-    flex: 0 0 calc(33.333% - 1.333rem);
-    scroll-snap-align: none;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .dejeselam-month-card {
-    flex: 0 0 calc(50% - 1rem);
-  }
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 12px 36px rgba(9, 16, 38, 0.03);
 }
 
 .dejeselam-month-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(15, 27, 61, 0.06);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(15, 27, 61, 0.08);
 }
 
 .dejeselam-month-title {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--navy);
-  font-weight: 700;
+  font-weight: 750;
   letter-spacing: 0.02em;
+}
+
+.dejeselam-nav-btn {
+  background: transparent;
+  border: 1.5px solid rgba(197, 160, 68, 0.25);
+  color: var(--gold-dark);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.dejeselam-nav-btn:hover:not(:disabled) {
+  background: var(--gold);
+  color: var(--white);
+  border-color: var(--gold);
+  transform: scale(1.05);
+}
+
+.dejeselam-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
 }
 
 .dejeselam-weekdays-grid {
@@ -4773,6 +4771,32 @@ a.contact-info-value:hover {
   background: var(--navy) !important;
   border-color: var(--navy) !important;
   color: var(--white) !important;
+}
+
+.dejeselam-day-btn.is-feast {
+  border: 1.5px dashed rgba(197, 160, 68, 0.6);
+  background: rgba(197, 160, 68, 0.02);
+}
+
+.dejeselam-day-btn.is-feast:hover:not(.fully-sponsored) {
+  border-color: var(--gold);
+  background: rgba(197, 160, 68, 0.08);
+}
+
+.dejeselam-feast-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+}
+
+.dejeselam-day-btn.selected .dejeselam-feast-indicator {
+  background: var(--white);
+  box-shadow: 0 0 6px var(--white);
 }
 
 .dejeselam-day-number {

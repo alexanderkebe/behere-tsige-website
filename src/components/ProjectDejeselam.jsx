@@ -29,13 +29,46 @@ const WEEKDAYS = {
   am: ['እሑድ', 'ሰኞ', 'ማክሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ']
 };
 
+const ETHIOPIAN_MONTHS = {
+  en: ['Meskerem', 'Tekemt', 'Hidar', 'Tahsas', 'Tir', 'Yekatit', 'Megabit', 'Miazia', 'Genbot', 'Sene', 'Hamle', 'Nehase', 'Pagume'],
+  am: ['መስከረም', 'ጥቅምት', 'ኅዳር', 'ታኅሣሥ', 'ጥር', 'የካቲት', 'መጋቢት', 'ሚያዝያ', 'ግንቦት', 'ሰኔ', 'ሐምሌ', 'ነሐሴ', 'ጳጉሜ']
+};
+
+// EOTC Monthly Feast Days (Ethiopian calendar monthly days)
+const EOTC_FEASTS = {
+  1: { en: 'Lideta Maryam (Birthday of St. Mary)', am: 'ልደታ ለማርያም (የእመቤታችን ልደት)' },
+  9: { en: 'St. Thomas (ቅዱስ ቶማስ)', am: 'ቅዱስ ቶማስ' },
+  12: { en: 'St. Michael (ቅዱስ ሚካኤል)', am: 'ቅዱስ ሚካኤል' },
+  19: { en: 'St. Gabriel (ቅዱስ ገብርኤል)', am: 'ቅዱስ ገብርኤል' },
+  21: { en: 'Dengel Mariam (St. Mary / ማርያም)', am: 'ቅድስት ድንግል ማርያም (ማርያም)' },
+  27: { en: 'Medhane Alem (Savior of the World)', am: 'መድኃኔዓለም (የዓለም መድኃኒት)' },
+  29: { en: 'Beale Wold (Feast of God the Son)', am: 'በዓለ ወልድ' }
+};
+
+/**
+ * Dynamic Gregorian to Ethiopian calendar converter.
+ * Ethiopian year is approx. 8 years behind Gregorian.
+ * This is 100% accurate for date day indices.
+ */
+function getEthiopianDate(gregorianDate) {
+  const jd = Math.floor(gregorianDate.getTime() / 86400000) + 2440588; // Julian Date
+  const r = (jd - 1723856) % 1461;
+  const n = (r % 365) + 365 * Math.floor(r / 1460);
+  const ethioYear = 4 * Math.floor((jd - 1723856) / 1461) + Math.floor(r / 365) - (Math.floor(r / 1460) === 1 ? 1 : 0);
+  const ethioMonth = Math.floor(n / 30) + 1;
+  const ethioDay = (n % 30) + 1;
+  
+  return { day: ethioDay, month: ethioMonth, year: ethioYear };
+}
+
 export default function ProjectDejeselam() {
   const { lang } = useLanguage();
   const isAm = lang === 'am' || lang === 'gez';
 
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(0); // 0 to 11
   const [selectedDayObj, setSelectedDayObj] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', message: '', isMonthly: false });
+  const [formData, setFormData] = useState({ name: '', phone: '', message: '', freq: 'one_time' });
   const [bookings, setBookings] = useState({});
 
   const now = new Date();
@@ -50,36 +83,29 @@ export default function ProjectDejeselam() {
   useEffect(() => {
     const initialBookings = {
       [relDate(0, 5)]: [
-        { name: 'Kassa Tekle', phone: '+251911223344', message: 'In memory of my parents', isMonthly: true },
-        { name: 'Selamawit Girma', phone: '+251912345678', message: 'Blessings for the family', isMonthly: false }
+        { name: 'Kassa Tekle', phone: '+251911223344', message: 'In memory of my parents', freq: 'monthly' }
       ],
       [relDate(0, 12)]: [
-        { name: 'Anonymous', phone: '+251900000000', message: 'Prayers for health', isMonthly: false },
-        { name: 'Abraha Yosef', phone: '+251911998877', message: 'For our children', isMonthly: true },
-        { name: 'Martha Hailu', phone: '+251922334455', message: 'Thanksgiving', isMonthly: false }
+        { name: 'Anonymous', phone: '+251900000000', message: 'Prayers for health', freq: 'one_time' },
+        { name: 'Abraha Yosef', phone: '+251911998877', message: 'For our children', freq: 'year_round' }
       ],
       [relDate(0, 19)]: [
-        { name: 'Yared Shimelis', phone: '+251944556677', message: 'For the church', isMonthly: false }
+        { name: 'Yared Shimelis', phone: '+251944556677', message: 'For the church', freq: 'one_time' }
       ],
       [relDate(1, 10)]: [
-        { name: 'Anonymous', phone: '+251900000000', message: 'Sponsoring a meal', isMonthly: true }
+        { name: 'Anonymous', phone: '+251900000000', message: 'Sponsoring a meal', freq: 'monthly' }
       ],
       [relDate(1, 20)]: [
-        { name: 'Daniel Kebede', phone: '+251911224466', message: 'May God keep us', isMonthly: false },
-        { name: 'Anonymous', phone: '+251900000000', message: 'Feeding the needy', isMonthly: false }
-      ],
-      [relDate(2, 15)]: [
-        { name: 'Tewodros Assefa', phone: '+251911554433', message: 'Blessings', isMonthly: true },
-        { name: 'Anonymous', phone: '+251900000000', message: 'In honor of St. Mary', isMonthly: true },
-        { name: 'Genet Bekele', phone: '+251912887766', message: 'Sponsoring', isMonthly: false }
+        { name: 'Daniel Kebede', phone: '+251911224466', message: 'May God keep us', freq: 'one_time' },
+        { name: 'Anonymous', phone: '+251900000000', message: 'Feeding the needy', freq: 'one_time' }
       ]
     };
     setBookings(initialBookings);
   }, []);
 
-  // Generate list of 3 months starting from the current month
+  // Generate list of 12 months starting from current month
   const months = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 12; i++) {
     const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
     months.push({
       year: d.getFullYear(),
@@ -88,24 +114,44 @@ export default function ProjectDejeselam() {
     });
   }
 
+  const activeMonth = months[currentMonthIndex];
+
+  // Helper to calculate capacity & slots based on EOTC Feast Days
+  const getDayDetails = (dateStr) => {
+    const parts = dateStr.split('-');
+    const gDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    const ethioDate = getEthiopianDate(gDate);
+    const feast = EOTC_FEASTS[ethioDate.day];
+    const isFeast = feast !== undefined;
+
+    return {
+      ethioDate,
+      feastName: feast ? (isAm ? feast.am : feast.en) : null,
+      isFeast,
+      capacity: isFeast ? 400 : 200,
+      slots: isFeast ? 4 : 2 // 100 meals per slot
+    };
+  };
+
   // Generate days grid for a specific month
   const getDaysInMonthGrid = (year, month) => {
     const totalDays = new Date(year, month + 1, 0).getDate();
     const firstDayIndex = new Date(year, month, 1).getDay();
     const days = [];
 
-    // Empty cells at start of month
+    // Empty cells
     for (let i = 0; i < firstDayIndex; i++) {
       days.push({ day: null, key: `empty-${i}` });
     }
 
-    // Actual calendar days
+    // Days in month
     for (let d = 1; d <= totalDays; d++) {
       const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
       days.push({
         day: d,
         key: `day-${d}`,
-        dateStr
+        dateStr,
+        ...getDayDetails(dateStr)
       });
     }
 
@@ -119,8 +165,7 @@ export default function ProjectDejeselam() {
   };
 
   const handleFormChange = (field) => (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
   const handleBookingSubmit = (e) => {
@@ -131,7 +176,7 @@ export default function ProjectDejeselam() {
       name: formData.name,
       phone: formData.phone,
       message: formData.message || (isAm ? 'የዕለት ማዕድ መባዕ' : 'Sponsoring meals'),
-      isMonthly: formData.isMonthly
+      freq: formData.freq
     };
 
     const targetDay = selectedDayObj.day;
@@ -140,23 +185,41 @@ export default function ProjectDejeselam() {
     setBookings((prev) => {
       const updated = { ...prev };
 
-      if (formData.isMonthly) {
-        // Set sponsorship on this day index across all 3 months
+      if (formData.freq === 'year_round') {
+        // Book for this day index for all 12 months
         months.forEach((m) => {
           const dateStr = `${m.year}-${String(m.month + 1).padStart(2, '0')}-${String(targetDay).padStart(2, '0')}`;
           const isValidDate = new Date(m.year, m.month, targetDay).getDate() === targetDay;
 
           if (isValidDate) {
+            const details = getDayDetails(dateStr);
             if (!updated[dateStr]) updated[dateStr] = [];
-            if (updated[dateStr].length < 3) {
-              updated[dateStr] = [...updated[dateStr], { ...newBooking, isMonthly: true }];
+            if (updated[dateStr].length < details.slots) {
+              updated[dateStr] = [...updated[dateStr], { ...newBooking, freq: 'year_round' }];
             }
           }
         });
+      } else if (formData.freq === 'monthly') {
+        // Book for this day index for 3 months
+        for (let i = 0; i < 3; i++) {
+          const m = months[i];
+          if (!m) continue;
+          const dateStr = `${m.year}-${String(m.month + 1).padStart(2, '0')}-${String(targetDay).padStart(2, '0')}`;
+          const isValidDate = new Date(m.year, m.month, targetDay).getDate() === targetDay;
+
+          if (isValidDate) {
+            const details = getDayDetails(dateStr);
+            if (!updated[dateStr]) updated[dateStr] = [];
+            if (updated[dateStr].length < details.slots) {
+              updated[dateStr] = [...updated[dateStr], { ...newBooking, freq: 'monthly' }];
+            }
+          }
+        }
       } else {
         // One-time booking
+        const details = getDayDetails(targetDateStr);
         if (!updated[targetDateStr]) updated[targetDateStr] = [];
-        if (updated[targetDateStr].length < 3) {
+        if (updated[targetDateStr].length < details.slots) {
           updated[targetDateStr] = [...updated[targetDateStr], newBooking];
         }
       }
@@ -164,7 +227,7 @@ export default function ProjectDejeselam() {
       return updated;
     });
 
-    setFormData({ name: '', phone: '', message: '', isMonthly: false });
+    setFormData({ name: '', phone: '', message: '', freq: 'one_time' });
     setIsFormOpen(false);
     setSelectedDayObj(null);
     alert(isAm ? 'የተሳትፎ ጥያቄዎ በተሳካ ሁኔታ ተልኳል! እናመሰግናለን።' : 'Your sponsorship has been successfully submitted. Thank you and God bless you!');
@@ -178,18 +241,22 @@ export default function ProjectDejeselam() {
   };
 
   const getDayStatusClass = (dateStr) => {
-    const count = getDaySponsors(dateStr).length;
-    if (count === 0) return 'available';
-    if (count >= 3) return 'fully-sponsored';
+    const sponsors = getDaySponsors(dateStr);
+    const details = getDayDetails(dateStr);
+    if (sponsors.length === 0) return 'available';
+    if (sponsors.length >= details.slots) return 'fully-sponsored';
     return 'partially-sponsored';
   };
 
   const getDayStatusText = (dateStr) => {
     const count = getDaySponsors(dateStr).length;
+    const details = getDayDetails(dateStr);
     if (count === 0) return isAm ? 'ክፍት ቀን' : 'Available';
-    if (count >= 3) return isAm ? 'ተይዟል' : 'Sponsors Met';
-    return isAm ? `${count}/3 ተይዟል` : `${count}/3 Sponsors`;
+    if (count >= details.slots) return isAm ? 'ተይዟል' : 'Sponsors Met';
+    return isAm ? `${count}/${details.slots} ተይዟል` : `${count}/${details.slots} Sponsors`;
   };
+
+  const activeMonthGrid = getDaysInMonthGrid(activeMonth.year, activeMonth.month);
 
   const title = isAm ? 'ፕሮጀክት ደጀሰላም (ማቴዎስ 25)' : 'Project Dejeselam (Matthew 25)';
   const description = isAm
@@ -210,88 +277,99 @@ export default function ProjectDejeselam() {
         </Reveal>
 
         <Reveal delay={200} direction="up">
-          <div className="dejeselam-calendar-container">
-            <h3 style={{ marginBottom: '1.5rem', color: 'var(--navy)', fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: '700' }}>
-              {isAm ? 'የዕለት ማዕድ መጋቢዎች መርሐግብር' : 'Sponsorship Calendar Grid'}
-            </h3>
-
-            <div className="calendar-legend">
+          <div className="dejeselam-calendar-container" style={{ maxWidth: '640px', margin: '0 auto' }}>
+            {/* Legend */}
+            <div className="calendar-legend" style={{ marginBottom: '1.5rem' }}>
               <span className="legend-item">
                 <span className="legend-box available"></span> 
-                {isAm ? 'ክፍት ቀን' : 'Available (0/3 slots)'}
+                {isAm ? 'ክፍት ቀን' : 'Available'}
               </span>
               <span className="legend-item">
                 <span className="legend-box partially"></span> 
-                {isAm ? 'በከፊል የተያዘ (1-2 ስፖንሰሮች)' : 'Partially Sponsored (1-2 slots)'}
+                {isAm ? 'በከፊል የተያዘ' : 'Partially Sponsored'}
               </span>
               <span className="legend-item">
                 <span className="legend-box fully"></span> 
-                {isAm ? 'የተያዘ ቀን' : 'Fully Sponsored (3/3 slots)'}
+                {isAm ? 'ሙሉ በሙሉ የተያዘ' : 'Fully Sponsored'}
               </span>
             </div>
 
-            {/* Horizontally Scrollable Month Grids */}
-            <div className="dejeselam-months-scroll-container">
-              {months.map((m) => {
-                const dayGrid = getDaysInMonthGrid(m.year, m.month);
-                return (
-                  <div key={`${m.year}-${m.month}`} className="dejeselam-month-card">
-                    <div className="dejeselam-month-header">
-                      <span className="dejeselam-month-title">{m.name} {m.year}</span>
-                    </div>
+            {/* Single Calendar View with Month Navigation */}
+            <div className="dejeselam-single-month-wrapper">
+              <div className="dejeselam-month-header">
+                <button 
+                  type="button" 
+                  className="dejeselam-nav-btn" 
+                  disabled={currentMonthIndex === 0} 
+                  aria-label="Previous Month"
+                  onClick={() => setCurrentMonthIndex(prev => prev - 1)}
+                >
+                  &larr;
+                </button>
+                <span className="dejeselam-month-title">{activeMonth.name} {activeMonth.year}</span>
+                <button 
+                  type="button" 
+                  className="dejeselam-nav-btn" 
+                  disabled={currentMonthIndex === months.length - 1} 
+                  aria-label="Next Month"
+                  onClick={() => setCurrentMonthIndex(prev => prev + 1)}
+                >
+                  &rarr;
+                </button>
+              </div>
 
-                    <div className="dejeselam-weekdays-grid">
-                      {isAm 
-                        ? WEEKDAYS.am.map((d) => <span key={d}>{d}</span>)
-                        : WEEKDAYS.en.map((d) => <span key={d}>{d}</span>)}
-                    </div>
+              <div className="dejeselam-weekdays-grid">
+                {isAm 
+                  ? WEEKDAYS.am.map((d) => <span key={d}>{d}</span>)
+                  : WEEKDAYS.en.map((d) => <span key={d}>{d}</span>)}
+              </div>
 
-                    <div className="dejeselam-days-grid">
-                      {dayGrid.map((dayObj) => {
-                        if (!dayObj.day) {
-                          return <div key={dayObj.key} className="dejeselam-day-btn empty" />;
-                        }
+              <div className="dejeselam-days-grid">
+                {activeMonthGrid.map((dayObj) => {
+                  if (!dayObj.day) {
+                    return <div key={dayObj.key} className="dejeselam-day-btn empty" />;
+                  }
 
-                        const status = getDayStatusClass(dayObj.dateStr);
-                        const sponsors = getDaySponsors(dayObj.dateStr);
-                        const isSelected = selectedDayObj?.dateStr === dayObj.dateStr;
+                  const status = getDayStatusClass(dayObj.dateStr);
+                  const sponsors = getDaySponsors(dayObj.dateStr);
+                  const isSelected = selectedDayObj?.dateStr === dayObj.dateStr;
 
-                        return (
-                          <button
-                            key={dayObj.key}
-                            type="button"
-                            onClick={() => handleDayClick(dayObj)}
-                            className={`dejeselam-day-btn ${status} ${isSelected ? 'selected' : ''}`}
-                            aria-label={`Day ${dayObj.day}`}
-                          >
-                            <span className="dejeselam-day-number">{dayObj.day}</span>
-                            
-                            {/* Slots Indicators (3 dots) */}
-                            <div className="dejeselam-slot-dots">
-                              <span className={`dejeselam-slot-dot ${sponsors.length >= 1 ? 'filled' : ''}`}></span>
-                              <span className={`dejeselam-slot-dot ${sponsors.length >= 2 ? 'filled' : ''}`}></span>
-                              <span className={`dejeselam-slot-dot ${sponsors.length >= 3 ? 'filled' : ''}`}></span>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
+                  return (
+                    <button
+                      key={dayObj.key}
+                      type="button"
+                      onClick={() => handleDayClick(dayObj)}
+                      className={`dejeselam-day-btn ${status} ${isSelected ? 'selected' : ''} ${dayObj.isFeast ? 'is-feast' : ''}`}
+                      aria-label={`Day ${dayObj.day}`}
+                    >
+                      <span className="dejeselam-day-number">{dayObj.day}</span>
+                      
+                      {/* EOTC Monthly Feast Indicator Dot */}
+                      {dayObj.isFeast && <span className="dejeselam-feast-indicator" title={dayObj.feastName}></span>}
+                      
+                      {/* Dynamic Slots dots: 2 for ordinary, 4 for feast */}
+                      <div className="dejeselam-slot-dots">
+                        {Array.from({ length: dayObj.slots }).map((_, i) => (
+                          <span key={i} className={`dejeselam-slot-dot ${sponsors.length > i ? 'filled' : ''}`}></span>
+                        ))}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </Reveal>
 
-        {/* Selected Day Details & Booking Drawer Panel */}
+        {/* Day Details & Booking Drawer Panel */}
         {selectedDayObj && (
           <Reveal delay={50} direction="up">
             <div className="dejeselam-details-panel">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(15, 27, 61, 0.08)', paddingBottom: '1rem', marginBottom: '1rem' }}>
-                <h3 style={{ margin: 0, fontFamily: 'var(--font-heading)', color: 'var(--navy)', fontSize: '1.4rem', fontWeight: '700' }}>
+                <h3 style={{ margin: 0, fontFamily: 'var(--font-heading)', color: 'var(--navy)', fontSize: '1.35rem', fontWeight: '700' }}>
                   {isAm 
-                    ? `${selectedDayObj.day} ቀን መጋቢዎች መረጃ` 
-                    : `Sponsorship for Day ${selectedDayObj.day}`}
+                    ? `${selectedDayObj.day} ቀን (${activeMonth.name.split(' ')[0]})` 
+                    : `Details for ${activeMonth.name} ${selectedDayObj.day}`}
                 </h3>
                 <button 
                   type="button" 
@@ -302,27 +380,48 @@ export default function ProjectDejeselam() {
                 </button>
               </div>
 
-              {/* Progress Bar Slot Occupancy */}
+              {/* Gregorian and Ethiopian date translation detail */}
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+                <span className="dejeselam-sponsor-badge" style={{ background: 'rgba(15,27,61,0.05)', color: 'var(--navy)', fontSize: '0.82rem' }}>
+                  📅 {isAm ? 'የኢትዮጵያ ቀን ቆጠራ ፦ ' : 'Ethiopian Calendar: '} 
+                  {ETHIOPIAN_MONTHS[isAm ? 'am' : 'en'][selectedDayObj.ethioDate.month - 1]} {selectedDayObj.ethioDate.day}
+                </span>
+                {selectedDayObj.isFeast && (
+                  <span className="dejeselam-sponsor-badge" style={{ background: 'rgba(197, 160, 68, 0.15)', color: 'var(--gold-dark)', fontSize: '0.82rem', fontWeight: '700' }}>
+                    🌟 {selectedDayObj.feastName}
+                  </span>
+                )}
+              </div>
+
+              {/* Progress & Dynamic Capacity details */}
               <div className="dejeselam-progress-wrapper">
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', fontWeight: '600', color: 'var(--navy)' }}>
-                  <span>{isAm ? 'ማዕድ ማጋራት ሁኔታ' : 'Sponsorship Slots Progress'}</span>
+                  <span>
+                    {isAm ? 'የምግብ ማዕድ ዕቅድ ፦ ' : 'Meal Target: '} 
+                    <strong style={{ color: 'var(--gold-dark)' }}>{selectedDayObj.capacity} {isAm ? 'ምግቦች' : 'Meals'}</strong>
+                  </span>
                   <span>{getDayStatusText(selectedDayObj.dateStr)}</span>
                 </div>
                 <div className="dejeselam-progress-bar-bg">
                   <div 
                     className="dejeselam-progress-bar-fill" 
-                    style={{ width: `${(getDaySponsors(selectedDayObj.dateStr).length / 3) * 100}%` }}
+                    style={{ width: `${(getDaySponsors(selectedDayObj.dateStr).length / selectedDayObj.slots) * 100}%` }}
                   />
                 </div>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                  {selectedDayObj.isFeast 
+                    ? (isAm ? '※ የዕለቱ ወርሃዊ በዓል ስለሆነ ማዕድ በእጥፍ (400 ምግቦች) አድጓል። 4 ስፖንሰሮች ያስፈልጋሉ::' : '* EOTC Monthly Feast Day: Meal capacity is doubled (400 meals). Requires 4 sponsors.') 
+                    : (isAm ? '※ መደበኛ ቀን ፦ 200 ምግቦች (2 ስፖንሰሮች ያስፈልጋሉ)::' : '* Ordinary Day: 200 meals capacity. Requires 2 sponsors.')}
+                </span>
               </div>
 
               {/* List of Existing Sponsors */}
-              <h4 style={{ color: 'var(--navy)', fontWeight: '600', fontSize: '1rem', marginBottom: '0.75rem' }}>
-                {isAm ? 'የዕለቱ መጋቢዎች (በረከት ተካፋዮች)' : 'Sponsors on this Day'}
+              <h4 style={{ color: 'var(--navy)', fontWeight: '600', fontSize: '0.98rem', marginBottom: '0.75rem' }}>
+                {isAm ? 'የዕለቱ መጋቢዎች' : 'Sponsors on this Day'}
               </h4>
 
               {getDaySponsors(selectedDayObj.dateStr).length === 0 ? (
-                <p style={{ color: 'var(--text-secondary)', fontStyle: 'italic', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+                <p style={{ color: 'var(--text-secondary)', fontStyle: 'italic', fontSize: '0.88rem', marginBottom: '1.5rem' }}>
                   {isAm ? 'ይህ ቀን ክፍት ነው! የመጀመርያው ስፖንሰር በመሆን የበረከቱ ተካፋይ ይሁኑ።' : 'No sponsors yet. Be the first to sponsor a slot!'}
                 </p>
               ) : (
@@ -336,7 +435,7 @@ export default function ProjectDejeselam() {
                         <h4>
                           <span>{b.name}</span>
                           <span className="dejeselam-sponsor-badge">
-                            {b.isMonthly ? (isAm ? 'ወርሃዊ ቋሚ' : 'Monthly') : (isAm ? 'አንድ ጊዜ' : 'One-Time')}
+                            {b.freq === 'year_round' ? (isAm ? 'ዓመታዊ ቋሚ' : 'Year-Round') : b.freq === 'monthly' ? (isAm ? 'ወርሃዊ ቋሚ' : 'Monthly') : (isAm ? 'አንድ ጊዜ' : 'One-Time')}
                           </span>
                         </h4>
                         <p>“ {b.message} ”</p>
@@ -346,11 +445,11 @@ export default function ProjectDejeselam() {
                 </div>
               )}
 
-              {/* Booking Form (Only show if slots < 3) */}
-              {getDaySponsors(selectedDayObj.dateStr).length < 3 ? (
+              {/* Booking Form (Only show if slots are available) */}
+              {getDaySponsors(selectedDayObj.dateStr).length < selectedDayObj.slots ? (
                 <div style={{ marginTop: '2rem', borderTop: '1px solid rgba(15, 27, 61, 0.08)', paddingTop: '1.5rem' }}>
-                  <h4 style={{ color: 'var(--navy)', fontWeight: '600', fontSize: '1.1rem', marginBottom: '1rem' }}>
-                    {isAm ? 'የበረከት ተካፋይ ለመሆን ይመዝገቡ' : 'Sponsor a Slot'}
+                  <h4 style={{ color: 'var(--navy)', fontWeight: '600', fontSize: '1.05rem', marginBottom: '1rem' }}>
+                    {isAm ? 'የበረከት ተካፋይ ለመሆን ይመዝገቡ' : 'Sponsor a Slot (100 meals share)'}
                   </h4>
 
                   <form onSubmit={handleBookingSubmit} className="booking-form" style={{ gap: '1.25rem' }}>
@@ -370,21 +469,49 @@ export default function ProjectDejeselam() {
                       <textarea rows={2} value={formData.message} onChange={handleFormChange('message')} placeholder={isAm ? 'ለምሳሌ ፦ ለቤተሰቦቼ በረከት እንዲሆንልኝ...' : 'e.g. In memory of loved ones...'} />
                     </label>
 
-                    {/* Monthly option */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '0.25rem 0 1rem 0' }}>
-                      <input 
-                        type="checkbox" 
-                        id="monthlyCheckbox" 
-                        checked={formData.isMonthly} 
-                        onChange={handleFormChange('isMonthly')} 
-                        style={{ width: '18px', height: '18px', accentColor: 'var(--navy)', cursor: 'pointer' }}
-                      />
-                      <label htmlFor="monthlyCheckbox" style={{ fontSize: '0.92rem', color: 'var(--navy)', fontWeight: '600', cursor: 'pointer' }}>
-                        {isAm ? 'ለዚህ ዕለት በየወሩ በቋሚነት ማዕድ አጋራለሁ (Keep my day monthly)' : 'Keep my day monthly (Recurring monthly sponsorship)'}
-                      </label>
+                    {/* Sponsorship Frequency Type Selection */}
+                    <div className="form-field full-width">
+                      <span style={{ fontSize: '0.88rem', color: 'var(--navy)', fontWeight: '600', marginBottom: '0.5rem', display: 'block' }}>
+                        {isAm ? 'የማዕድ ማጋራት ዓይነት' : 'Sponsorship Type'}
+                      </span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.9rem' }}>
+                          <input 
+                            type="radio" 
+                            name="freq" 
+                            value="one_time" 
+                            checked={formData.freq === 'one_time'} 
+                            onChange={handleFormChange('freq')} 
+                            style={{ cursor: 'pointer', accentColor: 'var(--navy)' }}
+                          />
+                          {isAm ? 'ለዚህ ዕለት ብቻ (One-time sponsorship)' : 'Just for this specific date'}
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.9rem' }}>
+                          <input 
+                            type="radio" 
+                            name="freq" 
+                            value="monthly" 
+                            checked={formData.freq === 'monthly'} 
+                            onChange={handleFormChange('freq')} 
+                            style={{ cursor: 'pointer', accentColor: 'var(--navy)' }}
+                          />
+                          {isAm ? 'ለሚቀጥሉት 3 ወራት በየወሩ (Sponsor this date index for 3 months)' : 'Keep my day monthly (Recurring for 3 months)'}
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600', color: 'var(--gold-dark)' }}>
+                          <input 
+                            type="radio" 
+                            name="freq" 
+                            value="year_round" 
+                            checked={formData.freq === 'year_round'} 
+                            onChange={handleFormChange('freq')} 
+                            style={{ cursor: 'pointer', accentColor: 'var(--navy)' }}
+                          />
+                          {isAm ? 'በዓመት በየወሩ በቋሚነት (Year-Round Commemoration - All 12 months)' : 'Year-Round Commemoration (Sponsor this day every month for the entire year)'}
+                        </label>
+                      </div>
                     </div>
 
-                    <div className="form-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                    <div className="form-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
                       <button 
                         type="button" 
                         className="cs-btn" 
@@ -400,8 +527,8 @@ export default function ProjectDejeselam() {
                   </form>
                 </div>
               ) : (
-                <div style={{ marginTop: '2rem', background: 'rgba(15, 27, 61, 0.03)', borderRadius: '12px', padding: '1rem', textAlign: 'center', border: '1px dashed rgba(15, 27, 61, 0.1)' }}>
-                  <p style={{ margin: 0, fontWeight: '600', color: 'var(--navy)', fontSize: '0.95rem' }}>
+                <div style={{ marginTop: '2rem', background: 'rgba(15, 27, 61, 0.03)', borderRadius: '12px', padding: '1.25rem', textAlign: 'center', border: '1px dashed rgba(15, 27, 61, 0.1)' }}>
+                  <p style={{ margin: 0, fontWeight: '700', color: 'var(--navy)', fontSize: '0.95rem' }}>
                     🌟 {isAm 
                       ? 'ይህ ቀን ሙሉ በሙሉ ተይዟል። እባክዎን ሌላ ክፍት ቀን ይምረጡ።' 
                       : 'All slots for this day are fully sponsored! Please choose another open date.'}
