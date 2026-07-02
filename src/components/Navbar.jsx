@@ -65,7 +65,8 @@ export default function Navbar() {
       const isEventsHero = pathname === '/events';
       const isMediaHero = pathname === '/media';
       const isArticlesHero = pathname === '/articles';
-      setHasHero(isServicesHero || isEventsHero || isMediaHero || isArticlesHero);
+      const isContactHero = pathname === '/contact';
+      setHasHero(isServicesHero || isEventsHero || isMediaHero || isArticlesHero || isContactHero);
     };
 
     checkHero();
