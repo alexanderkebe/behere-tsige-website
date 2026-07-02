@@ -63,7 +63,9 @@ export default function Navbar() {
       const isDashboardActive = document.body.classList.contains('services-dashboard-active');
       const isServicesHero = pathname === '/services' && !isDashboardActive;
       const isEventsHero = pathname === '/events';
-      setHasHero(isServicesHero || isEventsHero);
+      const isMediaHero = pathname === '/media';
+      const isArticlesHero = pathname === '/articles';
+      setHasHero(isServicesHero || isEventsHero || isMediaHero || isArticlesHero);
     };
 
     checkHero();

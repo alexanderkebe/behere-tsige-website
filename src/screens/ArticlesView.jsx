@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import ArticleCard from '@/components/articles/ArticleCard';
+import PageHero from '@/components/PageHero';
 import '@/styles/articles.css';
 
 const T = {
@@ -31,18 +32,19 @@ export default function ArticlesView({ articles = [] }) {
 
   return (
     <main className="site-page articles-page">
-      <section className="articles-section">
-        <header className="articles-head">
-          <span className="articles-tag">{t.tag}</span>
-          <h1 className="articles-title">{t.title}</h1>
-          <p className="articles-intro">{t.intro}</p>
+      <PageHero
+        title={t.title}
+        subtitle={t.intro}
+      />
+      <section className="articles-section" style={{ paddingTop: '3.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
           <input
             className="articles-search"
             placeholder={t.search}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </header>
+        </div>
 
         {filtered.length === 0 ? (
           <p className="articles-empty">{t.empty}</p>

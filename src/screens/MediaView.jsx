@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Reveal from '@/components/Reveal';
+import PageHero from '@/components/PageHero';
 import { useLanguage } from '@/context/LanguageContext';
 import {
   DiamondOrnament,
@@ -143,7 +144,11 @@ export default function MediaView({ initialMediaLinks = [] }) {
 
   return (
     <div className="media-page-view">
-      <div className="media-content-wrapper">
+      <PageHero
+        title={t.title}
+        subtitle={t.subtitle}
+      />
+      <div className="media-content-wrapper" style={{ paddingTop: '3.5rem' }}>
         {/* Profile Card & Scripture Quote - Inspired by Socials App */}
         <div className="media-profile-section-container">
           <Reveal className="media-profile-card-glass" direction="up">
