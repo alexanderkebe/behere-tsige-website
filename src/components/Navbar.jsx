@@ -45,7 +45,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [hasHero, setHasHero] = useState(true);
+  const [hasHero, setHasHero] = useState(false);
   const dropdownRef = useRef(null);
 
   const navItems = (lang === 'am' || lang === 'gez') ? NAV_ITEMS_AM : NAV_ITEMS_EN;
@@ -61,8 +61,8 @@ export default function Navbar() {
   useEffect(() => {
     const checkHero = () => {
       const isDashboardActive = document.body.classList.contains('services-dashboard-active');
-      const isHeroPath = pathname === '/' || pathname === '/events' || pathname === '/contact' || (pathname === '/services' && !isDashboardActive);
-      setHasHero(isHeroPath);
+      const isServicesHero = pathname === '/services' && !isDashboardActive;
+      setHasHero(isServicesHero);
     };
 
     checkHero();
