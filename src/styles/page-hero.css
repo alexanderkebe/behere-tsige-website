@@ -73,3 +73,36 @@
     font-size: 1rem;
   }
 }
+
+/* Video background layer */
+.page-hero-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-hero-video-bg video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top; /* Crop from the bottom, not the top */
+}
+
+/* When video is present, make the hero taller */
+.page-hero--has-video {
+  height: 55vh;
+  min-height: 400px;
+}
+
+@media (max-width: 768px) {
+  .page-hero--has-video {
+    height: 40vh;
+    min-height: 300px;
+  }
+}
