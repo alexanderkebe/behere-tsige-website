@@ -1,0 +1,60 @@
+/* Hand-coded brand loader — a pair of counter-rotating golden rings.
+   Replaces the bundled Lottie animation with pure CSS (no external asset). */
+.brand-loader {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: grid;
+  place-items: center;
+}
+
+.brand-loader-ring {
+  position: absolute;
+  border-radius: 50%;
+  /* conic gradient masked into a thin ring */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-w)), #000 calc(100% - var(--ring-w) + 1px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-w)), #000 calc(100% - var(--ring-w) + 1px));
+}
+
+.brand-loader-ring--outer {
+  --ring-w: 6px;
+  inset: 0;
+  background: conic-gradient(from 0deg, rgba(197, 160, 68, 0) 8%, var(--gold, #C5A044) 78%, var(--gold-light, #D4B865) 100%);
+  animation: brandSpin 1.05s cubic-bezier(0.65, 0.15, 0.35, 0.85) infinite;
+}
+
+.brand-loader-ring--inner {
+  --ring-w: 4px;
+  inset: 22px;
+  background: conic-gradient(from 180deg, rgba(168, 135, 46, 0) 10%, var(--gold-dark, #A8872E) 85%, var(--gold, #C5A044) 100%);
+  animation: brandSpinReverse 1.4s cubic-bezier(0.65, 0.15, 0.35, 0.85) infinite;
+}
+
+/* Small gold pip at the very centre for a finished, jewel-like look */
+.brand-loader-core {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--gold-light, #D4B865), var(--gold-dark, #A8872E));
+  box-shadow: 0 0 10px rgba(197, 160, 68, 0.55);
+  animation: brandPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes brandSpin {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes brandSpinReverse {
+  to { transform: rotate(-1turn); }
+}
+
+@keyframes brandPulse {
+  0%, 100% { transform: scale(0.8); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-loader-ring--outer { animation-duration: 2.4s; animation-timing-function: linear; }
+  .brand-loader-ring--inner,
+  .brand-loader-core { animation: none; }
+}
