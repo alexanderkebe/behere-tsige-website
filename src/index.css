@@ -5713,6 +5713,51 @@ a.contact-info-value:hover {
   box-shadow: 0 6px 18px rgba(197, 160, 68, 0.04);
 }
 
+/* Fathers pagination controls (penance page) */
+.fathers-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
+}
+
+.fathers-page-btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.9rem;
+  border: 1.5px solid rgba(197, 160, 68, 0.4);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--navy);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fathers-page-num {
+  padding: 0;
+}
+
+.fathers-page-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: rgba(197, 160, 68, 0.08);
+}
+
+.fathers-page-btn.is-active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #ffffff;
+}
+
+.fathers-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* On phones, stack the step number on top (centered) so the text gets
    the full card width instead of being squeezed to the edge. */
 @media (max-width: 640px) {

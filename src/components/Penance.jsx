@@ -57,9 +57,16 @@ export default function Penance({ settings = {}, fathers = [] }) {
   const fName = (f) => (isAm ? f.full_name_am || f.full_name_en : f.full_name_en);
   const fTitle = (f) => (isAm ? f.title_am || f.title_en : f.title_en);
   const fBio = (f) => (isAm ? f.bio_am || f.bio_en : f.bio_en);
-  // Only fathers who hear confession belong on the penance page, when flagged.
-  const penanceFathers = fathers.filter((f) => f.is_confessor || f.is_penance_father);
-  const listedFathers = penanceFathers.length > 0 ? penanceFathers : fathers;
+
+  // Show every father, confessors first, paginated.
+  const listedFathers = [...fathers].sort(
+    (a, b) => (b.is_confessor || b.is_penance_father ? 1 : 0) - (a.is_confessor || a.is_penance_father ? 1 : 0)
+  );
+  const FATHERS_PER_PAGE = 6;
+  const totalPages = Math.ceil(listedFathers.length / FATHERS_PER_PAGE);
+  const [fPage, setFPage] = useState(1);
+  const page = Math.min(fPage, totalPages || 1);
+  const pageFathers = listedFathers.slice((page - 1) * FATHERS_PER_PAGE, page * FATHERS_PER_PAGE);
 
   const [form, setForm] = useState({ name: '', phone: '', email: '', preferredFather: '', message: '' });
 
@@ -159,7 +166,7 @@ export default function Penance({ settings = {}, fathers = [] }) {
               {isAm ? 'የንስሐ አባቶቻችን' : 'Our Penance Fathers'}
             </h3>
             <div className="fathers-grid">
-              {listedFathers.map((f, i) => (
+              {pageFathers.map((f, i) => (
                 <Reveal className="father-profile-card" key={f.id} delay={i * 80}>
                   <div className="father-profile-avatar">
                     {f.photo_url ? (
@@ -174,6 +181,38 @@ export default function Penance({ settings = {}, fathers = [] }) {
                 </Reveal>
               ))}
             </div>
+
+            {totalPages > 1 && (
+              <nav className="fathers-pagination" aria-label={isAm ? 'የአባቶች ገጾች' : 'Fathers pages'}>
+                <button
+                  type="button"
+                  className="fathers-page-btn"
+                  onClick={() => setFPage(page - 1)}
+                  disabled={page === 1}
+                >
+                  ‹ {isAm ? 'ቀዳሚ' : 'Prev'}
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                  <button
+                    type="button"
+                    key={n}
+                    className={`fathers-page-btn fathers-page-num ${n === page ? 'is-active' : ''}`}
+                    aria-current={n === page ? 'page' : undefined}
+                    onClick={() => setFPage(n)}
+                  >
+                    {n}
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  className="fathers-page-btn"
+                  onClick={() => setFPage(page + 1)}
+                  disabled={page === totalPages}
+                >
+                  {isAm ? 'ቀጣይ' : 'Next'} ›
+                </button>
+              </nav>
+            )}
           </div>
         )}
 
