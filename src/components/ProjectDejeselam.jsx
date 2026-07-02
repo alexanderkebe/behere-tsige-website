@@ -70,7 +70,7 @@ export default function ProjectDejeselam() {
   const [currentMonthIndex, setCurrentMonthIndex] = useState(0); // 0 to 11
   const [selectedDayObj, setSelectedDayObj] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', message: '', freq: 'one_time', meals: 10 });
+  const [formData, setFormData] = useState({ name: '', phone: '', message: '', freq: 'one_time', meals: '10' });
   const [bookings, setBookings] = useState({});
 
   const now = new Date();
@@ -178,13 +178,12 @@ export default function ProjectDejeselam() {
       phone: '',
       message: '',
       freq: 'one_time',
-      meals: remaining > 0 ? Math.min(10, remaining) : 0
+      meals: remaining > 0 ? String(Math.min(10, remaining)) : '0'
     });
   };
 
   const handleFormChange = (field) => (e) => {
-    const value = field === 'meals' ? Number(e.target.value) : e.target.value;
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
   const handleBookingSubmit = (e) => {
@@ -265,7 +264,7 @@ export default function ProjectDejeselam() {
       return updated;
     });
 
-    setFormData({ name: '', phone: '', message: '', freq: 'one_time', meals: 10 });
+    setFormData({ name: '', phone: '', message: '', freq: 'one_time', meals: '10' });
     setIsFormOpen(false);
     setSelectedDayObj(null);
     alert(isAm ? 'የተሳትፎ ጥያቄዎ በተሳካ ሁኔታ ተልኳል! እናመሰግናለን።' : 'Your sponsorship has been successfully submitted. Thank you and God bless you!');
@@ -299,7 +298,13 @@ export default function ProjectDejeselam() {
 
   const currentMeals = selectedDayObj ? getMealsSponsoredSum(selectedDayObj.dateStr) : 0;
   const remainingMeals = selectedDayObj ? Math.max(0, selectedDayObj.capacity - currentMeals) : 0;
-  const totalCost = Number(formData.meals || 0) * MEAL_PRICE;
+  const getMultiplier = (freq) => {
+    if (freq === 'monthly') return 3;
+    if (freq === 'year_round') return 12;
+    return 1;
+  };
+  const multiplier = getMultiplier(formData.freq);
+  const totalCost = Number(formData.meals || 0) * MEAL_PRICE * multiplier;
 
   return (
     <section id="project-dejeselam" className="services-section">
@@ -522,7 +527,10 @@ export default function ProjectDejeselam() {
 
                       {/* Dynamic Cost Calculator */}
                       <div className="form-field" style={{ justifyContent: 'center' }}>
-                        <span>{isAm ? 'የአንዱ ምግብ ዋጋ ፦ 170 ብር' : 'Price per meal: 170 Birr'}</span>
+                        <span>
+                          {isAm ? 'የአንዱ ምግብ ዋጋ ፦ 170 ብር' : 'Price per meal: 170 Birr'}
+                          {multiplier > 1 && (isAm ? ` (${multiplier} ወራት)` : ` (${multiplier} months)`)}
+                        </span>
                         <div className="dejeselam-cost-badge">
                           💵 {isAm ? 'ጠቅላላ ዋጋ ፦ ' : 'Total: '} {totalCost.toLocaleString()} {isAm ? 'ብር' : 'Birr'}
                         </div>
