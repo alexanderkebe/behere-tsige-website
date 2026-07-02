@@ -94,13 +94,13 @@ export default function Penance({ settings = {} }) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {PENANCE_STEPS.map((step, index) => (
-              <Reveal key={index} delay={index * 100} direction={index % 2 === 0 ? 'left' : 'right'} as="div" className="nested-content-card" style={{
+              <Reveal key={index} delay={index * 100} direction={index % 2 === 0 ? 'left' : 'right'} as="div" className="nested-content-card penance-step" style={{
                 display: 'flex',
                 gap: '1.5rem',
                 borderLeft: '4px solid var(--gold)',
                 alignItems: 'flex-start'
               }}>
-                <div style={{
+                <div className="penance-step-num" style={{
                   minWidth: '40px',
                   height: '40px',
                   borderRadius: '50%',

@@ -5713,6 +5713,21 @@ a.contact-info-value:hover {
   box-shadow: 0 6px 18px rgba(197, 160, 68, 0.04);
 }
 
+/* On phones, stack the step number on top (centered) so the text gets
+   the full card width instead of being squeezed to the edge. */
+@media (max-width: 640px) {
+  .penance-step {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: stretch !important;
+    padding: 1.4rem 1.25rem;
+  }
+  .penance-step-num {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .nested-card-title {
   font-family: var(--font-heading);
   font-size: 1.2rem;
