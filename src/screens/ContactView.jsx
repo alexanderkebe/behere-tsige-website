@@ -113,7 +113,7 @@ export default function ContactView() {
     }
   };
 
-  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent('Gullele, Addis Ababa, Ethiopia')}&output=embed`;
+  const mapSrc = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.153860725416!2d38.74985757449817!3d8.957966690097901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b83f1f6181b5f%3A0x6047c0b4f2c0bbb6!2zQmloZXJlIFRzaWdlIFN0LiBNYXJpYW0gQ2h1cmNoIHwg4Yml4YiE4Yio4Yy94YyMIOGJheGLteGIteGJtSDhiJvhiK3hi6vhiJ0g4Ymk4Ymw4Yqt4Yir4Yi14Ym14Yur4YqV!5e0!3m2!1sen!2sus!4v1782997484374!5m2!1sen!2sus`;
 
   return (
     <div className="contact-page-view">
