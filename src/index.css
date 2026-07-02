@@ -4241,6 +4241,21 @@ a.contact-info-value:hover {
   transform: translateY(-2px);
 }
 
+/* On phones, stack the monogram on top (centered) so the abbot bio uses
+   the full card width instead of being squeezed beside the avatar. */
+@media (max-width: 640px) {
+  .abbot-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.4rem 1.25rem;
+  }
+  .abbot-avatar-ring {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .abbot-avatar-ring {
   width: 60px;
   height: 60px;
