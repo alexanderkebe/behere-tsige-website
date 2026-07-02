@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Reveal from './Reveal';
+import '@/styles/page-hero.css';
 
 export default function PageHero({ title, subtitle, bgImage }) {
   const style = bgImage ? { backgroundImage: `url(${bgImage})` } : {};
