@@ -28,38 +28,33 @@ function useScreenTier() {
   return tier;
 }
 
+// Video-only hero sources per screen tier — no image fallback, ever.
+const TIER_VIDEO = {
+  large: '/assets/hero-video-desktop.mp4',
+  tablet: '/assets/hero-tablet-video.mp4',
+  phone: '/assets/hero-mobile.mp4',
+};
+
 export default function Hero({ lang, videoSrc }) {
   const { content } = useContent();
   const c = content.hero[lang] || content.hero.en;
   const tier = useScreenTier();
-  const poster =
-    tier === 'phone'
-      ? '/assets/hero-mobile.png'
-      : tier === 'tablet'
-        ? '/assets/hero-tablet.png'
-        : '/assets/background.png';
+  // Prefer the preloaded blob; otherwise stream the tier's video directly.
+  const activeVideoSrc = videoSrc || TIER_VIDEO[tier];
 
   return (
     <section id="home" className="hero">
       <div className="hero-bg hero-bg-animate">
-        {videoSrc ? (
-          <video
-            className="hero-bg-video"
-            src={videoSrc}
-            poster={poster}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-          />
-        ) : (
-          <picture>
-            <source media="(max-width: 752px)" srcSet="/assets/hero-mobile.png" />
-            <source media="(max-width: 1180px)" srcSet="/assets/hero-tablet.png" />
-            <img src="/assets/background.png" alt="EOTC Church Background" loading="eager" className="hero-bg-img" />
-          </picture>
-        )}
+        <video
+          key={activeVideoSrc}
+          className="hero-bg-video"
+          src={activeVideoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
       </div>
 
       <div className="hero-content">
