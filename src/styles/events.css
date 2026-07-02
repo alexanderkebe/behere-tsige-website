@@ -394,11 +394,24 @@
   transform: translateX(4px);
 }
 
-/* Secondary Events Grid */
-.events-secondary-grid {
+/* Unified Events Grid */
+.events-main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
+}
+
+@media (max-width: 1024px) {
+  .events-main-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .events-main-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 .event-card.secondary-event {

@@ -185,148 +185,69 @@ export default function EventsView({ initialEvents = [] }) {
             </div>
           ) : (
             <div className="events-layout-container">
-              {/* Highlight main event if applicable */}
-              {featuredEvent && (
-                <Reveal className="event-card main-event-featured" as="div" direction="up">
-                  <div className="event-card-content">
-                    <div className="event-card-top">
-                      <span className="main-event-badge-label">{t.mainFeast}</span>
-                      <div className="calendar-badge-wrapper">
+              <div className="events-main-grid">
+                {filteredEvents.map((event, idx) => (
+                  <Reveal key={event.id} delay={idx * 50} className={`event-card secondary-event ${event.is_main ? 'has-badge' : ''}`} as="div" direction="up">
+                    <div className="event-secondary-poster-container" onClick={() => setSelectedEvent(event)}>
+                      {event.is_main && (
+                        <span className="secondary-card-badge">{t.mainFeast}</span>
+                      )}
+                      <div className="card-calendar-badge-position">
                         {(() => {
-                          const { month, day } = getCalendarDate(featuredEvent.event_date);
+                          const { month, day } = getCalendarDate(event.event_date);
                           return month && day ? (
-                            <div className="calendar-badge">
+                            <div className="calendar-badge small">
                               <span className="calendar-badge-month">{month}</span>
                               <span className="calendar-badge-day">{day}</span>
                             </div>
                           ) : null;
                         })()}
                       </div>
-                    </div>
-
-                    <div className="event-date-row">
-                      <span className="event-date-text">
-                        <span aria-hidden="true" className="meta-icon">📅</span>
-                        {formatDate(featuredEvent.event_date)}
-                      </span>
-                      {featuredEvent.start_time && (
-                        <span className="event-time-text">
-                          <span aria-hidden="true" className="meta-icon">⏰</span>
-                          {formatTime(featuredEvent.start_time)}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="event-title-highlight">
-                      {isAm ? featuredEvent.title_am || featuredEvent.title_en : featuredEvent.title_en || featuredEvent.title_am}
-                    </h3>
-                    
-                    <p className="event-desc-text text-truncate-3">
-                      {isAm ? featuredEvent.description_am || featuredEvent.description_en : featuredEvent.description_en || featuredEvent.description_am}
-                    </p>
-                    
-                    <div className="event-details-meta">
-                      {(featuredEvent.location_en || featuredEvent.location_am) && (
-                        <div className="event-meta-item">
-                          <span aria-hidden="true" className="meta-icon">📍</span>
-                          <strong>{t.location}:</strong> {isAm ? featuredEvent.location_am || featuredEvent.location_en : featuredEvent.location_en || featuredEvent.location_am}
+                      {event.poster_url ? (
+                        <div className="event-secondary-poster">
+                          <img 
+                            src={event.poster_url} 
+                            alt={isAm ? event.title_am : event.title_en} 
+                          />
+                        </div>
+                      ) : (
+                        <div className="event-secondary-placeholder">
+                          <DiamondOrnament />
                         </div>
                       )}
                     </div>
 
-                    <button 
-                      className="btn-event-more btn-event-more-main"
-                      onClick={() => setSelectedEvent(featuredEvent)}
-                    >
-                      {t.learnMore}
-                      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" className="learn-more-arrow">
-                        <path d="M4 10h12M11 5l5 5-5 5" />
-                      </svg>
-                    </button>
-                  </div>
-
-                  <div className="event-poster-wrapper" onClick={() => setSelectedEvent(featuredEvent)}>
-                    {featuredEvent.poster_url ? (
-                      <img 
-                        src={featuredEvent.poster_url} 
-                        alt={isAm ? featuredEvent.title_am : featuredEvent.title_en} 
-                        className="event-poster-img" 
-                      />
-                    ) : (
-                      <div className="event-poster-placeholder">
-                        <DiamondOrnament />
+                    <div className="event-secondary-content">
+                      <div className="event-date-badge">
+                        <span>📅 {formatDate(event.event_date)}</span>
+                        {event.start_time && <span className="time-badge"> · ⏰ {formatTime(event.start_time)}</span>}
                       </div>
-                    )}
-                  </div>
-                </Reveal>
-              )}
-
-              {/* Grid of other events */}
-              {gridEvents.length > 0 && (
-                <div className="events-secondary-grid">
-                  {gridEvents.map((event, idx) => (
-                    <Reveal key={event.id} delay={idx * 50} className={`event-card secondary-event ${event.is_main ? 'has-badge' : ''}`} as="div" direction="up">
-                      <div className="event-secondary-poster-container" onClick={() => setSelectedEvent(event)}>
-                        {event.is_main && (
-                          <span className="secondary-card-badge">{t.mainFeast}</span>
-                        )}
-                        <div className="card-calendar-badge-position">
-                          {(() => {
-                            const { month, day } = getCalendarDate(event.event_date);
-                            return month && day ? (
-                              <div className="calendar-badge small">
-                                <span className="calendar-badge-month">{month}</span>
-                                <span className="calendar-badge-day">{day}</span>
-                              </div>
-                            ) : null;
-                          })()}
+                      
+                      <h3>{isAm ? event.title_am || event.title_en : event.title_en || event.title_am}</h3>
+                      
+                      <p className="text-truncate-2">
+                        {isAm ? event.description_am || event.description_en : event.description_en || event.description_am}
+                      </p>
+                      
+                      {(event.location_en || event.location_am) && (
+                        <div className="event-card-location">
+                          <span>📍 {isAm ? event.location_am || event.location_en : event.location_en || event.location_am}</span>
                         </div>
-                        {event.poster_url ? (
-                          <div className="event-secondary-poster">
-                            <img 
-                              src={event.poster_url} 
-                              alt={isAm ? event.title_am : event.title_en} 
-                            />
-                          </div>
-                        ) : (
-                          <div className="event-secondary-placeholder">
-                            <DiamondOrnament />
-                          </div>
-                        )}
-                      </div>
+                      )}
 
-                      <div className="event-secondary-content">
-                        <div className="event-date-badge">
-                          <span>📅 {formatDate(event.event_date)}</span>
-                          {event.start_time && <span className="time-badge"> · ⏰ {formatTime(event.start_time)}</span>}
-                        </div>
-                        
-                        <h3>{isAm ? event.title_am || event.title_en : event.title_en || event.title_am}</h3>
-                        
-                        <p className="text-truncate-2">
-                          {isAm ? event.description_am || event.description_en : event.description_en || event.description_am}
-                        </p>
-                        
-                        {(event.location_en || event.location_am) && (
-                          <div className="event-card-location">
-                            <span>📍 {isAm ? event.location_am || event.location_en : event.location_en || event.location_am}</span>
-                          </div>
-                        )}
-
-                        <button 
-                          className="btn-event-more"
-                          onClick={() => setSelectedEvent(event)}
-                        >
-                          {t.learnMore}
-                          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" className="learn-more-arrow">
-                            <path d="M4 10h12M11 5l5 5-5 5" />
-                          </svg>
-                        </button>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              )}
+                      <button 
+                        className="btn-event-more"
+                        onClick={() => setSelectedEvent(event)}
+                      >
+                        {t.learnMore}
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" className="learn-more-arrow">
+                          <path d="M4 10h12M11 5l5 5-5 5" />
+                        </svg>
+                      </button>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
             </div>
           )}
         </div>
