@@ -25,6 +25,7 @@ export default function ServicesView({
   abnetData,
   evangelismData,
   memorialServices,
+  fathers = [],
 }) {
   const { lang } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
@@ -96,7 +97,7 @@ export default function ServicesView({
       subLabelEn: 'Baptism, Penance, Fithat',
       subLabelAm: 'ጥምቀት፣ ንስሐ እና ፍትሐት',
       icon: LogoCross,
-      component: <SacramentsHub settings={settings} services={memorialServices} />
+      component: <SacramentsHub settings={settings} services={memorialServices} fathers={fathers} />
     },
     {
       id: 'school',

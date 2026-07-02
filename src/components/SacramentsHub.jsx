@@ -50,7 +50,7 @@ const MemorialIcon = () => (
   </svg>
 );
 
-export default function SacramentsHub({ settings, services }) {
+export default function SacramentsHub({ settings, services, fathers = [] }) {
   const { lang } = useLanguage();
   const [selected, setSelected] = useState(null);
 
@@ -93,7 +93,7 @@ export default function SacramentsHub({ settings, services }) {
       linkEn: 'LEARN MORE & REQUEST',
       linkAm: 'በዝርዝር ይውረዱ እና አገልግሎቱን ይጠይቁ',
       icon: PenanceIcon,
-      component: <Penance settings={settings} />
+      component: <Penance settings={settings} fathers={fathers} />
     },
     {
       id: 'memorial',

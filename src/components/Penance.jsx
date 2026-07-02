@@ -16,9 +16,9 @@ const PENANCE_STEPS = [
     desc: 'The penitent confesses their sins to the priest, acknowledging their wrongdoings and expressing genuine remorse.',
     descAm: 'ንስሐ የገቡ ሰዎች ኃጢአታቸውን ለካህኑ ይናዘዛሉ፣ ስህተታቸውን አምነው እውነተኛ ጸጸታቸውን ይገልጻሉ። «መንግሥተ ሰማያት ቀርባለችና ንስሐ ግቡ» የማቴዎስ ወንጌል ምዕራፍ ፫፥፩',
     links: [
-      { label: '📱 Use this app as a guide (for first-timers)', url: 'https://www.confessionplanner.copticcollection.com/' },
-      { label: '📄 Download the Confession Guide PDF', url: '/assets/confession pdf.pdf' },
-      { label: '📖 Buy the Confession Book on Amazon', url: 'https://www.amazon.com/Holy-Mystery-Confession-confession-teenagers/dp/B0F5QBN5W3' },
+      { label: '📱 Use this app as a guide (for first-timers)', labelAm: '📱 ለጀማሪዎች እንደ መመሪያ ይህን መተግበሪያ ይጠቀሙ', url: 'https://www.confessionplanner.copticcollection.com/' },
+      { label: '📄 Download the Confession Guide PDF', labelAm: '📄 የንስሐ መመሪያ ፒዲኤፍ (PDF) ያውርዱ', url: '/assets/confession pdf.pdf' },
+      { label: '📖 Buy the Confession Book on Amazon', labelAm: '📖 የንስሐ መጽሐፍን ከአማዞን ይግዙ', url: 'https://www.amazon.com/Holy-Mystery-Confession-confession-teenagers/dp/B0F5QBN5W3' },
     ]
   },
   {
@@ -47,12 +47,19 @@ const PENANCE_STEPS = [
   }
 ];
 
-export default function Penance({ settings = {} }) {
+export default function Penance({ settings = {}, fathers = [] }) {
   const { lang } = useLanguage();
   const penanceInfo = settings.penance_resources || {};
-  
+
   const isAm = lang === 'am';
   const sectionTitle = isAm ? 'ምሥጢረ ንስሐ (Penance Services)' : 'Penance Services';
+
+  const fName = (f) => (isAm ? f.full_name_am || f.full_name_en : f.full_name_en);
+  const fTitle = (f) => (isAm ? f.title_am || f.title_en : f.title_en);
+  const fBio = (f) => (isAm ? f.bio_am || f.bio_en : f.bio_en);
+  // Only fathers who hear confession belong on the penance page, when flagged.
+  const penanceFathers = fathers.filter((f) => f.is_confessor || f.is_penance_father);
+  const listedFathers = penanceFathers.length > 0 ? penanceFathers : fathers;
 
   const [form, setForm] = useState({ name: '', phone: '', email: '', preferredFather: '', message: '' });
 
@@ -134,7 +141,7 @@ export default function Penance({ settings = {} }) {
                           fontSize: '0.9rem',
                           width: 'fit-content'
                         }}>
-                          {link.label}
+                          {isAm ? (link.labelAm || link.label) : link.label}
                         </a>
                       ))}
                     </div>
@@ -144,6 +151,31 @@ export default function Penance({ settings = {} }) {
             ))}
           </div>
         </div>
+
+        {/* Our Penance Fathers */}
+        {listedFathers.length > 0 && (
+          <div style={{ marginTop: '3.5rem' }}>
+            <h3 style={{ textAlign: 'center', color: 'var(--navy)', fontFamily: 'var(--font-heading)', fontSize: '1.8rem', marginBottom: '2.5rem' }}>
+              {isAm ? 'የንስሐ አባቶቻችን' : 'Our Penance Fathers'}
+            </h3>
+            <div className="fathers-grid">
+              {listedFathers.map((f, i) => (
+                <Reveal className="father-profile-card" key={f.id} delay={i * 80}>
+                  <div className="father-profile-avatar">
+                    {f.photo_url ? (
+                      <img src={f.photo_url} alt={fName(f)} />
+                    ) : (
+                      <span className="parish-avatar-initial">{(fName(f) || '?').charAt(0)}</span>
+                    )}
+                  </div>
+                  <div className="father-profile-name">{fName(f)}</div>
+                  <div className="father-profile-title">{fTitle(f)}</div>
+                  {fBio(f) && <p className="father-profile-bio">{fBio(f)}</p>}
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Contact Form */}
         <Reveal as="div" direction="up" className="form-container-card" style={{ maxWidth: '600px', marginTop: '3.5rem' }}>
@@ -183,6 +215,9 @@ export default function Penance({ settings = {} }) {
               <span>{isAm ? 'የሚመርጡት አባት (አማራጭ)' : 'Preferred Father (optional)'}</span>
               <select value={form.preferredFather} onChange={handleChange('preferredFather')} className="form-select-field">
                 <option value="">{isAm ? 'ምንም ምርጫ የለኝም' : 'No preference'}</option>
+                {listedFathers.map((f) => (
+                  <option key={f.id} value={fName(f)}>{fName(f)}</option>
+                ))}
               </select>
             </label>
 
