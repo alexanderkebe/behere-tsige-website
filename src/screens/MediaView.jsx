@@ -145,24 +145,12 @@ export default function MediaView({ initialMediaLinks = [] }) {
   return (
     <div className="media-page-view">
       <PageHero
-        title={t.title}
-        subtitle={t.subtitle}
+        title={t.profileTitle}
+        subtitle={t.profileSubtitle}
       />
       <div className="media-content-wrapper" style={{ paddingTop: '3.5rem' }}>
-        {/* Profile Card & Scripture Quote - Inspired by Socials App */}
+        {/* Scripture Quote */}
         <div className="media-profile-section-container">
-          <Reveal className="media-profile-card-glass" direction="up">
-            <div className="media-profile-avatar-wrapper">
-              <img 
-                src="/assets/logo-footer.png" 
-                alt="Church Logo" 
-                className="media-profile-avatar-img" 
-              />
-            </div>
-            <h2 className="media-profile-title">{t.profileTitle}</h2>
-            <p className="media-profile-subtitle">{t.profileSubtitle}</p>
-          </Reveal>
-
           <Reveal className="media-quote-card-glass" direction="up" delay={50}>
             <blockquote className="media-quote-text">
               <p>{t.scriptureQuote}</p>
