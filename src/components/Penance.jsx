@@ -68,7 +68,9 @@ export default function Penance({ settings = {} }) {
         {/* Intro */}
         <Reveal direction="up" style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <p style={{ fontSize: '1.15rem', lineHeight: '1.8', color: 'var(--text-dark)', margin: 0 }}>
-            {isAm ? 'ወደ ንስሐ አገልግሎት ገጻችን እንኳን በደህና መጡ። ይህም አገልግሎት ምዕመናን ኃጢአታቸውን ለካህን ተናዘው ሥርየት የሚያገኙበት ነው። ግለሰቦች ይቅርታን እንዲያገኙ እና ወደ ጸጋ ሁኔታ እንዲመለሱ የሚረዳ መንገድ ነው፣ በተለይም ቅዱስ ቁርባንን ከመቀበላቸው በፊት።' : 'Welcome to our penance services Page. The service allows believers to confess their sins to a priest and receive absolution. It\'s a way for individuals to seek forgiveness and return to a state of grace, especially before participating in the Holy Communion.'}
+            {isAm 
+              ? 'እንኳን ወደ ንስሐ አገልግሎት ገጻችን በደህና መጡ። አገልግሎቱ ምዕመናን ኃጢአታቸውን ለካህን እንዲናዘዙ እና ከአምላካቸው ይቅርታ እንዲቀበሉ ያስችላቸዋል። በተለይ ምዕመናን በቅዱስ ቁርባን ከመሳተፋቸው በፊት መደረግ ስለሚገባው ዝግጅት እና በዘላቂ የክርስትና ህይወት ጉዟቸው የንስሃ አባት ክትትል የሚያገኙበትን መንገድ በትምህርተ ንስሃ እንዲያጸኑ እና ዘለዓለማዊ ሕይወት የሚያገኙበትን መንገድ የሚያሳይ ነው።' 
+              : 'Welcome to our penance services Page. The service allows believers to confess their sins to a priest and receive absolution. It\'s a way for individuals to seek forgiveness and return to a state of grace, especially before participating in the Holy Communion.'}
           </p>
         </Reveal>
 
