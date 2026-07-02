@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Reveal from './Reveal';
 import { DiamondOrnament } from './Icons';
 import { useLanguage } from '../context/LanguageContext';
+import { createClient } from '@/lib/supabase/client';
 
 const PENANCE_STEPS = [
   {
@@ -68,16 +69,36 @@ export default function Penance({ settings = {}, fathers = [] }) {
   const page = Math.min(fPage, totalPages || 1);
   const pageFathers = listedFathers.slice((page - 1) * FATHERS_PER_PAGE, page * FATHERS_PER_PAGE);
 
-  const [form, setForm] = useState({ name: '', phone: '', email: '', preferredFather: '', message: '' });
+  // Same flow as the home page's Parish Office form: the request is stored
+  // in confessor_requests with the chosen father's database id.
+  const [form, setForm] = useState({
+    requester_name: '',
+    phone: '',
+    email: '',
+    preferred_father_id: '',
+    message: '',
+  });
+  const [state, setState] = useState('idle'); // idle | sending | sent | error
 
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Father Confessor Request: ${form.name}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nPreferred Father: ${form.preferredFather || 'No preference'}\n\nMessage:\n${form.message}`);
-    window.location.href = `mailto:info@beheretsigestmary.org?subject=${subject}&body=${body}`;
+    setState('sending');
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from('confessor_requests').insert({
+        ...form,
+        preferred_father_id: form.preferred_father_id || null,
+      });
+      if (error) throw error;
+      setState('sent');
+      setForm({ requester_name: '', phone: '', email: '', preferred_father_id: '', message: '' });
+    } catch (err) {
+      console.error('confessor request failed:', err?.message || err);
+      setState('error');
+    }
   };
 
   return (
@@ -220,28 +241,31 @@ export default function Penance({ settings = {}, fathers = [] }) {
         <Reveal as="div" direction="up" className="form-container-card" style={{ maxWidth: '600px', marginTop: '3.5rem' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <h3 style={{ color: 'var(--navy)', margin: '0 0 1rem 0', fontSize: '1.6rem', fontFamily: 'var(--font-heading)' }}>
-              {isAm ? 'ከነፍስ አባት ጋር ይገናኙ' : 'Get in Contact with a Father Confessor'}
+              {isAm ? 'ወደ አባትህ ተመለስ' : 'Get in Contact with a Father Confessor'}
             </h3>
             <blockquote className="scripture-blockquote" style={{ margin: '0 0 1.5rem 0' }}>
-              {isAm 
-                ? '«እርስ በርሳችሁ በኃጢአታችሁ ተናዘዙ፥ ትፈወሱም ዘንድ እያንዳንዱ ስለ ሌላው ይጸልይ።» — ያዕቆብ ፭፥፲፮' 
-                : '“Therefore confess your sins to each other and pray for each other so that you may be healed.” — James 5:16'}
+              {isAm
+                ? '“ተነስቼ ወደ አባቴ እሄዳለሁና፦ አባቴ ሆይ፥ በሰማይና በፊትህ በደልሁ እለዋለሁ…” — ሉቃስ 15:18'
+                : '“I will arise and go to my father, and will say to him, ‘Father, I have sinned against heaven and before you...’” — Luke 15:18'}
             </blockquote>
             <p style={{ color: 'var(--text-dark)', lineHeight: '1.6', fontSize: '0.95rem', opacity: 0.85 }}>
-              {isAm 
-                ? 'በእምነት ያነጋግሩን። በንስሐ ምሥጢር እንዲመሩዎት የነፍስ አባት ያነጋግርዎታል።' 
-                : 'Reach out in confidence. A father confessor will contact you to guide you in the sacrament of penance.'}
+              {isAm
+                ? 'ኑ፣ የልብዎን ሸክም ያቅልሉ። የንስሐ አባት ጋር ለመገናኘት ቅጹን ይሙሉ::'
+                : 'Come and relieve your burden. Reach out here to connect privately with a spiritual father who will help you find peace.'}
             </p>
+            <h4 style={{ color: 'var(--navy)', margin: '1.5rem 0 0', fontSize: '1.15rem', fontFamily: 'var(--font-heading)' }}>
+              {isAm ? 'የንስሐ አባት ይጠይቁ' : 'Request a Father Confessor'}
+            </h4>
           </div>
-          
+
           <form onSubmit={handleSubmit} className="services-form" style={{ gridTemplateColumns: '1fr' }}>
             <label className="form-label-field">
-              <span>{isAm ? 'ስም' : 'Your Name'} *</span>
-              <input type="text" required value={form.name} onChange={handleChange('name')} className="form-input-field" />
+              <span>{isAm ? 'ስም' : 'Name'} *</span>
+              <input type="text" required value={form.requester_name} onChange={handleChange('requester_name')} className="form-input-field" />
             </label>
 
             <label className="form-label-field">
-              <span>{isAm ? 'ስልክ' : 'Phone'} *</span>
+              <span>{isAm ? 'ስልክ ቁጥር' : 'Phone'} *</span>
               <input type="tel" required value={form.phone} onChange={handleChange('phone')} className="form-input-field" />
             </label>
 
@@ -251,11 +275,11 @@ export default function Penance({ settings = {}, fathers = [] }) {
             </label>
 
             <label className="form-label-field">
-              <span>{isAm ? 'የሚመርጡት አባት (አማራጭ)' : 'Preferred Father (optional)'}</span>
-              <select value={form.preferredFather} onChange={handleChange('preferredFather')} className="form-select-field">
-                <option value="">{isAm ? 'ምንም ምርጫ የለኝም' : 'No preference'}</option>
+              <span>{isAm ? 'የንስሐ አባት ይምረጡ (አማራጭ)' : 'Spiritual Father (Optional)'}</span>
+              <select value={form.preferred_father_id} onChange={handleChange('preferred_father_id')} className="form-select-field">
+                <option value="">{isAm ? 'ምርጫ የለኝም' : 'No preference'}</option>
                 {listedFathers.map((f) => (
-                  <option key={f.id} value={fName(f)}>{fName(f)}</option>
+                  <option key={f.id} value={f.id}>{fName(f)}</option>
                 ))}
               </select>
             </label>
@@ -265,8 +289,21 @@ export default function Penance({ settings = {}, fathers = [] }) {
               <textarea required rows={4} value={form.message} onChange={handleChange('message')} className="form-textarea-field" />
             </label>
 
-            <button type="submit" className="form-submit-btn">
-              {isAm ? 'ጥያቄውን ላክ' : 'Send Request'}
+            {state === 'sent' && (
+              <p style={{ color: '#16a34a', fontWeight: 600, fontSize: '0.92rem', margin: 0 }}>
+                {isAm ? 'እናመሰግናለን። ጥያቄዎ ደርሶናል — አባት ያገኙዎታል።' : 'Thank you. Your request has been received — a father will be in touch.'}
+              </p>
+            )}
+            {state === 'error' && (
+              <p style={{ color: '#c62828', fontWeight: 600, fontSize: '0.92rem', margin: 0 }}>
+                {isAm ? 'የሆነ ስህተት ተፈጥሯል። እባክዎን እንደገና ይሞክሩ።' : 'Something went wrong. Please try again.'}
+              </p>
+            )}
+
+            <button type="submit" className="form-submit-btn" disabled={state === 'sending'}>
+              {state === 'sending'
+                ? (isAm ? 'በመላክ ላይ…' : 'Sending…')
+                : (isAm ? 'ጉዞዬን እጀምራለሁ' : 'Begin My Journey')}
             </button>
           </form>
         </Reveal>
