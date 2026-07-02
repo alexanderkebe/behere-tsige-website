@@ -4,7 +4,7 @@ import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import ChatBubble from './ChatBubble';
+import ChatWidget from './ChatWidget';
 import CookieConsent from './CookieConsent';
 import GeezComingSoon from './GeezComingSoon';
 
@@ -19,7 +19,7 @@ export default function SiteChrome({ children }) {
       <Navbar />
       {children}
       <Footer />
-      <ChatBubble />
+      <ChatWidget />
       <CookieConsent />
       <GeezComingSoon />
     </div>
