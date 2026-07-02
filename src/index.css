@@ -4724,6 +4724,41 @@ a.contact-info-value:hover {
   gap: 8px;
 }
 
+/* Mobile: the nested 2rem paddings + gaps overflowed the 7-column grid.
+   Tighten everything so the calendar fits within the viewport. */
+@media (max-width: 600px) {
+  .dejeselam-calendar-container {
+    padding: 1rem 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .dejeselam-single-month-wrapper {
+    padding: 1rem 0.75rem;
+    border-radius: 14px;
+  }
+  .dejeselam-days-grid {
+    gap: 5px;
+  }
+  .dejeselam-weekdays-grid {
+    font-size: 0.68rem;
+  }
+  .dejeselam-day-btn {
+    border-radius: 8px;
+    padding: 0.15rem;
+  }
+  .dejeselam-day-number {
+    font-size: 0.82rem;
+  }
+  .dejeselam-month-title {
+    font-size: 1.05rem;
+  }
+  .calendar-legend {
+    gap: 0.6rem 1rem;
+  }
+  .legend-item {
+    font-size: 0.78rem;
+  }
+}
+
 .dejeselam-day-btn {
   aspect-ratio: 1;
   border: 1px solid rgba(15, 27, 61, 0.08);

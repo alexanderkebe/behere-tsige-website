@@ -4,6 +4,7 @@ import Reveal from './Reveal';
 import { DiamondOrnament } from './Icons';
 import { useLanguage } from '../context/LanguageContext';
 import { createClient } from '@/lib/supabase/client';
+import '@/styles/memorial-form.css';
 
 export default function Memorial({ services = [] }) {
   const { lang } = useLanguage();
@@ -190,7 +191,7 @@ export default function Memorial({ services = [] }) {
         )}
 
         {/* Request Form */}
-        <Reveal as="div" direction="up" style={{ background: 'white', padding: '3rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(15,27,61,0.04)', border: '1px solid rgba(197,160,68,0.15)', maxWidth: '800px', margin: '0 auto' }}>
+        <Reveal as="div" direction="up" className="memorial-form-card">
           <h3 style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--navy)', fontFamily: 'var(--font-heading)' }}>
             {isAm ? 'የፍትሐት ጸሎት መጠየቂያ ቅጽ' : 'Memorial Service Request Form'}
           </h3>
@@ -201,30 +202,30 @@ export default function Memorial({ services = [] }) {
             </div>
           )}
           
-          <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+          <form onSubmit={handleSubmit} className="memorial-form-grid">
             <label className="contact-field" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'የአስቀዳሹ/ስፖንሰር ሙሉ ስም' : 'Sponsor Full Name'} *</span>
-              <input type="text" required value={form.sponsorName} onChange={handleChange('sponsorName')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px' }} disabled={loading} />
+              <input type="text" required value={form.sponsorName} onChange={handleChange('sponsorName')} className="memorial-input" disabled={loading} />
             </label>
 
             <label className="contact-field" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'የሟች ስም (የክርስትና/ዓለማዊ ስም)' : 'Departed Soul Name'} *</span>
-              <input type="text" required value={form.departedName} onChange={handleChange('departedName')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px' }} disabled={loading} />
+              <input type="text" required value={form.departedName} onChange={handleChange('departedName')} className="memorial-input" disabled={loading} />
             </label>
 
             <label className="contact-field" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'ስልክ ቁጥር' : 'Phone'} *</span>
-              <input type="tel" required value={form.phone} onChange={handleChange('phone')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px' }} disabled={loading} />
+              <input type="tel" required value={form.phone} onChange={handleChange('phone')} className="memorial-input" disabled={loading} />
             </label>
 
             <label className="contact-field" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'የሚመርጡት ቀን' : 'Preferred Date'} *</span>
-              <input type="date" required value={form.preferredDate} onChange={handleChange('preferredDate')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px' }} disabled={loading} />
+              <input type="date" required value={form.preferredDate} onChange={handleChange('preferredDate')} className="memorial-input" disabled={loading} />
             </label>
 
-            <label className="contact-field" style={{ display: 'block', gridColumn: '1 / -1' }}>
+            <label className="contact-field memorial-field-full" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'የአገልግሎት አይነት' : 'Memorial Package'} *</span>
-              <select required value={form.serviceId} onChange={handleChange('serviceId')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px', background: 'white' }} disabled={loading}>
+              <select required value={form.serviceId} onChange={handleChange('serviceId')} className="memorial-input" disabled={loading}>
                 <option value="">{isAm ? '-- ይምረጡ --' : '-- Select Package --'}</option>
                 {services.map(s => (
                   <option key={s.id} value={s.id}>
@@ -234,28 +235,28 @@ export default function Memorial({ services = [] }) {
               </select>
             </label>
 
-            <label className="contact-field" style={{ display: 'block', gridColumn: '1 / -1' }}>
+            <label className="contact-field memorial-field-full" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'ኢሜይል (ክፍያ ማረጋገጫ ለመቀበል)' : 'Email (For receipt confirmation)'}</span>
-              <input type="email" value={form.email} onChange={handleChange('email')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px' }} disabled={loading} />
+              <input type="email" value={form.email} onChange={handleChange('email')} className="memorial-input" disabled={loading} />
             </label>
 
-            <label className="contact-field" style={{ display: 'block', gridColumn: '1 / -1' }}>
+            <label className="contact-field memorial-field-full" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'የክፍያ አማራጭ' : 'Payment Option'} *</span>
-              <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 'bold' }}>
+              <div className="memorial-payment-options">
+                <label className="memorial-payment-opt">
                   <input type="radio" name="paymentMethod" value="chapa" checked={form.paymentMethod === 'chapa'} onChange={handleChange('paymentMethod')} disabled={loading} />
                   <span>{isAm ? 'በChapa (ኦንላይን መክፈያ)' : 'Pay Online (Chapa)'}</span>
                 </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 'bold' }}>
+                <label className="memorial-payment-opt">
                   <input type="radio" name="paymentMethod" value="bank" checked={form.paymentMethod === 'bank'} onChange={handleChange('paymentMethod')} disabled={loading} />
                   <span>{isAm ? 'በባንክ ሂሳብ/በአካል (ቆይተው መክፈያ)' : 'Pay Later (Bank Transfer / Cash)'}</span>
                 </label>
               </div>
             </label>
 
-            <label className="contact-field" style={{ display: 'block', gridColumn: '1 / -1' }}>
+            <label className="contact-field memorial-field-full" style={{ display: 'block' }}>
               <span className="contact-field-label">{isAm ? 'ተጨማሪ መረጃ ወይም የሚነበቡ ስሞች' : 'Names to be Read / Message'}</span>
-              <textarea rows={4} value={form.message} onChange={handleChange('message')} className="contact-input" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ccc', borderRadius: '4px', resize: 'vertical' }} disabled={loading} />
+              <textarea rows={4} value={form.message} onChange={handleChange('message')} className="memorial-input" style={{ resize: 'vertical' }} disabled={loading} />
             </label>
 
             <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginTop: '1rem' }}>

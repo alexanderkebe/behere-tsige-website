@@ -221,12 +221,6 @@ export default function ChurchSchool({ lang }) {
                     ? "የካቴድራሉ የአብነት መምህር የኔታ አባ ጊሩም የሚሰጡት የአብነት ትምህርት በየሳምንቱ ረቡዕ ከሰዓት በኋላ እስከ ምሽቱ ፪ ሰዓት (8:00 PM)፣ ቅዳሜ ደግሞ ከሰዓት በኋላ እስከ ምሽቱ ፲፪ ሰዓት (6:00 PM) ይሰጣል። በተጨማሪም ተማሪዎች ከሰኞ እስከ አርብ ባሉት ቀናት ከመምህሩ ጋር ቀጠሮ በመያዝ ትምህርቱን በግል መከታተል ይችላሉ።"
                     : "The Abnet curriculum given by the Cathedral's Abnet teacher, Yeneta Abba Girum, is every Wednesday from 6 pm – 8 pm and Saturday from 3 pm – 6 pm. In addition, students can learn the lessons from the teacher by appointment from Monday to Friday."}
                 </p>
-                <p className="schedule-callout">
-                  <strong>{isAm ? 'ማሳሰቢያ፦' : 'Note:'}</strong>{' '}
-                  {isAm
-                    ? "ልጆችዎን ወደ ቤተክርስቲያን በማምጣትና በግብረ-ገብነት (ክርስቲያናዊ ሥነ-ምግባር) ሥርዓተ-ትምህርት ኮትኩቶ በማሳደግ ረገድ የድርሻዎን እንዲወጡ አጥብቀን እናሳስባለን።"
-                    : "We urge you to contribute to the education of your children by bringing them to church according to the mentioned Abnet curriculum schedule."}
-                </p>
               </div>
             </div>
           </div>
@@ -401,14 +395,6 @@ export default function ChurchSchool({ lang }) {
                 </ul>
               </div>
 
-              <div className="schedule-card" style={{ marginTop: '2rem' }}>
-                <h4 className="section-small-title">{isAm ? 'ማሳሰቢያ' : 'General Reminder'}</h4>
-                <p className="schedule-text" style={{ fontSize: '0.95rem' }}>
-                  {isAm
-                    ? "የሰንበት ትምህርት ቤት መርሃ ግብራችን ለወጣቶች፣ ለሕፃናትና ለቤተሰቦች በተዘጋጁ የመጽሐፍ ቅዱስ ጥናቶች፣ በተግባራዊ የሕይወት ትምህርቶችና በመንፈሳዊ አንድነት ቀጣዩን ትውልድ በሃይማኖትና በሥነ ምግባር ኮትኩቶ ያሳድጋል።"
-                    : "Our Sunday School program nurtures the next generation through biblical studies, life application, and spiritual fellowship tailored for youth, children, and families."}
-                </p>
-              </div>
             </div>
           </div>
 
