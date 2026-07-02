@@ -39,13 +39,21 @@ export default function Hero({ lang, videoSrc }) {
         ? '/assets/hero-tablet.png'
         : '/assets/background.png';
 
+  const activeVideoSrc = videoSrc || (
+    tier === 'phone'
+      ? '/assets/hero-mobile.mp4'
+      : tier === 'large'
+        ? '/assets/hero-video-desktop.mp4'
+        : '/assets/hero-tablet-video.mp4'
+  );
+
   return (
     <section id="home" className="hero">
       <div className="hero-bg hero-bg-animate">
-        {videoSrc ? (
+        {activeVideoSrc ? (
           <video
             className="hero-bg-video"
-            src={videoSrc}
+            src={activeVideoSrc}
             poster={poster}
             autoPlay
             loop
