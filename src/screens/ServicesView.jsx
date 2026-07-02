@@ -40,6 +40,17 @@ export default function ServicesView({
     return () => mq.removeEventListener('change', updateSrc);
   }, []);
 
+  useEffect(() => {
+    if (activeTab !== 'overview') {
+      document.body.classList.add('services-dashboard-active');
+    } else {
+      document.body.classList.remove('services-dashboard-active');
+    }
+    return () => {
+      document.body.classList.remove('services-dashboard-active');
+    };
+  }, [activeTab]);
+
   const isAm = lang === 'am';
 
   const tabs = [
