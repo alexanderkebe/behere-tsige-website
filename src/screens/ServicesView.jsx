@@ -33,7 +33,7 @@ export default function ServicesView({
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)');
     const updateSrc = () => {
-      setVideoSrc(mq.matches ? '/assets/hero-mobile.mp4' : '/assets/hero-video-desktop.mp4');
+      setVideoSrc(mq.matches ? '/assets/services-hero-mobile.mp4' : '/assets/services-hero-pc.mp4');
     };
     updateSrc();
     mq.addEventListener('change', updateSrc);
