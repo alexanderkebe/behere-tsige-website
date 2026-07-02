@@ -109,16 +109,8 @@ export function usePreloader() {
     const jobs = imageSources.map((src, i) => loadImage(src, tasks[i]));
     if (videoTask) jobs.push(loadVideo(videoToLoad, videoTask));
 
-    const safety = setTimeout(() => {
-      if (cancelled) return;
-      if (createdUrl) setVideoSrc(createdUrl);
-      setProgress(100);
-      setDone(true);
-    }, SAFETY_TIMEOUT);
-
     Promise.all(jobs).then(() => {
       if (cancelled) return;
-      clearTimeout(safety);
       if (createdUrl) setVideoSrc(createdUrl);
       setProgress(100);
       // Brief beat so the user actually sees 100%.
@@ -129,7 +121,6 @@ export function usePreloader() {
 
     return () => {
       cancelled = true;
-      clearTimeout(safety);
       if (createdUrl) URL.revokeObjectURL(createdUrl);
     };
   }, []);

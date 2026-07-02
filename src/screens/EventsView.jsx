@@ -331,6 +331,98 @@ export default function EventsView({ initialEvents = [] }) {
           )}
         </div>
       </section>
+
+      {/* Event Details Modal */}
+      {selectedEvent && (
+        <div className="event-modal-overlay" onClick={() => setSelectedEvent(null)}>
+          <div className="event-modal-container" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="event-modal-close" 
+              onClick={() => setSelectedEvent(null)}
+              aria-label={t.close}
+            >
+              ✕
+            </button>
+            
+            <div className="event-modal-layout">
+              <div className="event-modal-image-side">
+                {selectedEvent.poster_url ? (
+                  <a href={selectedEvent.poster_url} target="_blank" rel="noopener noreferrer" className="event-modal-image-link">
+                    <img 
+                      src={selectedEvent.poster_url} 
+                      alt={isAm ? selectedEvent.title_am : selectedEvent.title_en} 
+                      className="event-modal-img" 
+                    />
+                  </a>
+                ) : (
+                  <div className="event-modal-placeholder">
+                    <DiamondOrnament />
+                  </div>
+                )}
+              </div>
+
+              <div className="event-modal-info-side">
+                <span className="modal-badge">
+                  {selectedEvent.is_main ? t.mainFeast : (isAm ? 'መርሃ ግብር' : 'Event')}
+                </span>
+                
+                <h3 className="event-modal-title">
+                  {isAm ? selectedEvent.title_am || selectedEvent.title_en : selectedEvent.title_en || selectedEvent.title_am}
+                </h3>
+
+                <div className="event-modal-meta-list">
+                  <div className="event-modal-meta-row">
+                    <span aria-hidden="true" className="meta-icon-large">📅</span>
+                    <div>
+                      <div className="meta-label">{t.date}</div>
+                      <div className="meta-val">{formatDate(selectedEvent.event_date)}</div>
+                    </div>
+                  </div>
+
+                  {selectedEvent.start_time && (
+                    <div className="event-modal-meta-row">
+                      <span aria-hidden="true" className="meta-icon-large">⏰</span>
+                      <div>
+                        <div className="meta-label">{t.time}</div>
+                        <div className="meta-val">
+                          {formatTime(selectedEvent.start_time)}
+                          {selectedEvent.end_time && ` - ${formatTime(selectedEvent.end_time)}`}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {(selectedEvent.location_en || selectedEvent.location_am) && (
+                    <div className="event-modal-meta-row">
+                      <span aria-hidden="true" className="meta-icon-large">📍</span>
+                      <div>
+                        <div className="meta-label">{t.location}</div>
+                        <div className="meta-val">
+                          {isAm ? selectedEvent.location_am || selectedEvent.location_en : selectedEvent.location_en || selectedEvent.location_am}
+                        </div>
+                        {selectedEvent.map_url && (
+                          <a 
+                            href={selectedEvent.map_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="modal-map-link"
+                          >
+                            🗺️ {t.viewLocation} &rarr;
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="event-modal-description">
+                  <p>{isAm ? selectedEvent.description_am || selectedEvent.description_en : selectedEvent.description_en || selectedEvent.description_am}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
