@@ -7,16 +7,30 @@ export default function Catechism() {
   const { lang } = useLanguage();
   const isAm = lang === 'am' || lang === 'gez';
 
+  const [activeTab, setActiveTab] = useState('inquiry'); // 'inquiry' or 'register'
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [regForm, setRegForm] = useState({ name: '', phone: '', email: '', course: 'Foundations', message: '' });
 
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
+  const handleRegChange = (field) => (e) =>
+    setRegForm((prev) => ({ ...prev, [field]: e.target.value }));
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Catechism Inquiry: ${form.name}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`);
-    window.location.href = `mailto:info@beheretsigestmary.org?subject=${subject}&body=${body}`;
+    if (activeTab === 'inquiry') {
+      const subject = encodeURIComponent(`Catechism Inquiry: ${form.name}`);
+      const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`);
+      window.location.href = `mailto:info@beheretsigestmary.org?subject=${subject}&body=${body}`;
+    } else {
+      const courseLabel = regForm.course === 'Foundations' 
+        ? (isAm ? 'የኦርቶዶክስ መሠረቶች (Orthodox Foundations)' : 'Orthodox Foundations')
+        : (isAm ? 'ኦርቶዶክሳዊ ሕይወት (Living Orthodox)' : 'Living Orthodox');
+      const subject = encodeURIComponent(`Catechism Registration: ${regForm.name} - ${courseLabel}`);
+      const body = encodeURIComponent(`Name: ${regForm.name}\nPhone: ${regForm.phone}\nEmail: ${regForm.email}\nSelected Course: ${courseLabel}\n\nNotes/Message:\n${regForm.message}`);
+      window.location.href = `mailto:info@beheretsigestmary.org?subject=${subject}&body=${body}`;
+    }
   };
 
   const sectionTitle = isAm ? 'የትምህርተ ሃይማኖት መርሃ ግብር (Catechism)' : 'Catechism Class';
@@ -126,37 +140,123 @@ export default function Catechism() {
           </Reveal>
         </div>
 
-        {/* Contact Form */}
+        {/* Contact & Registration Forms */}
         <Reveal as="div" direction="up" className="form-container-card" style={{ maxWidth: '600px' }}>
+          
+          {/* Toggle buttons */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid rgba(15, 27, 61, 0.08)', paddingBottom: '1rem' }}>
+            <button 
+              type="button" 
+              onClick={() => setActiveTab('inquiry')} 
+              style={{
+                background: activeTab === 'inquiry' ? 'var(--navy)' : 'transparent',
+                color: activeTab === 'inquiry' ? 'var(--white)' : 'var(--navy)',
+                border: '1.5px solid var(--navy)',
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.25s'
+              }}
+            >
+              {isAm ? 'ጥያቄ ለመጠየቅ' : 'Have Questions?'}
+            </button>
+            <button 
+              type="button" 
+              onClick={() => setActiveTab('register')} 
+              style={{
+                background: activeTab === 'register' ? 'var(--navy)' : 'transparent',
+                color: activeTab === 'register' ? 'var(--white)' : 'var(--navy)',
+                border: '1.5px solid var(--navy)',
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.25s'
+              }}
+            >
+              {isAm ? 'ለትምህርት ለመመዝገብ' : 'Register for Course'}
+            </button>
+          </div>
+
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h3 style={{ color: 'var(--navy)', margin: '0 0 0.5rem 0', fontSize: '1.8rem', fontFamily: 'var(--font-heading)' }}>
-              {isAm ? 'ያግኙን' : 'Contact Us'}
-            </h3>
-            <h4 style={{ margin: 0, color: 'var(--text-dark)', fontSize: '1.1rem', fontWeight: '500' }}>
-              {isAm ? 'ጥያቄዎች አሉዎት? ያነጋግሩን!' : 'Have Questions? Get in touch!'}
-            </h4>
+            {activeTab === 'inquiry' ? (
+              <>
+                <h3 style={{ color: 'var(--navy)', margin: '0 0 0.5rem 0', fontSize: '1.8rem', fontFamily: 'var(--font-heading)' }}>
+                  {isAm ? 'ያግኙን' : 'Contact Us'}
+                </h3>
+                <h4 style={{ margin: 0, color: 'var(--text-dark)', fontSize: '1.1rem', fontWeight: '500' }}>
+                  {isAm ? 'ጥያቄዎች አሉዎት? ያነጋግሩን!' : 'Have Questions? Get in touch!'}
+                </h4>
+              </>
+            ) : (
+              <>
+                <h3 style={{ color: 'var(--navy)', margin: '0 0 0.5rem 0', fontSize: '1.8rem', fontFamily: 'var(--font-heading)' }}>
+                  {isAm ? 'የትምህርት ምዝገባ' : 'Course Registration'}
+                </h3>
+                <h4 style={{ margin: 0, color: 'var(--text-dark)', fontSize: '1.1rem', fontWeight: '500' }}>
+                  {isAm ? 'ከሁለቱ አንዱን መርሃ ግብር ይምረጡና ይመዝገቡ' : 'Choose a program and fill out the details below'}
+                </h4>
+              </>
+            )}
           </div>
           
-          <form onSubmit={handleSubmit} className="services-form" style={{ gridTemplateColumns: '1fr' }}>
-            <label className="form-label-field">
-              <span>{isAm ? 'ስም *' : 'Name *'}</span>
-              <input type="text" required value={form.name} onChange={handleChange('name')} className="form-input-field" />
-            </label>
+          {activeTab === 'inquiry' ? (
+            <form onSubmit={handleSubmit} className="services-form" style={{ gridTemplateColumns: '1fr' }}>
+              <label className="form-label-field">
+                <span>{isAm ? 'ስም *' : 'Name *'}</span>
+                <input type="text" required value={form.name} onChange={handleChange('name')} className="form-input-field" />
+              </label>
 
-            <label className="form-label-field">
-              <span>{isAm ? 'ኢሜይል *' : 'Email *'}</span>
-              <input type="email" required value={form.email} onChange={handleChange('email')} className="form-input-field" />
-            </label>
+              <label className="form-label-field">
+                <span>{isAm ? 'ኢሜይል *' : 'Email *'}</span>
+                <input type="email" required value={form.email} onChange={handleChange('email')} className="form-input-field" />
+              </label>
 
-            <label className="form-label-field">
-              <span>{isAm ? 'መልእክት *' : 'Message *'}</span>
-              <textarea required rows={4} value={form.message} onChange={handleChange('message')} className="form-textarea-field" />
-            </label>
+              <label className="form-label-field">
+                <span>{isAm ? 'መልእክት *' : 'Message *'}</span>
+                <textarea required rows={4} value={form.message} onChange={handleChange('message')} className="form-textarea-field" />
+              </label>
 
-            <button type="submit" className="form-submit-btn">
-              {isAm ? 'ጥያቄውን ላክ (Submit)' : 'Submit Inquiry'}
-            </button>
-          </form>
+              <button type="submit" className="form-submit-btn">
+                {isAm ? 'ጥያቄውን ላክ (Submit)' : 'Submit Inquiry'}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="services-form" style={{ gridTemplateColumns: '1fr' }}>
+              <label className="form-label-field">
+                <span>{isAm ? 'ሙሉ ስም *' : 'Full Name *'}</span>
+                <input type="text" required value={regForm.name} onChange={handleRegChange('name')} className="form-input-field" />
+              </label>
+
+              <label className="form-label-field">
+                <span>{isAm ? 'ስልክ ቁጥር *' : 'Phone Number *'}</span>
+                <input type="tel" required value={regForm.phone} onChange={handleRegChange('phone')} className="form-input-field" />
+              </label>
+
+              <label className="form-label-field">
+                <span>{isAm ? 'ኢሜይል' : 'Email (Optional)'}</span>
+                <input type="email" value={regForm.email} onChange={handleRegChange('email')} className="form-input-field" />
+              </label>
+
+              <label className="form-label-field">
+                <span>{isAm ? 'የፕሮግራም ምርጫ *' : 'Select Program *'}</span>
+                <select value={regForm.course} onChange={handleRegChange('course')} className="form-input-field" style={{ width: '100%', height: '48px', padding: '0 12px', borderRadius: '8px', border: '1px solid #eaeaea', background: '#fff' }}>
+                  <option value="Foundations">{isAm ? 'የኦርቶዶክስ መሠረቶች (Orthodox Foundations) - 14 ሳምንታት' : 'Orthodox Foundations (14 weeks)'}</option>
+                  <option value="Living">{isAm ? 'ኦርቶዶክሳዊ ሕይወት (Living Orthodox) - 1 ዓመት' : 'Living Orthodox (1 year)'}</option>
+                </select>
+              </label>
+
+              <label className="form-label-field">
+                <span>{isAm ? 'ተጨማሪ መልእክት ወይም ማስታወሻ' : 'Additional Message / Notes (Optional)'}</span>
+                <textarea rows={3} value={regForm.message} onChange={handleRegChange('message')} className="form-textarea-field" />
+              </label>
+
+              <button type="submit" className="form-submit-btn">
+                {isAm ? 'ምዝገባውን ላክ (Submit)' : 'Submit Course Registration'}
+              </button>
+            </form>
+          )}
         </Reveal>
 
       </div>
