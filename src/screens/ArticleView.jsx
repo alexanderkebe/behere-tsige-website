@@ -1,8 +1,61 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import Comments from '@/components/articles/Comments';
 import '@/styles/articles.css';
+import '@/styles/article-comments.css';
+
+const ShareIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+  </svg>
+);
+
+const LinkIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+  </svg>
+);
+
+function ShareBar({ title, lang }) {
+  const [copied, setCopied] = useState(false);
+  const url = typeof window !== 'undefined' ? window.location.href : '';
+  const enc = encodeURIComponent(url);
+  const encTitle = encodeURIComponent(title);
+
+  const t = {
+    share: lang === 'am' ? 'ያጋሩ' : 'Share',
+    copy: lang === 'am' ? 'ሊንክ ይቅዱ' : 'Copy Link',
+    copied: lang === 'am' ? 'ተቀድቷል!' : 'Copied!',
+  };
+
+  const copy = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    });
+  };
+
+  const nativeShare = () => {
+    if (navigator.share) navigator.share({ title, url }).catch(() => {});
+    else copy();
+  };
+
+  return (
+    <div className="article-share">
+      <span className="article-share-label">{t.share}</span>
+      <button className="btn-share" onClick={nativeShare}><ShareIcon /> {t.share}</button>
+      <a className="btn-share" href={`https://t.me/share/url?url=${enc}&text=${encTitle}`} target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a className="btn-share" href={`https://wa.me/?text=${encTitle}%20${enc}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a className="btn-share" href={`https://www.facebook.com/sharer/sharer.php?u=${enc}`} target="_blank" rel="noopener noreferrer">Facebook</a>
+      <button className="btn-share" onClick={copy}><LinkIcon /> {copied ? t.copied : t.copy}</button>
+    </div>
+  );
+}
 
 export default function ArticleView({ article }) {
   const { lang } = useLanguage();
@@ -41,6 +94,10 @@ export default function ArticleView({ article }) {
         <div className="article-detail-body">
           {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
         </div>
+
+        <ShareBar title={title} lang={lang} />
+
+        <Comments articleId={article.id} lang={lang} />
       </article>
     </main>
   );

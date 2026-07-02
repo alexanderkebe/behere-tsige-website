@@ -31,7 +31,7 @@ export default function ArticlesView({ articles = [] }) {
   const visible = showAll || q ? filtered : filtered.slice(0, INITIAL);
 
   return (
-    <main className="site-page articles-page">
+    <main className="articles-page">
       <PageHero
         title={t.title}
         subtitle={t.intro}
