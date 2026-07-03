@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import PageHero from '@/components/PageHero';
 import '@/styles/donate.css';
 import '@/styles/donate-bank.css';
 
 const T = {
   en: {
+    heroTitle: 'Donations & Support',
+    heroSubtitle: 'Your generosity sustains our parish, our schools, and our outreach. Thank you for giving cheerfully.',
     quote: '“Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.”',
     quoteRef: '— 2 Corinthians 9:7',
     introText: 'Your generosity sustains our parish, our schools, and our outreach. Thank you for giving cheerfully.',
@@ -19,6 +22,8 @@ const T = {
     bankTitle: 'Bank Transfer', accName: 'Account Name', accNum: 'Account Number', copy: 'Copy', copied: 'Copied!',
   },
   am: {
+    heroTitle: 'ልገሳ እና ድጋፍ',
+    heroSubtitle: 'የእርስዎ ልግስና ደብራችንን፣ ትምህርት ቤቶቻችንንና አገልግሎቶቻችንን ይደግፋል። በደስታ ስለሰጡ እናመሰግናለን።',
     quote: '“እያንዳንዱ በልቡ እንዳሰበ ይስጥ፥ በኀዘን ወይም በግድ አይደለም፤ እግዚአብሔር በደስታ የሚሰጠውን ይወዳልና።”',
     quoteRef: '— 2ኛ ቆሮንቶስ 9፥7',
     introText: 'የእርስዎ ልግስና ደብራችንን፣ ትምህርት ቤቶቻችንንና አገልግሎቶቻችንን ይደግፋል። በደስታ ስለሰጡ እናመሰግናለን።',
@@ -188,10 +193,12 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
 
   return (
     <main className="site-page">
-      <div className="donate-container-wrapper">
+      <PageHero title={t.heroTitle} subtitle={t.heroSubtitle} />
+      <div className="donate-container-wrapper" style={{ paddingTop: '4rem' }}>
         <section className="donate-intro-section">
-          <blockquote className="donate-intro-quote">{t.quote}<br /><cite>{t.quoteRef}</cite></blockquote>
-          <p className="donate-intro-text">{t.introText}</p>
+          <blockquote className="donate-intro-quote" style={{ borderLeft: '4px solid var(--gold)', margin: '0 auto' }}>
+            {t.quote}<br /><cite style={{ display: 'block', marginTop: '0.5rem', textAlign: 'right', fontWeight: 'bold' }}>{t.quoteRef}</cite>
+          </blockquote>
         </section>
 
         <section className="donate-projects-section">
