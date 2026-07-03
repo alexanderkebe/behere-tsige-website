@@ -193,7 +193,12 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
 
   return (
     <main className="donate-page">
-      <PageHero title={t.heroTitle} subtitle={t.heroSubtitle} />
+      <PageHero 
+        title={t.heroTitle} 
+        subtitle={t.heroSubtitle} 
+        videoSrcDesktop="/assets/donate-hero-pc.mp4"
+        videoSrcMobile="/assets/donate-hero-mobile.mp4"
+      />
       <div className="donate-container-wrapper" style={{ paddingTop: '4rem' }}>
         <section className="donate-intro-section">
           <blockquote className="donate-intro-quote" style={{ borderLeft: '4px solid var(--gold)', margin: '0 auto' }}>

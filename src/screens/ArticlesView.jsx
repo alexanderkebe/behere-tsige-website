@@ -35,6 +35,8 @@ export default function ArticlesView({ articles = [] }) {
       <PageHero
         title={t.title}
         subtitle={t.intro}
+        videoSrcDesktop="/assets/article-hero-pc.mp4"
+        videoSrcMobile="/assets/article-hero-mobile.mp4"
       />
       <section className="articles-section" style={{ paddingTop: '3.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>

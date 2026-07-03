@@ -147,6 +147,8 @@ export default function MediaView({ initialMediaLinks = [] }) {
       <PageHero
         title={t.profileTitle}
         subtitle={t.profileSubtitle}
+        videoSrcDesktop="/assets/media-hero-pc.mp4"
+        videoSrcMobile="/assets/media-hero-mobile.mp4"
       />
       <div className="media-content-wrapper" style={{ paddingTop: '3.5rem' }}>
         {/* Scripture Quote */}

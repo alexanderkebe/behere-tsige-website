@@ -120,6 +120,8 @@ export default function ContactView() {
       <PageHero
         title={t.title}
         subtitle={t.subtitle}
+        videoSrcDesktop="/assets/contact-hero-pc.mp4"
+        videoSrcMobile="/assets/contact-hero-mobile.mp4"
       />
 
       <section className="contact-main-section">

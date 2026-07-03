@@ -121,8 +121,8 @@ export default function EventsView({ initialEvents = [] }) {
       <PageHero
         title={t.title}
         subtitle={t.subtitle}
-        videoSrcDesktop="/assets/events-hero-video-pc.mp4"
-        videoSrcMobile="/assets/events-hero-video-mobile.mp4"
+        videoSrcDesktop="/assets/events-hero-pc.mp4"
+        videoSrcMobile="/assets/events-hero-mobile.mp4"
       />
 
       <section className="events-content-section">
