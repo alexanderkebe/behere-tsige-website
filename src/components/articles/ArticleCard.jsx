@@ -13,11 +13,11 @@ export default function ArticleCard({ article, lang }) {
 
   return (
     <Link href={`/articles/${article.slug}`} className="article-card">
-      <div className="article-card-cover">
-        {article.cover_url
-          ? <img src={article.cover_url} alt="" loading="lazy" />
-          : <div className="article-card-cover-fallback">✚</div>}
-      </div>
+      {article.cover_url && (
+        <div className="article-card-cover">
+          <img src={article.cover_url} alt="" loading="lazy" />
+        </div>
+      )}
       <div className="article-card-body">
         {article.tags?.length > 0 && (
           <div className="article-tags">
@@ -32,6 +32,11 @@ export default function ArticleCard({ article, lang }) {
           )}
           <span className="article-author-name">{article.author?.name}</span>
           {date && <span className="article-date">· {date}</span>}
+        </div>
+        <div className="article-card-stats">
+          <span className="stat">❤️ {article.likes_count || 0}</span>
+          <span className="stat">💬 {article.comments_count || 0}</span>
+          <span className="stat">👁️ {article.views_count || 0}</span>
         </div>
       </div>
     </Link>

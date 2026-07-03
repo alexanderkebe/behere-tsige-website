@@ -59,6 +59,8 @@ function ShareBar({ title, lang }) {
 
 export default function ArticleView({ article }) {
   const { lang } = useLanguage();
+  const [likes, setLikes] = useState(article.likes_count || 0);
+  const [liked, setLiked] = useState(false);
   const title = lang === 'am' ? article.title_am || article.title_en : article.title_en;
   const body = lang === 'am' ? article.body_am || article.body_en : article.body_en;
   const date = article.published_at
@@ -93,6 +95,16 @@ export default function ArticleView({ article }) {
 
         <div className="article-detail-body">
           {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+        </div>
+
+        <div className="article-detail-actions">
+          <button onClick={() => { setLiked(!liked); setLikes(liked ? likes - 1 : likes + 1); }} className={`btn-like ${liked ? 'liked' : ''}`}>
+            {liked ? '❤️' : '🤍'} {likes} {lang === 'am' ? 'ወደድኩት' : 'Like'}
+          </button>
+          <div className="article-detail-stats">
+            <span className="stat">💬 {article.comments_count || 0}</span>
+            <span className="stat">👁️ {article.views_count || 0}</span>
+          </div>
         </div>
 
         <ShareBar title={title} lang={lang} />
