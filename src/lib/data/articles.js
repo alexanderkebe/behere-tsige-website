@@ -16,7 +16,13 @@ export async function getPublishedArticles() {
       .eq('status', 'published')
       .order('published_at', { ascending: false, nullsFirst: false });
     if (error) throw error;
-    return (data || []).map(normalize);
+    const articles = (data || []).map(normalize);
+    for (let i = 0; i < Math.min(2, articles.length); i++) {
+      if (!articles[i].cover_url) {
+        articles[i].cover_url = `https://picsum.photos/seed/${articles[i].id}/800/600`;
+      }
+    }
+    return articles;
   } catch (e) {
     console.error('getPublishedArticles:', e?.message || e);
     return [];
@@ -34,7 +40,14 @@ export async function getArticleBySlug(slug) {
       .eq('status', 'published')
       .maybeSingle();
     if (error) throw error;
-    return data ? normalize(data) : null;
+    if (data) {
+      const art = normalize(data);
+      if (!art.cover_url) {
+        art.cover_url = `https://picsum.photos/seed/${art.id}/800/600`;
+      }
+      return art;
+    }
+    return null;
   } catch (e) {
     console.error('getArticleBySlug:', e?.message || e);
     return null;

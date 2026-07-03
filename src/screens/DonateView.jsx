@@ -195,9 +195,9 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
         </section>
 
         <section className="donate-projects-section">
-          <h2 className="donate-section-subtitle">{t.projectsTitle}</h2>
+          <h2 className="donate-section-subtitle">{CAT[lang]?.parish || 'Projects of the Parish'}</h2>
           <div className="projects-grid">
-            {projects.map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
+            {projects.filter(p => p.category === 'parish').map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
             <div className="general-donation-card">
               <div className="general-donation-content">
                 <h3 className="general-donation-title">{t.generalTitle}</h3>
@@ -205,6 +205,22 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
               </div>
               <button className="btn-contribute" onClick={() => setModal('general')}>{t.giveNow}</button>
             </div>
+          </div>
+
+          <h2 className="donate-section-subtitle" style={{ marginTop: '60px' }}>{CAT[lang]?.sunday_school || 'Projects of the Sunday School'}</h2>
+          <div className="projects-grid">
+            {projects.filter(p => p.category === 'sunday_school').map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
+            {projects.filter(p => p.category === 'sunday_school').length === 0 && (
+              <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)' }}>{lang === 'am' ? 'በአሁኑ ጊዜ ፕሮጀክቶች የሉም' : 'No projects at this time.'}</p>
+            )}
+          </div>
+
+          <h2 className="donate-section-subtitle" style={{ marginTop: '60px' }}>{CAT[lang]?.abnet || 'Projects of the Abnet School'}</h2>
+          <div className="projects-grid">
+            {projects.filter(p => p.category === 'abnet').map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
+            {projects.filter(p => p.category === 'abnet').length === 0 && (
+              <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)' }}>{lang === 'am' ? 'በአሁኑ ጊዜ ፕሮጀክቶች የሉም' : 'No projects at this time.'}</p>
+            )}
           </div>
         </section>
 
