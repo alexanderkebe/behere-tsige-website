@@ -439,7 +439,9 @@ button {
    ============================================= */
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 500px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
