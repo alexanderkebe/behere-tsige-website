@@ -192,7 +192,7 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
   };
 
   return (
-    <main className="site-page">
+    <main className="donate-page">
       <PageHero title={t.heroTitle} subtitle={t.heroSubtitle} />
       <div className="donate-container-wrapper" style={{ paddingTop: '4rem' }}>
         <section className="donate-intro-section">
