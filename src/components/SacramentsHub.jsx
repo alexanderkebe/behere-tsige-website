@@ -8,45 +8,46 @@ import Penance from './Penance';
 import Memorial from './Memorial';
 
 // Beautiful SVGs for sacraments
+// Beautiful SVGs for sacraments (designed specifically for Ethiopian Orthodox context)
 const BaptismIcon = () => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="sacrament-card-icon">
-    <path d="M32 8C20 22 20 34 32 52C44 34 44 22 32 8Z" stroke="var(--gold)" strokeWidth="2.5" strokeLinejoin="round" fill="rgba(197, 160, 68, 0.05)" />
-    <path d="M32 18V38" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" />
-    <path d="M22 28H42" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" />
-    <path d="M12 56H52" stroke="var(--gold)" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M12 40 C12 50, 52 50, 52 40 L48 24 H16 L12 40 Z" fill="rgba(197, 160, 68, 0.05)" stroke="var(--gold)" strokeWidth="2.5" />
+    <path d="M24 48 L20 58 H44 L40 48" stroke="var(--gold)" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M18 28 C22 26, 26 30, 30 28 C34 26, 38 30, 42 28 C46 26, 48 28, 48 28" stroke="var(--gold)" strokeWidth="1.5" />
+    <path d="M32 8 V24 M24 14 H40" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" />
+    <circle cx="32" cy="14" r="3" stroke="var(--gold)" strokeWidth="1.5" />
   </svg>
 );
 
 const CatechismIcon = () => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="sacrament-card-icon">
-    <rect x="8" y="10" width="48" height="44" rx="4" stroke="var(--gold)" strokeWidth="2.5" fill="rgba(197, 160, 68, 0.05)" />
-    <line x1="32" y1="10" x2="32" y2="54" stroke="var(--gold)" strokeWidth="2" />
-    <line x1="16" y1="22" x2="26" y2="22" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="16" y1="30" x2="26" y2="30" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="16" y1="38" x2="26" y2="38" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="38" y1="22" x2="48" y2="22" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="38" y1="30" x2="48" y2="30" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="38" y1="38" x2="48" y2="38" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M32 50 C26 46, 12 46, 8 48 V14 C12 12, 26 12, 32 16 C38 12, 52 12, 56 14 V48 C52 46, 38 46, 32 50 Z" fill="rgba(197, 160, 68, 0.05)" stroke="var(--gold)" strokeWidth="2.5" />
+    <path d="M32 16 V50" stroke="var(--gold)" strokeWidth="2" />
+    <path d="M44 22 V34 M38 28 H50" stroke="var(--gold)" strokeWidth="1.5" />
+    <circle cx="44" cy="28" r="2" stroke="var(--gold)" strokeWidth="1" />
+    <path d="M20 22 H12 M20 28 H12 M20 34 H12" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
   </svg>
 );
 
 const PenanceIcon = () => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="sacrament-card-icon">
-    <path d="M32 6V58" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
-    <path d="M14 22H50" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
-    <circle cx="32" cy="22" r="6" stroke="var(--gold)" strokeWidth="2.5" fill="var(--navy)" />
-    <path d="M22 42C22 36 42 36 42 42" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" />
+    <path d="M32 40 V58" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
+    <rect x="27" y="52" width="10" height="6" rx="1" fill="none" stroke="var(--gold)" strokeWidth="2" />
+    <path d="M32 12 V40 M18 26 H46" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
+    <circle cx="32" cy="26" r="6" stroke="var(--gold)" strokeWidth="2" fill="var(--navy)" />
+    <path d="M32 12 L35 15 H29 Z M18 26 L21 23 V29 Z M46 26 L43 23 V29 Z" fill="var(--gold)" />
+    <path d="M12 12 L20 18 M52 12 L44 18 M12 40 L20 34 M52 40 L44 34" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
   </svg>
 );
 
 const MemorialIcon = () => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="sacrament-card-icon">
-    {/* Candle flame */}
-    <path d="M32 6C30 14 34 18 32 24C30 18 34 14 32 6Z" fill="var(--gold)" opacity="0.9" />
-    {/* Candle Body */}
-    <rect x="26" y="24" width="12" height="34" rx="2" stroke="var(--gold)" strokeWidth="2.5" fill="rgba(197, 160, 68, 0.05)" />
-    <line x1="26" y1="34" x2="38" y2="34" stroke="var(--gold)" strokeWidth="1.5" />
-    <line x1="26" y1="44" x2="38" y2="44" stroke="var(--gold)" strokeWidth="1.5" />
+    <path d="M32 26 C22 26, 20 42, 32 46 C44 42, 42 26, 32 26 Z" fill="rgba(197, 160, 68, 0.05)" stroke="var(--gold)" strokeWidth="2.5" />
+    <path d="M24 26 C24 16, 40 16, 40 26" stroke="var(--gold)" strokeWidth="2" />
+    <path d="M32 12 V16" stroke="var(--gold)" strokeWidth="2" />
+    <path d="M22 26 L30 6 M42 26 L34 6 M32 26 L32 6" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+    <circle cx="32" cy="6" r="3" stroke="var(--gold)" strokeWidth="1.5" />
+    <path d="M26 12 C24 8, 28 6, 26 4 M38 12 C36 8, 40 6, 38 4" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
   </svg>
 );
 
