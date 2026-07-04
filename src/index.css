@@ -680,7 +680,7 @@ button {
   font-size: 1.05rem; /* subtitle small */
   color: var(--navy); /* blue */
   line-height: 1.6;
-  margin-top: auto; /* Push the subtitle and everything below it to the bottom */
+  margin-top: 16px; /* Keep the subtitle centered and grouped close to the title */
   margin-bottom: 24px;
   font-weight: 600;
   max-width: 580px;
@@ -3563,7 +3563,9 @@ a.contact-info-value:hover {
 
 /* ── Desktop only (> 1024px): clean top layout, no gradient ── */
 @media (min-width: 1181px) {
-
+  .hero-bg::after {
+    background: rgba(255, 255, 255, 0.45); /* Solid white translucent overlay */
+  }
 
   .hero-content {
     align-items: center; /* Center vertically on desktop */
