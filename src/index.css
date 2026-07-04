@@ -463,11 +463,12 @@ button {
   transition: background var(--transition-base);
   background: linear-gradient(
     to bottom,
-    rgba(253, 248, 237, 0.75) 0%,      /* Top gradient under bubble/title */
-    rgba(253, 248, 237, 0.3) 25%,      /* Quickly fades out */
-    rgba(253, 248, 237, 0) 45%,        /* Faded away center */
-    rgba(253, 248, 237, 0) 70%,        /* Faded away center */
-    rgba(253, 248, 237, 0.75) 100%     /* Bottom gradient under subtitle */
+    rgba(255, 255, 255, 0.9) 0%,       /* White top gradient for navbar legibility */
+    rgba(255, 255, 255, 0.45) 20%,
+    rgba(255, 255, 255, 0) 40%,         /* Clear center viewport */
+    rgba(255, 255, 255, 0) 65%,
+    rgba(255, 255, 255, 0.45) 80%,
+    rgba(255, 255, 255, 0.95) 100%      /* White bottom gradient for section blend */
   );
 }
 
@@ -3562,9 +3563,7 @@ a.contact-info-value:hover {
 
 /* ── Desktop only (> 1024px): clean top layout, no gradient ── */
 @media (min-width: 1181px) {
-  .hero-bg::after {
-    background: transparent; /* No gradient on large screens */
-  }
+
 
   .hero-content {
     align-items: center; /* Center vertically on desktop */
@@ -3603,18 +3602,7 @@ a.contact-info-value:hover {
     object-position: center center; /* Keep backgrounds centered on tablet and mobile */
   }
 
-  /* White gradient on tablet so the hero text stays readable over the video */
-  .hero-bg::after {
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.6) 20%,
-      rgba(255, 255, 255, 0.15) 38%,
-      rgba(255, 255, 255, 0.15) 55%,
-      rgba(255, 255, 255, 0.78) 78%,
-      rgba(255, 255, 255, 0.97) 100%
-    );
-  }
+
 
   .hero-content {
     align-items: center; /* Center vertically on tablet */
@@ -3690,15 +3678,7 @@ a.contact-info-value:hover {
 }
 
 @media (max-width: 752px) {
-  .hero-bg::after {
-    background: linear-gradient(
-      to top,
-      rgba(253, 248, 237, 0.98) 0%,
-      rgba(253, 248, 237, 0.8) 15%,
-      rgba(253, 248, 237, 0.15) 35%,
-      rgba(253, 248, 237, 0) 50%
-    );
-  }
+
 
   .hero-content {
     position: static;
