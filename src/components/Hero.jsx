@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TinyCross, DiamondOrnament } from './Icons';
 import { useContent } from '../context/ContentContext';
+import { getCachedAsset } from '../lib/assetCache';
 import ScrollIndicator from './ScrollIndicator';
 
 // Returns the active screen tier: 'large' (> 1180px), 'phone' (<= 752px),
@@ -30,31 +31,38 @@ function useScreenTier() {
 
 // Video-only hero sources per screen tier — no image fallback, ever.
 const TIER_VIDEO = {
-  large: '/assets/hero-video-desktop.mp4',
-  tablet: '/assets/hero-tablet-video.mp4',
-  phone: '/assets/hero-mobile.mp4',
+  large: '/assets/hero-home-pc.mp4',
+  tablet: '/assets/hero-home-pc.mp4',
+  phone: '/assets/home-hero-mobile.mp4',
 };
 
 export default function Hero({ lang, videoSrc }) {
   const { content } = useContent();
   const c = content.hero[lang] || content.hero.en;
   const tier = useScreenTier();
-  // Prefer the preloaded blob; otherwise stream the tier's video directly.
-  const activeVideoSrc = videoSrc || TIER_VIDEO[tier];
+  // Prefer the blob the splash preloader downloaded; resolved after mount so
+  // SSR and the first client render agree (no hydration mismatch).
+  const [resolvedSrc, setResolvedSrc] = useState(null);
+  useEffect(() => {
+    setResolvedSrc(getCachedAsset(TIER_VIDEO[tier]));
+  }, [tier]);
+  const activeVideoSrc = videoSrc || resolvedSrc;
 
   return (
     <section id="home" className="hero">
       <div className="hero-bg hero-bg-animate">
-        <video
-          key={activeVideoSrc}
-          className="hero-bg-video"
-          src={activeVideoSrc}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-        />
+        {activeVideoSrc && (
+          <video
+            key={activeVideoSrc}
+            className="hero-bg-video"
+            src={activeVideoSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          />
+        )}
       </div>
 
       <div className="hero-content">

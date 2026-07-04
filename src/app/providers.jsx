@@ -3,6 +3,7 @@
 import React from 'react';
 import { ContentProvider } from '../context/ContentContext';
 import { LanguageProvider } from '../context/LanguageContext';
+import AnalyticsTracker from '../components/AnalyticsTracker';
 
 /**
  * Client-side providers shared across all routes. Lives in the root layout so
@@ -11,7 +12,10 @@ import { LanguageProvider } from '../context/LanguageContext';
 export default function Providers({ children }) {
   return (
     <LanguageProvider>
-      <ContentProvider>{children}</ContentProvider>
+      <ContentProvider>
+        <AnalyticsTracker />
+        {children}
+      </ContentProvider>
     </LanguageProvider>
   );
 }

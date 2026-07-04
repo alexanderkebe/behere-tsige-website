@@ -17,6 +17,7 @@ const T = {
     posting: 'Posting…',
     error: 'Could not post your comment. Please try again.',
     loading: 'Loading comments…',
+    pending: 'Thank you! Your comment was received and will appear once it is approved.',
   },
   am: {
     title: 'አስተያየቶች',
@@ -30,6 +31,7 @@ const T = {
     posting: 'በመላክ ላይ…',
     error: 'አስተያየትዎን መለጠፍ አልተቻለም። እባክዎ እንደገና ይሞክሩ።',
     loading: 'አስተያየቶች በመጫን ላይ…',
+    pending: 'እናመሰግናለን! አስተያየትዎ ደርሶናል፤ ከጸደቀ በኋላ ይታያል።',
   },
 };
 
@@ -148,6 +150,7 @@ export default function Comments({ articleId, lang }) {
   const t = T[lang] || T.en;
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [awaitingApproval, setAwaitingApproval] = useState(false);
   const supabase = useMemo(() => createClient(), []);
 
   const load = useCallback(async () => {
@@ -165,6 +168,8 @@ export default function Comments({ articleId, lang }) {
     load();
   }, [load]);
 
+  // New comments start as 'pending' (moderated), so they won't be in the
+  // reloaded list — show a "waiting for approval" note instead.
   const post = async (parentId, name, body) => {
     const { error } = await supabase.from('article_comments').insert({
       article_id: articleId,
@@ -173,7 +178,7 @@ export default function Comments({ articleId, lang }) {
       body,
     });
     if (error) return false;
-    await load();
+    setAwaitingApproval(true);
     return true;
   };
 
@@ -199,6 +204,8 @@ export default function Comments({ articleId, lang }) {
       </h2>
 
       <CommentForm t={t} placeholder={t.message} onSubmit={(name, body) => post(null, name, body)} />
+
+      {awaitingApproval && <p className="comments-hint comments-hint-pending">{t.pending}</p>}
 
       {loading ? (
         <p className="comments-hint">{t.loading}</p>

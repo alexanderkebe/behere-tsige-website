@@ -1,10 +1,40 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 /**
  * AI chat assistant backed by Google Gemini (free tier).
  * Knows the site's structure and guides visitors to the right page,
  * answering in English or Amharic to match the user.
+ * Every question/answer pair is recorded in the interactions table
+ * (event_type 'chat_message') for the admin Analytics dashboard.
  */
+
+function logChat(sessionId, question, reply) {
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      { auth: { persistSession: false, autoRefreshToken: false } }
+    );
+    return supabase
+      .from('interactions')
+      .insert({
+        event_type: 'chat_message',
+        page: '/chat',
+        session_id: typeof sessionId === 'string' ? sessionId.slice(0, 80) : null,
+        metadata: {
+          question: String(question || '').slice(0, 1500),
+          reply: String(reply || '').slice(0, 1500),
+        },
+      })
+      .then(({ error }) => {
+        if (error) console.error('Chat log error:', error.message);
+      });
+  } catch (err) {
+    console.error('Chat log error:', err);
+    return Promise.resolve();
+  }
+}
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
 
@@ -52,7 +82,7 @@ export async function POST(request) {
       );
     }
 
-    const { messages } = await request.json();
+    const { messages, sessionId } = await request.json();
     if (!Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json({ error: 'messages required' }, { status: 400 });
     }
@@ -95,6 +125,9 @@ export async function POST(request) {
     if (!reply) {
       return NextResponse.json({ error: 'failed' }, { status: 502 });
     }
+
+    const lastUser = [...messages].reverse().find((m) => m.role !== 'assistant');
+    await logChat(sessionId, lastUser?.text, reply);
 
     return NextResponse.json({ reply });
   } catch (err) {

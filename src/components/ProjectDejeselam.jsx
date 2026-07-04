@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Reveal from './Reveal';
 import { useLanguage } from '../context/LanguageContext';
 import { DiamondOrnament } from './Icons';
+import { createClient } from '../lib/supabase/client';
+import { MEAL_PRICE, ETHIOPIAN_MONTHS, getEthiopianDate, EOTC_FEASTS } from '../lib/dejeselam';
 
 const MONTH_NAMES = {
   en: [
@@ -29,40 +31,6 @@ const WEEKDAYS = {
   am: ['እሑድ', 'ሰኞ', 'ማክሰኞ', 'ረቡዕ', 'ሐሙስ', 'አርብ', 'ቅዳሜ']
 };
 
-const ETHIOPIAN_MONTHS = {
-  en: ['Meskerem', 'Tekemt', 'Hidar', 'Tahsas', 'Tir', 'Yekatit', 'Megabit', 'Miazia', 'Genbot', 'Sene', 'Hamle', 'Nehase', 'Pagume'],
-  am: ['መስከረም', 'ጥቅምት', 'ኅዳር', 'ታኅሣሥ', 'ጥር', 'የካቲት', 'መጋቢት', 'ሚያዝያ', 'ግንቦት', 'ሰኔ', 'ሐምሌ', 'ነሐሴ', 'ጳጉሜ']
-};
-
-// EOTC Monthly Feast Days (Ethiopian calendar monthly days)
-const EOTC_FEASTS = {
-  1: { en: 'Lideta Maryam (Birthday of St. Mary)', am: 'ልደታ ለማርያም (የእመቤታችን ልደት)' },
-  9: { en: 'St. Thomas (ቅዱስ ቶማስ)', am: 'ቅዱስ ቶማስ' },
-  12: { en: 'St. Michael (ቅዱስ ሚካኤል)', am: 'ቅዱስ ሚካኤል' },
-  19: { en: 'St. Gabriel (ቅዱስ ገብርኤል)', am: 'ቅዱስ ገብርኤል' },
-  21: { en: 'Dengel Mariam (St. Mary / ማርያም)', am: 'ቅድስት ድንግል ማርያም (ማርያም)' },
-  27: { en: 'Medhane Alem (Savior of the World)', am: 'መድኃኔዓለም (የዓለም መድኃኒት)' },
-  29: { en: 'Beale Wold (Feast of God the Son)', am: 'በዓለ ወልድ' }
-};
-
-const MEAL_PRICE = 170; // 170 Birr per meal
-
-/**
- * Dynamic Gregorian to Ethiopian calendar converter.
- * Ethiopian year is approx. 8 years behind Gregorian.
- * This is 100% accurate for date day indices.
- */
-function getEthiopianDate(gregorianDate) {
-  const jd = Math.floor(gregorianDate.getTime() / 86400000) + 2440588; // Julian Date
-  const r = (jd - 1723856) % 1461;
-  const n = (r % 365) + 365 * Math.floor(r / 1460);
-  const ethioYear = 4 * Math.floor((jd - 1723856) / 1461) + Math.floor(r / 365) - (Math.floor(r / 1460) === 1 ? 1 : 0);
-  const ethioMonth = Math.floor(n / 30) + 1;
-  const ethioDay = (n % 30) + 1;
-  
-  return { day: ethioDay, month: ethioMonth, year: ethioYear };
-}
-
 export default function ProjectDejeselam() {
   const { lang } = useLanguage();
   const isAm = lang === 'am' || lang === 'gez';
@@ -72,38 +40,44 @@ export default function ProjectDejeselam() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', phone: '', message: '', freq: 'one_time', meals: '10' });
   const [bookings, setBookings] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const supabase = useMemo(() => createClient(), []);
 
   const now = new Date();
 
-  // Helper to generate date strings
-  const relDate = (monthOffset, day) => {
-    const d = new Date(now.getFullYear(), now.getMonth() + monthOffset, day);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  };
+  // Load real sponsorships (12-month window) from the dejeselam_public view.
+  const loadBookings = useCallback(async () => {
+    const from = new Date();
+    from.setDate(1);
+    const to = new Date(from.getFullYear(), from.getMonth() + 12, 0);
+    const fmt = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-  // Seed mock bookings relative to current dates
+    const { data, error } = await supabase
+      .from('dejeselam_public')
+      .select('sponsor_date, sponsor_name, message, frequency, meals')
+      .gte('sponsor_date', fmt(from))
+      .lte('sponsor_date', fmt(to))
+      .order('created_at', { ascending: true });
+
+    if (error) return;
+    const grouped = {};
+    for (const row of data || []) {
+      const key = row.sponsor_date;
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push({
+        name: row.sponsor_name,
+        message: row.message,
+        freq: row.frequency,
+        meals: row.meals,
+      });
+    }
+    setBookings(grouped);
+  }, [supabase]);
+
   useEffect(() => {
-    const initialBookings = {
-      [relDate(0, 5)]: [
-        { name: 'Kassa Tekle', phone: '+251911223344', message: 'In memory of my parents', freq: 'monthly', meals: 120 }
-      ],
-      [relDate(0, 12)]: [
-        { name: 'Anonymous', phone: '+251900000000', message: 'Prayers for health', freq: 'one_time', meals: 150 },
-        { name: 'Abraha Yosef', phone: '+251911998877', message: 'For our children', freq: 'year_round', meals: 250 }
-      ],
-      [relDate(0, 19)]: [
-        { name: 'Yared Shimelis', phone: '+251944556677', message: 'For the church', freq: 'one_time', meals: 60 }
-      ],
-      [relDate(1, 10)]: [
-        { name: 'Anonymous', phone: '+251900000000', message: 'Sponsoring a meal', freq: 'monthly', meals: 80 }
-      ],
-      [relDate(1, 20)]: [
-        { name: 'Daniel Kebede', phone: '+251911224466', message: 'May God keep us', freq: 'one_time', meals: 110 },
-        { name: 'Anonymous', phone: '+251900000000', message: 'Feeding the needy', freq: 'one_time', meals: 90 }
-      ]
-    };
-    setBookings(initialBookings);
-  }, []);
+    loadBookings();
+  }, [loadBookings]);
 
   // Generate list of 12 months starting from current month
   const months = [];
@@ -186,9 +160,9 @@ export default function ProjectDejeselam() {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
-  const handleBookingSubmit = (e) => {
+  const handleBookingSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedDayObj) return;
+    if (!selectedDayObj || submitting) return;
 
     const mealsToBook = Number(formData.meals || 0);
     if (mealsToBook <= 0) return;
@@ -197,73 +171,59 @@ export default function ProjectDejeselam() {
     const remaining = Math.max(0, selectedDayObj.capacity - currentMeals);
 
     if (mealsToBook > remaining) {
-      alert(isAm 
-        ? `እባክዎን ከቀረው የምግብ መጠን (${remaining}) እኩል ወይም ያነሰ ያስገቡ።` 
+      alert(isAm
+        ? `እባክዎን ከቀረው የምግብ መጠን (${remaining}) እኩል ወይም ያነሰ ያስገቡ።`
         : `Please enter a meal count less than or equal to the remaining meals needed (${remaining}).`);
       return;
     }
 
-    const newBooking = {
-      name: formData.name,
+    // One DB row per covered date; recurring bookings share a group id.
+    const groupId =
+      typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : null;
+    const base = {
+      group_id: groupId,
+      sponsor_name: formData.name,
       phone: formData.phone,
       message: formData.message || (isAm ? 'የዕለት ማዕድ መባዕ' : 'Sponsoring meals'),
-      freq: formData.freq,
-      meals: mealsToBook
+      frequency: formData.freq,
     };
 
     const targetDay = selectedDayObj.day;
-    const targetDateStr = selectedDayObj.dateStr;
+    const monthsToBook =
+      formData.freq === 'year_round' ? months : formData.freq === 'monthly' ? months.slice(0, 3) : null;
 
-    setBookings((prev) => {
-      const updated = { ...prev };
-
-      if (formData.freq === 'year_round') {
-        // Book for this day index for all 12 months
-        months.forEach((m) => {
-          const dateStr = `${m.year}-${String(m.month + 1).padStart(2, '0')}-${String(targetDay).padStart(2, '0')}`;
-          const isValidDate = new Date(m.year, m.month, targetDay).getDate() === targetDay;
-
-          if (isValidDate) {
-            const details = getDayDetails(dateStr);
-            const currentSponsors = updated[dateStr] || [];
-            const currentTotal = currentSponsors.reduce((sum, s) => sum + Number(s.meals || 0), 0);
-            const rem = Math.max(0, details.capacity - currentTotal);
-
-            if (rem > 0) {
-              const bookCount = Math.min(mealsToBook, rem);
-              updated[dateStr] = [...currentSponsors, { ...newBooking, freq: 'year_round', meals: bookCount }];
-            }
-          }
-        });
-      } else if (formData.freq === 'monthly') {
-        // Book for this day index for 3 months
-        for (let i = 0; i < 3; i++) {
-          const m = months[i];
-          if (!m) continue;
-          const dateStr = `${m.year}-${String(m.month + 1).padStart(2, '0')}-${String(targetDay).padStart(2, '0')}`;
-          const isValidDate = new Date(m.year, m.month, targetDay).getDate() === targetDay;
-
-          if (isValidDate) {
-            const details = getDayDetails(dateStr);
-            const currentSponsors = updated[dateStr] || [];
-            const currentTotal = currentSponsors.reduce((sum, s) => sum + Number(s.meals || 0), 0);
-            const rem = Math.max(0, details.capacity - currentTotal);
-
-            if (rem > 0) {
-              const bookCount = Math.min(mealsToBook, rem);
-              updated[dateStr] = [...currentSponsors, { ...newBooking, freq: 'monthly', meals: bookCount }];
-            }
-          }
-        }
-      } else {
-        // One-time booking
-        if (!updated[targetDateStr]) updated[targetDateStr] = [];
-        updated[targetDateStr] = [...updated[targetDateStr], newBooking];
+    const rows = [];
+    if (monthsToBook) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      for (const m of monthsToBook) {
+        const isValidDate = new Date(m.year, m.month, targetDay).getDate() === targetDay;
+        if (!isValidDate) continue;
+        if (new Date(m.year, m.month, targetDay) < today) continue;
+        const dateStr = `${m.year}-${String(m.month + 1).padStart(2, '0')}-${String(targetDay).padStart(2, '0')}`;
+        const details = getDayDetails(dateStr);
+        const currentTotal = getMealsSponsoredSum(dateStr);
+        const rem = Math.max(0, details.capacity - currentTotal);
+        if (rem > 0) rows.push({ ...base, sponsor_date: dateStr, meals: Math.min(mealsToBook, rem) });
       }
+    } else {
+      rows.push({ ...base, sponsor_date: selectedDayObj.dateStr, meals: mealsToBook });
+    }
 
-      return updated;
-    });
+    if (rows.length === 0) return;
 
+    setSubmitting(true);
+    const { error } = await supabase.from('dejeselam_sponsorships').insert(rows);
+    setSubmitting(false);
+
+    if (error) {
+      alert(isAm
+        ? 'ይቅርታ፣ ጥያቄዎን መላክ አልተቻለም። እባክዎ እንደገና ይሞክሩ።'
+        : 'Sorry, your sponsorship could not be submitted. Please try again.');
+      return;
+    }
+
+    await loadBookings();
     setFormData({ name: '', phone: '', message: '', freq: 'one_time', meals: '10' });
     setIsFormOpen(false);
     setSelectedDayObj(null);
@@ -593,8 +553,10 @@ export default function ProjectDejeselam() {
                       >
                         {isAm ? 'ሰርዝ' : 'Cancel'}
                       </button>
-                      <button type="submit" className="cs-btn cs-btn-filled">
-                        {isAm ? 'አረጋግጥ' : 'Confirm Sponsorship'}
+                      <button type="submit" className="cs-btn cs-btn-filled" disabled={submitting}>
+                        {submitting
+                          ? (isAm ? 'በመላክ ላይ…' : 'Submitting…')
+                          : (isAm ? 'አረጋግጥ' : 'Confirm Sponsorship')}
                       </button>
                     </div>
                   </form>

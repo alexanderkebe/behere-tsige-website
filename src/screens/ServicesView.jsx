@@ -9,6 +9,7 @@ import SacramentsHub from '@/components/SacramentsHub';
 import ChurchSchool from '@/components/ChurchSchool';
 import Reveal from '@/components/Reveal';
 import ScrollIndicator from '@/components/ScrollIndicator';
+import { getCachedAsset } from '@/lib/assetCache';
 import {
   WorshipIcon,
   FellowshipIcon,
@@ -34,7 +35,10 @@ export default function ServicesView({
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)');
     const updateSrc = () => {
-      setVideoSrc(mq.matches ? '/assets/services-hero-mobile.mp4' : '/assets/services-hero-pc.mp4');
+      // Use the blob the splash preloader downloaded when available.
+      setVideoSrc(
+        getCachedAsset(mq.matches ? '/assets/services-hero-mobile.mp4' : '/assets/services-hero-pc.mp4')
+      );
     };
     updateSrc();
     mq.addEventListener('change', updateSrc);

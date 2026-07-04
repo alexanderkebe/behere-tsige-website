@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { getSessionId } from '@/lib/analytics';
 import '@/styles/chat-widget.css';
 
 const T = {
@@ -98,7 +99,7 @@ export default function ChatWidget() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: next, sessionId: getSessionId() }),
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.reply) {

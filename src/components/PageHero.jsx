@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Reveal from './Reveal';
+import { getCachedAsset } from '../lib/assetCache';
 import '@/styles/page-hero.css';
 
 export default function PageHero({ title, subtitle, bgImage, videoSrcDesktop, videoSrcMobile }) {
@@ -11,7 +12,9 @@ export default function PageHero({ title, subtitle, bgImage, videoSrcDesktop, vi
     if (!videoSrcDesktop && !videoSrcMobile) return;
     const mq = window.matchMedia('(max-width: 768px)');
     const update = () => {
-      setVideoSrc(mq.matches ? (videoSrcMobile || videoSrcDesktop) : (videoSrcDesktop || videoSrcMobile));
+      // Use the blob the splash preloader downloaded when available.
+      const chosen = mq.matches ? (videoSrcMobile || videoSrcDesktop) : (videoSrcDesktop || videoSrcMobile);
+      setVideoSrc(getCachedAsset(chosen));
     };
     update();
     mq.addEventListener('change', update);

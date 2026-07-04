@@ -1,12 +1,24 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useRef, useState } from 'react';
+import { track, setAnalyticsLang } from '../lib/analytics';
 
 const LanguageContext = createContext(null);
 
 /** App-wide language state (en | am), shared across all pages. */
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState('en');
+  const [lang, setLangState] = useState('en');
+  const langRef = useRef('en');
+
+  const setLang = useCallback((next) => {
+    if (next !== langRef.current) {
+      setAnalyticsLang(next);
+      track('language_switch', { from: langRef.current, to: next });
+      langRef.current = next;
+    }
+    setLangState(next);
+  }, []);
+
   return (
     <LanguageContext.Provider value={{ lang, setLang }}>
       {children}
