@@ -577,12 +577,12 @@ button {
   position: relative;
   z-index: 5; /* Sit on top of the bottom shape */
   display: flex;
-  align-items: stretch; /* Stretch vertically to separate top and bottom elements */
+  align-items: center;
   justify-content: center;
   max-width: var(--container-max);
   width: 100%;
   margin: 0 auto;
-  padding: 130px 40px 10px;
+  padding: 110px 40px 80px; /* balanced padding: room for header at top, room above wave at bottom */
   flex: 1;
 }
 
@@ -594,8 +594,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  flex: 1; /* Stretch to occupy the full height of stretched hero-content */
 }
 
 .hero-tiny-cross {
@@ -3567,12 +3567,12 @@ a.contact-info-value:hover {
   }
 
   .hero-content {
-    align-items: flex-start; /* All text stays at the top */
-    padding: 130px 40px 40px;
+    align-items: center; /* Center vertically on desktop */
+    padding: 110px 40px 80px;
   }
 
   .hero-text {
-    flex: none; /* Don't stretch vertically */
+    flex: none;
   }
 
   .hero-description {
@@ -3617,14 +3617,13 @@ a.contact-info-value:hover {
   }
 
   .hero-content {
-    align-items: stretch;
-    padding: 120px 40px 10px;
+    align-items: center; /* Center vertically on tablet */
+    padding: 110px 40px 80px;
   }
 
   .hero-text {
     max-width: 500px;
-    flex: 1;
-    padding-bottom: 0px;
+    flex: none;
   }
 
   .services-grid {
@@ -3644,12 +3643,12 @@ a.contact-info-value:hover {
 
 @media (max-width: 768px) {
   .hero-content {
-    align-items: stretch;
-    padding: 110px 20px 10px;
+    align-items: center; /* Center vertically on mobile */
+    padding: 110px 20px 80px;
   }
 
   .hero-text {
-    flex: 1;
+    flex: none;
   }
 
   .hero-title {
@@ -3704,15 +3703,16 @@ a.contact-info-value:hover {
   .hero-content {
     position: static;
     display: flex;
-    align-items: flex-end; /* Keep title and subtitle aligned to bottom */
-    padding: 80px 20px 25px; /* bottom padding above wave shape */
+    align-items: center; /* Center vertically on small mobile */
+    justify-content: center;
+    padding: 100px 20px 80px; /* bottom padding above wave shape */
   }
 
   .hero-text {
     position: static;
     padding-bottom: 0px;
     margin-top: 0;
-    flex: none; /* Reset vertical stretch */
+    flex: none;
   }
 
   .hero-tiny-cross {
