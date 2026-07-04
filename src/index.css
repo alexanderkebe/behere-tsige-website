@@ -5864,27 +5864,28 @@ a.contact-info-value:hover {
   font-family: var(--font-ui);
   font-size: 0.65rem;
   letter-spacing: 0.18em;
+  margin-right: -0.18em; /* Compensate for letter-spacing to center text mathematically */
   text-transform: uppercase;
-  color: var(--white);
-  font-weight: 600;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  color: var(--navy);
+  font-weight: 700;
+  text-shadow: none;
 }
 
 /* Mouse Scroll Animation */
 .scroll-indicator-mouse {
   width: 22px;
   height: 36px;
-  border: 1.5px solid var(--white);
+  border: 1.5px solid var(--navy);
   border-radius: 11px;
   position: relative;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2), inset 0 0 4px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(15, 27, 61, 0.08);
 }
 
 .scroll-indicator-mouse::before {
   content: '';
   width: 3px;
   height: 6px;
-  background-color: var(--white);
+  background-color: var(--navy);
   border-radius: 1.5px;
   position: absolute;
   top: 7px;
@@ -5920,9 +5921,9 @@ a.contact-info-value:hover {
 }
 
 .scroll-indicator-finger {
-  color: var(--white);
+  color: var(--navy);
   animation: scrollFinger 2s infinite ease-in-out;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+  filter: none;
 }
 
 .scroll-indicator-finger-dot {
@@ -5972,7 +5973,7 @@ a.contact-info-value:hover {
 /* Positioning wrapper for Hero sections */
 .hero-scroll-indicator-wrapper {
   position: absolute;
-  bottom: 75px;
+  bottom: 35px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
