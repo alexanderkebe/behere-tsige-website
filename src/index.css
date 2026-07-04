@@ -5976,16 +5976,22 @@ a.contact-info-value:hover {
 .hero-scroll-indicator-wrapper {
   position: absolute;
   bottom: 35px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
   z-index: 10;
 }
 
 .services-hero-scroll-wrapper {
   position: absolute;
   bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
   z-index: 10;
 }
 
