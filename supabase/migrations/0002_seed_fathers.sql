@@ -14,8 +14,8 @@ insert into public.fathers
 values
   ('Melake Genet Memhir Habtewold Tegegn', 'መልአከ ገነት መምህር ሀብተወልድ ተገኝ',
    'Head Priest', 'የደብሩ አስተዳዳሪ', 'head_priest',
-   'Head priest of the parish for over two decades, leading the congregation in worship, teaching, and pastoral care.',
-   'ከሁለት አስርት ዓመታት በላይ የደብሩ አስተዳዳሪ ሆነው ምዕመናንን በአምልኮ፣ በትምህርትና በመንፈሳዊ እንክብካቤ ይመራሉ።',
+   'Insert your message here.',
+   'እባክዎን መልእክትዎን እዚህ ያስገቡ።',
    '/assets/profile-pic-preist.png', true, true, '+251 911 100 101', 'habtewold@beheretsigestmary.org', 1),
 
   ('Kesis Tesfaye Bekele', 'ቀሲስ ተስፋዬ በቀለ',
