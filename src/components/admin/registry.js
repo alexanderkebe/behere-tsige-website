@@ -1,5 +1,6 @@
 import SiteContentManager from './SiteContentManager';
 import AnalyticsDashboard from './AnalyticsDashboard';
+import AccountsManager from './AccountsManager';
 import FathersManager from './FathersManager';
 import MembersManager from './MembersManager';
 import RequestsManager from './RequestsManager';
@@ -22,6 +23,7 @@ import ContributionsInbox from './ContributionsInbox';
 export const adminRegistry = [
   { id: 'site-content', label: 'Site Content & Translations', Component: SiteContentManager },
   { id: 'analytics', label: 'Analytics', Component: AnalyticsDashboard },
+  { id: 'accounts', label: 'Admin Accounts', Component: AccountsManager },
   { id: 'fathers', label: 'Fathers', Component: FathersManager },
   { id: 'members', label: 'Parish Council', Component: MembersManager },
   { id: 'requests', label: 'Confessor Requests', Component: RequestsManager },

@@ -84,7 +84,8 @@ export default function AdminApp() {
           <img src="/assets/logo.png" alt="" className="admin-login-logo" />
           <h1>Not authorized</h1>
           <p className="admin-login-sub">
-            This account doesn’t have admin access yet.
+            This account doesn’t have admin access yet. Ask an existing admin to
+            grant you access from Admin Accounts.
           </p>
           <button className="admin-btn admin-btn-primary" onClick={signOut}>Sign out</button>
         </div>
