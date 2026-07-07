@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import AnnualFeasts from '@/components/AnnualFeasts';
+import WeeklySchedule from '@/components/WeeklySchedule';
 import Evangelism from '@/components/Evangelism';
 import ProjectDejeselam from '@/components/ProjectDejeselam';
 import SacramentsHub from '@/components/SacramentsHub';
@@ -11,6 +12,7 @@ import Reveal from '@/components/Reveal';
 import ScrollIndicator from '@/components/ScrollIndicator';
 import { getCachedAsset } from '@/lib/assetCache';
 import {
+  WorshipIcon,
   FellowshipIcon,
   LogoCross,
   TeachingIcon,
@@ -57,6 +59,7 @@ function CenserIcon({ size = 32 }) {
 export default function ServicesView({
   settings,
   annualFeasts,
+  weeklySchedule,
   sundaySchoolData,
   abnetData,
   evangelismData,
@@ -104,6 +107,17 @@ export default function ServicesView({
       subLabelAm: 'ዐቢይ በዓላት እና ዓመታዊ በዓላት',
       icon: CenserIcon,
       component: <AnnualFeasts feasts={annualFeasts} />
+    },
+    {
+      id: 'weekly-schedule',
+      labelEn: 'Weekly Liturgical Schedule',
+      labelAm: 'የሳምንቱ ቁመታት',
+      descEn: 'Join us in our daily prayers, Sunday Divine Liturgy, Kidan services, Canonical Hours, and special feast day services.',
+      descAm: 'በዘወትር እንዲሁም በሠንበት ቅዳሴ ፣ በኪዳን ፣በሰዓታት እንዲሁም በበዓላት ቁመት ይሳተፉ',
+      subLabelEn: 'Daily Prayers & Sunday Kidase',
+      subLabelAm: 'ዕለታዊ ጸሎት እና ቅዳሴ',
+      icon: WorshipIcon,
+      component: <WeeklySchedule schedule={weeklySchedule} />
     },
     {
       id: 'evangelism',

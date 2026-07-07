@@ -1,6 +1,7 @@
 import {
   getSiteSettings,
   getAnnualFeasts,
+  getWeeklySchedule,
   getSundaySchoolData,
   getAbnetData,
   getEvangelismData,
@@ -15,6 +16,7 @@ export default async function ServicesPage() {
   const [
     settings,
     annualFeasts,
+    weeklySchedule,
     sundaySchoolData,
     abnetData,
     evangelismData,
@@ -23,6 +25,7 @@ export default async function ServicesPage() {
   ] = await Promise.all([
     getSiteSettings(),
     getAnnualFeasts(),
+    getWeeklySchedule(),
     getSundaySchoolData(),
     getAbnetData(),
     getEvangelismData(),
@@ -34,6 +37,7 @@ export default async function ServicesPage() {
     <ServicesView
       settings={settings}
       annualFeasts={annualFeasts}
+      weeklySchedule={weeklySchedule}
       sundaySchoolData={sundaySchoolData}
       abnetData={abnetData}
       evangelismData={evangelismData}

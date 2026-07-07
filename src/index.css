@@ -5467,6 +5467,73 @@ a.contact-info-value:hover {
   color: var(--white);
 }
 
+/* Weekly Liturgical Schedule Styles */
+.weekly-schedule-section {
+  width: 100%;
+}
+.weekly-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.weekly-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(197, 160, 68, 0.15);
+  padding: 1.5rem 0;
+  align-items: center;
+}
+.weekly-row:last-child {
+  border-bottom: none;
+}
+.weekly-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+.weekly-row-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.weekly-row-note {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  opacity: 0.75;
+}
+.weekly-time-col {
+  text-align: right;
+  min-width: 130px;
+}
+.weekly-row-day {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  display: block;
+  color: var(--navy);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.weekly-row-time {
+  font-family: var(--font-ui);
+  color: var(--gold-dark);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 4px;
+  display: block;
+}
+.dark-theme .weekly-row-title,
+.dark-theme .weekly-row-day {
+  color: var(--white);
+}
+.dark-theme .weekly-row-note {
+  color: var(--off-white);
+}
+
 /* Sacraments Hub card layout */
 .sacraments-grid {
   display: grid;

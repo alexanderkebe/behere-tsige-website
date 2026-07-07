@@ -29,6 +29,20 @@ export async function getAnnualFeasts() {
   return data;
 }
 
+export async function getWeeklySchedule() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('weekly_schedule')
+    .select('*')
+    .order('display_order', { ascending: true });
+  
+  if (error) {
+    console.error('Error fetching weekly_schedule:', error);
+    return [];
+  }
+  return data;
+}
+
 export async function getSundaySchoolData() {
   const supabase = await createClient();
   
