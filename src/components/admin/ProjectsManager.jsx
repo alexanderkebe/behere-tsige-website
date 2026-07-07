@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   title_en: '',
@@ -66,14 +67,7 @@ export default function ProjectsManager({ supabase }) {
     const payload = { ...editing };
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('donation_projects').update(payload).eq('id', editing.id);
-      } else {
-        const { id, created_at, ...insert } = payload;
-        res = await supabase.from('donation_projects').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'donation_projects', payload);
       setEditing(null);
       await load();
     } catch (err) {
@@ -85,9 +79,8 @@ export default function ProjectsManager({ supabase }) {
 
   const remove = async (item) => {
     if (!window.confirm(`Delete donation project "${item.title_en}"?`)) return;
-    const { error } = await supabase.from('donation_projects').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else load();
+    try { await deleteRow(supabase, 'donation_projects', item.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

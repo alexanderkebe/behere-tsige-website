@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   title_en: '', title_am: '', slug: '', excerpt_en: '', excerpt_am: '',
@@ -95,8 +96,8 @@ export default function ArticlesManager({ supabase }) {
 
   const remove = async (a) => {
     if (!window.confirm(`Delete "${a.title_en}"?`)) return;
-    const { error } = await supabase.from('articles').delete().eq('id', a.id);
-    if (error) setError(error.message); else load();
+    try { await deleteRow(supabase, 'articles', a.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

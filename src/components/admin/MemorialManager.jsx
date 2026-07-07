@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY_SERVICE = {
   type: 'fitehat',
@@ -66,14 +67,7 @@ export default function MemorialManager({ supabase }) {
     };
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('memorial_services').update(payload).eq('id', editing.id);
-      } else {
-        const { id, ...insert } = payload;
-        res = await supabase.from('memorial_services').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'memorial_services', payload);
       setEditing(null);
       await loadServices();
     } catch (err) {
@@ -85,9 +79,8 @@ export default function MemorialManager({ supabase }) {
 
   const remove = async (item) => {
     if (!window.confirm(`Delete service "${item.name_en}"?`)) return;
-    const { error } = await supabase.from('memorial_services').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else loadServices();
+    try { await deleteRow(supabase, 'memorial_services', item.id); await loadServices(); }
+    catch (err) { setError(err.message); }
   };
 
   const updateStatus = async (booking, status) => {

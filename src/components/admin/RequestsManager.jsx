@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { updateRow } from '@/lib/admin/db';
 
 const STATUSES = ['new', 'contacted', 'assigned', 'closed'];
 
@@ -29,9 +30,10 @@ export default function RequestsManager({ supabase }) {
   useEffect(() => { load(); }, [load]);
 
   const setStatus = async (req, status) => {
-    const { error } = await supabase.from('confessor_requests').update({ status }).eq('id', req.id);
-    if (error) setError(error.message);
-    else setList((l) => l.map((r) => (r.id === req.id ? { ...r, status } : r)));
+    try {
+      await updateRow(supabase, 'confessor_requests', req.id, { status });
+      setList((l) => l.map((r) => (r.id === req.id ? { ...r, status } : r)));
+    } catch (err) { setError(err.message); }
   };
 
   return (

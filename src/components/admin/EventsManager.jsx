@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   title_en: '',
@@ -69,14 +70,7 @@ export default function EventsManager({ supabase }) {
     }
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('events').update(payload).eq('id', editing.id);
-      } else {
-        const { id, created_at, ...insert } = payload;
-        res = await supabase.from('events').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'events', payload);
       setEditing(null);
       await load();
     } catch (err) {
@@ -88,9 +82,8 @@ export default function EventsManager({ supabase }) {
 
   const remove = async (item) => {
     if (!window.confirm(`Delete event "${item.title_en}"?`)) return;
-    const { error } = await supabase.from('events').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else load();
+    try { await deleteRow(supabase, 'events', item.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

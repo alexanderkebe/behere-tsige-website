@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { updateRow } from '@/lib/admin/db';
 
 export default function ContributionsInbox({ supabase }) {
   const [list, setList] = useState([]);
@@ -37,13 +38,8 @@ export default function ContributionsInbox({ supabase }) {
     setUpdatingId(item.id);
     
     try {
-      // 1. Update contribution status to completed
-      const { error: updateErr } = await supabase
-        .from('contributions')
-        .update({ status: 'completed' })
-        .eq('id', item.id);
-
-      if (updateErr) throw updateErr;
+      // 1. Update contribution status to completed (verified)
+      await updateRow(supabase, 'contributions', item.id, { status: 'completed' });
 
       // 2. Increment project raised_amount if linked
       if (item.project_id) {
@@ -56,12 +52,7 @@ export default function ContributionsInbox({ supabase }) {
         if (projErr) throw projErr;
 
         const newRaisedAmount = Number(project.raised_amount) + Number(item.amount);
-        const { error: projUpdateErr } = await supabase
-          .from('donation_projects')
-          .update({ raised_amount: newRaisedAmount })
-          .eq('id', item.project_id);
-
-        if (projUpdateErr) throw projUpdateErr;
+        await updateRow(supabase, 'donation_projects', item.project_id, { raised_amount: newRaisedAmount });
       }
 
       await load();

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { updateRow, deleteRow } from '@/lib/admin/db';
 
 /**
  * Article comment moderation + per-article analytics.
@@ -55,19 +56,16 @@ export default function CommentsManager({ supabase }) {
   }, [load]);
 
   const setStatus = async (comment, status) => {
-    const { error: err } = await supabase
-      .from('article_comments')
-      .update({ status })
-      .eq('id', comment.id);
-    if (err) setError(err.message);
-    else setComments((list) => list.map((c) => (c.id === comment.id ? { ...c, status } : c)));
+    try {
+      await updateRow(supabase, 'article_comments', comment.id, { status });
+      setComments((list) => list.map((c) => (c.id === comment.id ? { ...c, status } : c)));
+    } catch (err) { setError(err.message); }
   };
 
   const remove = async (comment) => {
     if (!window.confirm('Permanently delete this comment (and its replies)?')) return;
-    const { error: err } = await supabase.from('article_comments').delete().eq('id', comment.id);
-    if (err) setError(err.message);
-    else load();
+    try { await deleteRow(supabase, 'article_comments', comment.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   const counts = useMemo(() => {

@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   full_name_en: '', full_name_am: '', title_en: '', title_am: '', role: 'confessor',
@@ -40,12 +41,8 @@ export default function FathersManager({ supabase }) {
 
   const save = async (e) => {
     e.preventDefault(); setSaving(true); setError('');
-    const payload = { ...editing, display_order: Number(editing.display_order) || 0 };
     try {
-      let res;
-      if (editing.id) res = await supabase.from('fathers').update(payload).eq('id', editing.id);
-      else { const { id, created_at, ...insert } = payload; res = await supabase.from('fathers').insert(insert); }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'fathers', { ...editing, display_order: Number(editing.display_order) || 0 });
       setEditing(null); await load();
     } catch (err) { setError(err.message); }
     finally { setSaving(false); }
@@ -53,8 +50,8 @@ export default function FathersManager({ supabase }) {
 
   const remove = async (f) => {
     if (!window.confirm(`Delete ${f.full_name_en}?`)) return;
-    const { error } = await supabase.from('fathers').delete().eq('id', f.id);
-    if (error) setError(error.message); else load();
+    try { await deleteRow(supabase, 'fathers', f.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

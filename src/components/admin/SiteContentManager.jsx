@@ -193,14 +193,25 @@ function SectionEditor({ supabase, user, section, initialData, onBack, onSaved }
   const save = async () => {
     setSaving(true);
     setError('');
-    const { error: err } = await supabase
-      .from('site_content')
-      .upsert({ section, data, updated_at: new Date().toISOString(), updated_by: user?.id || null });
-    setSaving(false);
-    if (err) setError(err.message);
-    else {
+    try {
+      // Confirm the session is still valid, then upsert and verify a row came
+      // back — an expired admin session otherwise makes this silently no-op.
+      const { data: sess } = await supabase.auth.getSession();
+      if (!sess?.session) throw new Error('Your admin session has expired. Please sign out, sign back in, and try again.');
+      const { data: rows, error: err } = await supabase
+        .from('site_content')
+        .upsert({ section, data, updated_at: new Date().toISOString(), updated_by: user?.id || null })
+        .select();
+      if (err) throw err;
+      if (!rows || rows.length === 0) {
+        throw new Error('The change did not save (the database rejected it). Your admin session may have expired — sign out, sign back in, and try again.');
+      }
       setSavedAt(new Date());
       onSaved(section, data);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSaving(false);
     }
   };
 

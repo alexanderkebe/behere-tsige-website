@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { updateRow } from '@/lib/admin/db';
 
 const STATUSES = ['pending', 'approved', 'rejected'];
 
@@ -59,10 +60,8 @@ export default function RegistrationsInbox({ supabase }) {
   }, [loadAll]);
 
   const setStatus = async (tableName, item, status) => {
-    const { error } = await supabase.from(tableName).update({ status }).eq('id', item.id);
-    if (error) {
-      setError(error.message);
-    } else {
+    try {
+      await updateRow(supabase, tableName, item.id, { status });
       if (tableName === 'ss_registrations') {
         setSsRegs(prev => prev.map(r => r.id === item.id ? { ...r, status } : r));
       } else if (tableName === 'abnet_registrations') {
@@ -70,7 +69,7 @@ export default function RegistrationsInbox({ supabase }) {
       } else if (tableName === 'catechumen_registrations') {
         setCatRegs(prev => prev.map(r => r.id === item.id ? { ...r, status } : r));
       }
-    }
+    } catch (err) { setError(err.message); }
   };
 
   return (

@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { saveRow, deleteRow, saveConfig } from '@/lib/admin/db';
 
 const EMPTY_TEAM = { name: '', role_en: '', role_am: '', photo_url: '', bio_en: '', bio_am: '', display_order: 0 };
 const EMPTY_PROJECT = { title_en: '', title_am: '', description_en: '', description_am: '', type: 'event', event_date: '', poster_url: '', status: 'upcoming' };
@@ -105,14 +106,7 @@ export default function SchoolsManager({ supabase }) {
     }
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from(tableName).update(payload).eq('id', editing.id);
-      } else {
-        const { id, ...insert } = payload;
-        res = await supabase.from(tableName).insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, tableName, payload);
       setEditing(null);
       await loadAllLists();
     } catch (err) {
@@ -125,9 +119,8 @@ export default function SchoolsManager({ supabase }) {
   const removeRecord = async (item, tableName) => {
     const name = item.name || item.title_en || item.name_en;
     if (!window.confirm(`Delete "${name}"?`)) return;
-    const { error } = await supabase.from(tableName).delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else loadAllLists();
+    try { await deleteRow(supabase, tableName, item.id); await loadAllLists(); }
+    catch (err) { setError(err.message); }
   };
 
   const saveAllConfigs = async (e) => {
@@ -136,12 +129,10 @@ export default function SchoolsManager({ supabase }) {
     setError('');
     setSuccess('');
     try {
-      await Promise.all([
-        supabase.from('site_settings').upsert({ key: 'sunday_school', value: ssConfig }, { onConflict: 'key' }),
-        supabase.from('site_settings').upsert({ key: 'abnet', value: abnetConfig }, { onConflict: 'key' }),
-        supabase.from('site_settings').upsert({ key: 'baptism_info', value: baptismConfig }, { onConflict: 'key' }),
-        supabase.from('site_settings').upsert({ key: 'penance_resources', value: penanceConfig }, { onConflict: 'key' })
-      ]);
+      await saveConfig(supabase, 'sunday_school', ssConfig);
+      await saveConfig(supabase, 'abnet', abnetConfig);
+      await saveConfig(supabase, 'baptism_info', baptismConfig);
+      await saveConfig(supabase, 'penance_resources', penanceConfig);
       setSuccess('All settings configurations updated successfully!');
     } catch (err) {
       setError(err.message);

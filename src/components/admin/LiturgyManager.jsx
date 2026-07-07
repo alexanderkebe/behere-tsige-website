@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   day_of_week: 'sunday',
@@ -72,14 +73,7 @@ export default function LiturgyManager({ supabase }) {
     }
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('liturgy_schedule').update(payload).eq('id', editing.id);
-      } else {
-        const { id, ...insert } = payload;
-        res = await supabase.from('liturgy_schedule').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'liturgy_schedule', payload);
       setEditing(null);
       await load();
     } catch (err) {
@@ -91,9 +85,8 @@ export default function LiturgyManager({ supabase }) {
 
   const remove = async (item) => {
     if (!window.confirm(`Delete ${item.title_en || item.service_type} on ${item.day_of_week}?`)) return;
-    const { error } = await supabase.from('liturgy_schedule').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else load();
+    try { await deleteRow(supabase, 'liturgy_schedule', item.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

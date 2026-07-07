@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { updateRow, deleteRow } from '@/lib/admin/db';
 
 const STATUSES = ['new', 'read', 'replied', 'archived'];
 
@@ -27,23 +28,16 @@ export default function MessagesInbox({ supabase }) {
   }, [load]);
 
   const setStatus = async (item, status) => {
-    const { error } = await supabase
-      .from('contact_messages')
-      .update({ status })
-      .eq('id', item.id);
-    
-    if (error) {
-      setError(error.message);
-    } else {
+    try {
+      await updateRow(supabase, 'contact_messages', item.id, { status });
       setList((prev) => prev.map((msg) => (msg.id === item.id ? { ...msg, status } : msg)));
-    }
+    } catch (err) { setError(err.message); }
   };
 
   const remove = async (item) => {
     if (!window.confirm(`Delete message from ${item.name}?`)) return;
-    const { error } = await supabase.from('contact_messages').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else load();
+    try { await deleteRow(supabase, 'contact_messages', item.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   return (

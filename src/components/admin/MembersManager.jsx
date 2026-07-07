@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   full_name: '', role_en: '', role_am: '', department: '', photo_url: '',
@@ -37,12 +38,8 @@ export default function MembersManager({ supabase }) {
 
   const save = async (e) => {
     e.preventDefault(); setSaving(true); setError('');
-    const payload = { ...editing, display_order: Number(editing.display_order) || 0 };
     try {
-      let res;
-      if (editing.id) res = await supabase.from('members').update(payload).eq('id', editing.id);
-      else { const { id, created_at, ...insert } = payload; res = await supabase.from('members').insert(insert); }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'members', { ...editing, display_order: Number(editing.display_order) || 0 });
       setEditing(null); await load();
     } catch (err) { setError(err.message); }
     finally { setSaving(false); }
@@ -50,8 +47,8 @@ export default function MembersManager({ supabase }) {
 
   const remove = async (m) => {
     if (!window.confirm(`Delete ${m.full_name}?`)) return;
-    const { error } = await supabase.from('members').delete().eq('id', m.id);
-    if (error) setError(error.message); else load();
+    try { await deleteRow(supabase, 'members', m.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

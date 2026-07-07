@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { getDayDetails, toDateStr } from '../../lib/dejeselam';
+import { updateRow, deleteRow } from '@/lib/admin/db';
 
 /**
  * Project Dejeselam control panel: every meal sponsorship submitted on the
@@ -53,19 +54,18 @@ export default function DejeselamManager({ supabase }) {
   }, [load]);
 
   const setStatus = async (row, status) => {
-    const { error: err } = await supabase
-      .from('dejeselam_sponsorships')
-      .update({ status })
-      .eq('id', row.id);
-    if (err) setError(err.message);
-    else setRows((list) => list.map((r) => (r.id === row.id ? { ...r, status } : r)));
+    try {
+      await updateRow(supabase, 'dejeselam_sponsorships', row.id, { status });
+      setRows((list) => list.map((r) => (r.id === row.id ? { ...r, status } : r)));
+    } catch (err) { setError(err.message); }
   };
 
   const remove = async (row) => {
     if (!window.confirm(`Delete the sponsorship by ${row.sponsor_name} on ${row.sponsor_date}?`)) return;
-    const { error: err } = await supabase.from('dejeselam_sponsorships').delete().eq('id', row.id);
-    if (err) setError(err.message);
-    else setRows((list) => list.filter((r) => r.id !== row.id));
+    try {
+      await deleteRow(supabase, 'dejeselam_sponsorships', row.id);
+      setRows((list) => list.filter((r) => r.id !== row.id));
+    } catch (err) { setError(err.message); }
   };
 
   /* ---------- reports ---------- */

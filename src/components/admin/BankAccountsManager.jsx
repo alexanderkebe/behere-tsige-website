@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   bank_name: '',
@@ -46,14 +47,7 @@ export default function BankAccountsManager({ supabase }) {
     const payload = { ...editing };
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('bank_accounts').update(payload).eq('id', editing.id);
-      } else {
-        const { id, created_at, ...insert } = payload;
-        res = await supabase.from('bank_accounts').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'bank_accounts', payload);
       setEditing(null);
       await load();
     } catch (err) {
@@ -65,9 +59,8 @@ export default function BankAccountsManager({ supabase }) {
 
   const remove = async (item) => {
     if (!window.confirm(`Delete bank account "${item.bank_name}" - ${item.account_number}?`)) return;
-    const { error } = await supabase.from('bank_accounts').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else load();
+    try { await deleteRow(supabase, 'bank_accounts', item.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

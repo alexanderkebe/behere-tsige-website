@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { uploadImage } from '@/lib/admin/upload';
+import { saveRow, deleteRow, saveConfig } from '@/lib/admin/db';
 
 const EMPTY_SERMON = {
   title_en: '',
@@ -101,14 +102,7 @@ export default function SermonsManager({ supabase }) {
     };
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('sermons').update(payload).eq('id', editing.id);
-      } else {
-        const { id, published_at, ...insert } = payload;
-        res = await supabase.from('sermons').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'sermons', payload);
       setEditing(null);
       await loadSermons();
     } catch (err) {
@@ -128,14 +122,7 @@ export default function SermonsManager({ supabase }) {
     };
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('gospel_programs').update(payload).eq('id', editing.id);
-      } else {
-        const { id, ...insert } = payload;
-        res = await supabase.from('gospel_programs').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'gospel_programs', payload);
       setEditing(null);
       await loadPrograms();
     } catch (err) {
@@ -147,16 +134,14 @@ export default function SermonsManager({ supabase }) {
 
   const removeSermon = async (item) => {
     if (!window.confirm(`Delete sermon "${item.title_en}"?`)) return;
-    const { error } = await supabase.from('sermons').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else loadSermons();
+    try { await deleteRow(supabase, 'sermons', item.id); await loadSermons(); }
+    catch (err) { setError(err.message); }
   };
 
   const removeProgram = async (item) => {
     if (!window.confirm(`Delete program "${item.title_en}"?`)) return;
-    const { error } = await supabase.from('gospel_programs').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else loadPrograms();
+    try { await deleteRow(supabase, 'gospel_programs', item.id); await loadPrograms(); }
+    catch (err) { setError(err.message); }
   };
 
   const saveSettings = async (e) => {
@@ -165,10 +150,7 @@ export default function SermonsManager({ supabase }) {
     setError('');
     setSuccess('');
     try {
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert({ key: 'evangelism', value: settings }, { onConflict: 'key' });
-      if (error) throw error;
+      await saveConfig(supabase, 'evangelism', settings);
       setSuccess('Settings updated successfully!');
     } catch (err) {
       setError(err.message);

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { saveRow, deleteRow } from '@/lib/admin/db';
 
 const EMPTY = {
   platform: 'youtube',
@@ -56,14 +57,7 @@ export default function MediaLinksManager({ supabase }) {
     };
 
     try {
-      let res;
-      if (editing.id) {
-        res = await supabase.from('media_links').update(payload).eq('id', editing.id);
-      } else {
-        const { id, created_at, ...insert } = payload;
-        res = await supabase.from('media_links').insert(insert);
-      }
-      if (res.error) throw res.error;
+      await saveRow(supabase, 'media_links', payload);
       setEditing(null);
       await load();
     } catch (err) {
@@ -75,9 +69,8 @@ export default function MediaLinksManager({ supabase }) {
 
   const remove = async (item) => {
     if (!window.confirm(`Delete media link "${item.title_en}"?`)) return;
-    const { error } = await supabase.from('media_links').delete().eq('id', item.id);
-    if (error) setError(error.message);
-    else load();
+    try { await deleteRow(supabase, 'media_links', item.id); await load(); }
+    catch (err) { setError(err.message); }
   };
 
   if (editing) {

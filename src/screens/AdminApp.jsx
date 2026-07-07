@@ -44,9 +44,22 @@ export default function AdminApp() {
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) =>
       resolve(session?.user || null)
     );
+
+    // Re-verify the session whenever the admin returns to the tab. Supabase
+    // refreshes tokens in the background, but if a refresh failed (or the
+    // session was revoked) we want the login screen back rather than a
+    // dashboard whose saves would silently fail.
+    const recheck = () => {
+      if (document.visibilityState === 'visible') {
+        supabase.auth.getSession().then(({ data }) => resolve(data.session?.user || null));
+      }
+    };
+    document.addEventListener('visibilitychange', recheck);
+
     return () => {
       active = false;
       sub.subscription.unsubscribe();
+      document.removeEventListener('visibilitychange', recheck);
     };
   }, [supabase]);
 
