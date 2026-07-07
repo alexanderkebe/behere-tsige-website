@@ -1,6 +1,5 @@
 import React from 'react';
 import { 
-  Flame, 
   BookOpen, 
   HandHelping, 
   Users, 
@@ -95,8 +94,40 @@ export const DiamondOrnament = ({ className = '', ...props }) => (
   </svg>
 );
 
-// Standard Core Service Icons re-routed to Lucide React
-export const WorshipIcon = (props) => <Flame stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
+// Custom Censer (Incense Burner) Icon for Liturgy & Worship
+export const WorshipIcon = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#C5A044"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ width: 28, height: 28 }}
+    {...props}
+  >
+    {/* Chains */}
+    <path d="M12 2v9" />
+    <path d="M7 3l2 8" />
+    <path d="M17 3l-2 8" />
+    
+    {/* Lid with small cross */}
+    <path d="M9 11c0-2.5 6-2.5 6 0" />
+    <path d="M12 6.5v2M11 7.5h2" />
+    
+    {/* Censer Bowl Body */}
+    <path d="M5 11h14v2H5z" />
+    <path d="M6 13c0 3.5 2.5 6 6 6s6-2.5 6-6" />
+    
+    {/* Foot/Pedestal */}
+    <path d="M10 19l-1 3h6l-1-3" />
+    
+    {/* Little bells/ornaments on chains */}
+    <circle cx="8" cy="7" r="1.2" fill="#C5A044" stroke="none" />
+    <circle cx="12" cy="5" r="1.2" fill="#C5A044" stroke="none" />
+    <circle cx="16" cy="7" r="1.2" fill="#C5A044" stroke="none" />
+  </svg>
+);
 export const TeachingIcon = (props) => <BookOpen stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
 export const ServingIcon = (props) => <HandHelping stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
 export const FellowshipIcon = (props) => <Users stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
