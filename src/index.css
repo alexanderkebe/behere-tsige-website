@@ -6120,3 +6120,136 @@ a.contact-info-value:hover {
   z-index: 10;
 }
 
+/* Baptism Sub-tabs Navigation Styles */
+.baptism-tabs-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.baptism-tabs {
+  display: flex;
+  background: rgba(197, 160, 68, 0.05);
+  border: 1px solid rgba(197, 160, 68, 0.15);
+  border-radius: 30px;
+  padding: 6px;
+  max-width: 100%;
+  overflow-x: auto;
+  gap: 4px;
+}
+.baptism-tab-btn {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: transparent;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.baptism-tab-btn:hover {
+  color: var(--gold-dark);
+}
+.baptism-tab-btn.active {
+  background: var(--gold-dark);
+  color: var(--white);
+  box-shadow: 0 4px 10px rgba(197, 160, 68, 0.2);
+}
+.dark-theme .baptism-tab-btn {
+  color: var(--off-white);
+}
+.dark-theme .baptism-tab-btn:hover {
+  color: var(--gold);
+}
+.dark-theme .baptism-tab-btn.active {
+  color: var(--white);
+  background: var(--gold);
+}
+
+/* Baptism Info Card */
+.baptism-info-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(197, 160, 68, 0.3);
+  border-radius: 12px;
+  padding: 1.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+.dark-theme .baptism-info-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(197, 160, 68, 0.2);
+}
+.baptism-tab-desc {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin: 0;
+}
+.dark-theme .baptism-tab-desc {
+  color: var(--off-white);
+}
+
+/* Location Highlight */
+.baptism-location-box {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(197, 160, 68, 0.15);
+}
+.baptism-location-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold-dark);
+  margin: 0 0 0.5rem 0;
+}
+.dark-theme .baptism-location-title {
+  color: var(--gold);
+}
+.baptism-location-text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin: 0;
+  opacity: 0.85;
+}
+.dark-theme .baptism-location-text {
+  color: var(--off-white);
+}
+
+/* Form Select Dropdown styling */
+.form-select-field {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  color: var(--text-dark);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23C5A044' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+.form-select-field:focus {
+  border-color: var(--gold-dark);
+}
+.dark-theme .form-select-field {
+  background: #111b33;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+.dark-theme .form-select-field:focus {
+  border-color: var(--gold);
+}
+
+
