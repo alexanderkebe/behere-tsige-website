@@ -13,11 +13,24 @@ import { getCachedAsset } from '@/lib/assetCache';
 import {
   WorshipIcon,
   FellowshipIcon,
-  CalendarIcon,
   LogoCross,
   TeachingIcon,
   DiamondOrnament
 } from '@/components/Icons';
+
+// Mesob (traditional Ethiopian food basket) icon for Project Dejeselam.
+// Same call signature as the SVG icons so it drops into the tab config.
+function MesobIcon({ size = 32 }) {
+  return (
+    <img
+      src="/assets/mesob-icon.png"
+      alt=""
+      width={size}
+      height={size}
+      style={{ objectFit: 'contain' }}
+    />
+  );
+}
 
 export default function ServicesView({
   settings,
@@ -89,7 +102,7 @@ export default function ServicesView({
       descAm: 'በቤተ ክርስቲያን ደጃፍ የሚገኙ የተቸገሩ ወገኖችን በዕለት ማዕድ ለመደገፍ የበረከት ቀን ይምረጡ።',
       subLabelEn: 'Feed the Needy (Matthew 25)',
       subLabelAm: 'ለተቸገሩት የዕለት ማዕድ ማጋራት',
-      icon: CalendarIcon,
+      icon: MesobIcon,
       component: <ProjectDejeselam />
     },
     {
