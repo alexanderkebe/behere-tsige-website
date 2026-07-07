@@ -11,7 +11,7 @@ export async function getPublishedArticles() {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from('articles')
+      .from('articles_with_stats')
       .select(SELECT)
       .eq('status', 'published')
       .order('published_at', { ascending: false, nullsFirst: false });
@@ -34,7 +34,7 @@ export async function getArticleBySlug(slug) {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from('articles')
+      .from('articles_with_stats')
       .select(SELECT)
       .eq('slug', slug)
       .eq('status', 'published')

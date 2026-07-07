@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import Comments from '@/components/articles/Comments';
+import { createClient } from '@/lib/supabase/client';
 import '@/styles/articles.css';
 import '@/styles/article-comments.css';
 
@@ -59,8 +60,45 @@ function ShareBar({ title, lang }) {
 
 export default function ArticleView({ article }) {
   const { lang } = useLanguage();
+  const supabase = useMemo(() => createClient(), []);
   const [likes, setLikes] = useState(article.likes_count || 0);
   const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLiked(!!localStorage.getItem(`liked_${article.id}`));
+    }
+  }, [article.id]);
+
+  const handleLike = async () => {
+    const nextLiked = !liked;
+    setLiked(nextLiked);
+    setLikes((prev) => nextLiked ? prev + 1 : Math.max(0, prev - 1));
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`liked_${article.id}`, nextLiked ? 'true' : '');
+    }
+
+    try {
+      const { data, error } = await supabase.rpc('toggle_article_like', {
+        target_article_id: article.id,
+        increment_like: nextLiked,
+      });
+      if (error) throw error;
+      if (typeof data === 'number') {
+        setLikes(data);
+      }
+    } catch (err) {
+      console.error('Failed to toggle like:', err);
+      // Revert if request failed
+      setLiked(!nextLiked);
+      setLikes((prev) => nextLiked ? Math.max(0, prev - 1) : prev + 1);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`liked_${article.id}`, nextLiked ? '' : 'true');
+      }
+    }
+  };
+
   const title = lang === 'am' ? article.title_am || article.title_en : article.title_en;
   const body = lang === 'am' ? article.body_am || article.body_en : article.body_en;
   const date = article.published_at
@@ -98,7 +136,7 @@ export default function ArticleView({ article }) {
         </div>
 
         <div className="article-detail-actions">
-          <button onClick={() => { setLiked(!liked); setLikes(liked ? likes - 1 : likes + 1); }} className={`btn-like ${liked ? 'liked' : ''}`}>
+          <button onClick={handleLike} className={`btn-like ${liked ? 'liked' : ''}`}>
             {liked ? '❤️' : '🤍'} {likes} {lang === 'am' ? 'ወደድኩት' : 'Like'}
           </button>
           <div className="article-detail-stats">

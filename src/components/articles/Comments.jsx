@@ -176,6 +176,7 @@ export default function Comments({ articleId, lang }) {
       parent_comment_id: parentId,
       guest_name: name,
       body,
+      status: 'pending',
     });
     if (error) return false;
     setAwaitingApproval(true);
