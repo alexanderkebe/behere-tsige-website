@@ -5349,115 +5349,122 @@ a.contact-info-value:hover {
   margin-top: 2.5rem;
 }
 
-/* Annual Feasts Section Redesign Styles */
+/* Annual Feasts Calendar Grid Redesign */
 .annual-feasts-section {
   width: 100%;
 }
-.feasts-container {
-  max-width: 700px;
+.feasts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+  padding: 1.5rem 0;
 }
-.feast-row {
-  display: flex;
-  align-items: center;
-  gap: 1.75rem;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(197, 160, 68, 0.15);
-  border-radius: 12px;
-  padding: 1.25rem 1.75rem;
-  transition: all 0.3s var(--ease-smooth);
-  text-align: left;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-}
-.feast-row:hover {
-  transform: translateY(-2px);
-  border-color: var(--gold);
-  box-shadow: 0 8px 25px rgba(197, 160, 68, 0.12);
-  background: rgba(255, 255, 255, 0.85);
-}
-.feast-date-col {
-  flex-shrink: 0;
-}
-.feast-calendar-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90px;
-  height: 90px;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-  border: 1.5px solid var(--gold);
-  border-radius: 10px;
+.calendar-card {
+  background: var(--white);
+  border: 1px solid rgba(197, 160, 68, 0.2);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(15, 27, 61, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: all 0.35s var(--transition-base);
+  display: flex;
+  flex-direction: column;
 }
-.feast-calendar-month {
+.calendar-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 12px 30px rgba(197, 160, 68, 0.15);
+}
+.calendar-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+.calendar-month {
   font-family: var(--font-ui);
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--gold-light);
-  letter-spacing: 0.06em;
-  padding: 5px 0;
-  width: 100%;
-  text-align: center;
-  background: rgba(197, 160, 68, 0.12);
-  border-bottom: 1.5px solid var(--gold);
+  letter-spacing: 0.1em;
 }
-.feast-calendar-day {
+.calendar-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+}
+.calendar-day-circle {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: rgba(197, 160, 68, 0.08);
+  border: 1.5px dashed var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+}
+.calendar-card:hover .calendar-day-circle {
+  background: var(--gold);
+  border-style: solid;
+  transform: scale(1.05);
+}
+.calendar-day {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 700;
+  color: var(--navy);
+  transition: all 0.3s ease;
+}
+.calendar-card:hover .calendar-day {
   color: var(--white);
+}
+.calendar-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+.divider-line {
+  flex-grow: 1;
+  height: 1px;
+  background: rgba(197, 160, 68, 0.25);
+}
+.divider-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.calendar-feast-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.feast-info-col {
-  flex-grow: 1;
-}
-.feast-title-text {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--navy);
-  line-height: 1.4;
-}
 
-/* Responsive fixes */
-@media (max-width: 600px) {
-  .feast-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.25rem;
-  }
-  .feast-calendar-badge {
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 6px 12px;
-    gap: 8px;
-    border-radius: 8px;
-  }
-  .feast-calendar-month {
-    width: auto;
-    padding: 0;
-    background: none;
-    border-bottom: none;
-    font-size: 0.85rem;
-  }
-  .feast-calendar-day {
-    font-size: 1rem;
-    font-family: var(--font-ui);
-    font-weight: 600;
-  }
+/* Dark mode and alternate themes support */
+.dark-theme .calendar-card {
+  background: rgba(255, 255, 255, 0.02);
+}
+.dark-theme .calendar-day {
+  color: var(--white);
+}
+.dark-theme .calendar-feast-title {
+  color: var(--white);
 }
 
 /* Sacraments Hub card layout */

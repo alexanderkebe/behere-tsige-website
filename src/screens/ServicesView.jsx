@@ -11,7 +11,6 @@ import Reveal from '@/components/Reveal';
 import ScrollIndicator from '@/components/ScrollIndicator';
 import { getCachedAsset } from '@/lib/assetCache';
 import {
-  WorshipIcon,
   FellowshipIcon,
   LogoCross,
   TeachingIcon,
@@ -27,6 +26,23 @@ function MesobIcon({ size = 32 }) {
   return (
     <img
       src="/assets/mesob-icon.png"
+      alt=""
+      width={size}
+      height={size}
+      style={{
+        objectFit: 'contain',
+        filter: `drop-shadow(0.6px 0 0 ${g}) drop-shadow(-0.6px 0 0 ${g}) drop-shadow(0 0.6px 0 ${g}) drop-shadow(0 -0.6px 0 ${g})`,
+      }}
+    />
+  );
+}
+
+// Censer icon for Major Annual Feasts.
+function CenserIcon({ size = 32 }) {
+  const g = 'var(--gold, #C5A044)';
+  return (
+    <img
+      src="/assets/censer-icon.png"
       alt=""
       width={size}
       height={size}
@@ -86,7 +102,7 @@ export default function ServicesView({
       descAm: 'በደብራችን የሚከበሩ ዓመታዊ ዐቢይ በዓላትንና የቅዱሳን መታሰቢያዎችን ይሳተፉ።',
       subLabelEn: 'Patron Saints & Feast Days',
       subLabelAm: 'ዐቢይ በዓላት እና ዓመታዊ በዓላት',
-      icon: WorshipIcon,
+      icon: CenserIcon,
       component: <AnnualFeasts feasts={annualFeasts} />
     },
     {
@@ -184,7 +200,7 @@ export default function ServicesView({
           <div className="services-overview-container">
             <Reveal className="services-overview-header" direction="up">
               <h2>{isAm ? 'የአገልግሎት ዘርፎች' : 'Our Service Hub'}</h2>
-              <p>{isAm ? 'ለመለኮታዊ አገልግሎት፣ ለመማር፣ ለመጸለይ እና በቸርነት ለመሳተፍ ከታች ካሉት አንዱን ይምረጡ' : 'Select a service below to view detailed schedules, curriculum, or register.'}</p>
+              <p>{isAm ? 'በብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተክርስቲያን የሚያገኟቸው መንፈሳዊ አገልግሎቶች' : 'Discover the spiritual ministries and services available at Behere Tsegie Mekane Selam Kidist Dingel Maryam Church.'}</p>
             </Reveal>
 
             <div className="services-overview-grid">

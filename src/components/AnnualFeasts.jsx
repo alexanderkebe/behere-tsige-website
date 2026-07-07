@@ -20,7 +20,7 @@ export default function AnnualFeasts({ feasts = [] }) {
         <h2 className="services-title">{sectionTitle}</h2>
       </Reveal>
  
-      <div className="feasts-container">
+      <div className="feasts-grid">
         {feasts.map((item, index) => {
           const dateStr = isAm ? item.date_am : item.date_en;
           const parts = dateStr ? dateStr.trim().split(/\s+/) : [];
@@ -29,15 +29,20 @@ export default function AnnualFeasts({ feasts = [] }) {
           const title = isAm ? item.title_am : item.title_en;
 
           return (
-            <Reveal key={item.id} delay={index * 40} direction="up" as="div" className="feast-row">
-              <div className="feast-date-col">
-                <div className="feast-calendar-badge">
-                  <span className="feast-calendar-month">{month}</span>
-                  <span className="feast-calendar-day">{day}</span>
-                </div>
+            <Reveal key={item.id} delay={index * 40} direction="up" as="div" className="calendar-card">
+              <div className="calendar-header">
+                <span className="calendar-month">{month}</span>
               </div>
-              <div className="feast-info-col">
-                <h3 className="feast-title-text">
+              <div className="calendar-body">
+                <div className="calendar-day-circle">
+                  <span className="calendar-day">{day}</span>
+                </div>
+                <div className="calendar-divider">
+                  <span className="divider-line"></span>
+                  <span className="divider-dot"></span>
+                  <span className="divider-line"></span>
+                </div>
+                <h3 className="calendar-feast-title">
                   {title}
                 </h3>
               </div>
