@@ -2,7 +2,6 @@ import React from 'react';
 import { 
   BookOpen, 
   HandHelping, 
-  Users, 
   Home, 
   User, 
   Church, 
@@ -130,7 +129,38 @@ export const WorshipIcon = (props) => (
 );
 export const TeachingIcon = (props) => <BookOpen stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
 export const ServingIcon = (props) => <HandHelping stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
-export const FellowshipIcon = (props) => <Users stroke="#C5A044" strokeWidth={2} style={{ width: 28, height: 28 }} {...props} />;
+// Custom Church Podium (Lectern/Pulpit) Icon for Gospel & Sermons
+export const FellowshipIcon = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#C5A044"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ width: 28, height: 28 }}
+    {...props}
+  >
+    {/* Open Book/Bible on top */}
+    <path d="M12 5c-1-1-2.5-1-3-1H5v3h4c.5 0 2 0 3 1" />
+    <path d="M12 5c1-1 2.5-1 3-1h4v3h-4c-.5 0-2 0-3 1" />
+    
+    {/* Lectern Slanted Stand */}
+    <path d="M4 8h16" />
+    
+    {/* Central Pillar */}
+    <path d="M10 8v11" />
+    <path d="M14 8v11" />
+    
+    {/* Decorative Cross on the Pillar */}
+    <path d="M12 11v4" />
+    <path d="M10.5 12.5h3" />
+    
+    {/* Base */}
+    <path d="M6 19h12" />
+    <path d="M4 21h16" />
+  </svg>
+);
 
 // Custom Social Media Icons (since Lucide React does not export brand icons)
 export const InstagramIcon = (props) => (
