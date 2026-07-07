@@ -185,21 +185,12 @@ export default function ChurchSchool({ lang }) {
                 <h4 className="section-small-title">{isAm ? 'የሚሰጡ የትምህርት ዓይነቶች (Offered Subjects)' : 'Offered Subjects'}</h4>
                 <div className="tags-grid">
                   {(isAm 
-                    ? ['የአማርኛ ፊደል', 'የግዕዝ ቋንቋ', 'የግዕዝ ቁጥር', 'ክርስቲያናዊ ሥነ ምግባር (ግብረ ገብነት)', 'የዲቁና ሥርዓት ትምህርት (ግብረ ዲቁና)', 'ያሬዳዊ ዜማ', 'ቅኔ', 'የሐዲስ ኪዳን ትርጓሜ (አንድምታ)']
-                    : ['Amharic alphabet', 'Geez language', 'Geez number', 'Ethics', 'Deaconate', 'Zema', 'Poetry (Qene)', 'New Testament commentary']
+                    ? ['የፊደል ትምህርት', 'የግዕዝ ቋንቋ', 'የግዕዝ ቁጥር', 'ክርስቲያናዊ ሥነ ምግባር (ግብረ ገብነት)', 'የዲቁና ሥርዓት ትምህርት (ግብረ ዲቁና)', 'ያሬዳዊ ዜማ', 'ቅኔ', 'የሐዲስ ኪዳን ትርጓሜ (አንድምታ)']
+                    : ['Alphabet learning', 'Geez language', 'Geez number', 'Ethics', 'Deaconate', 'Zema', 'Poetry (Qene)', 'New Testament commentary']
                   ).map((sub, idx) => (
                     <span key={idx} className="subject-tag">#{sub}</span>
                   ))}
                 </div>
-              </div>
-
-              <div className="schedule-card">
-                <h4 className="section-small-title">{isAm ? 'የክፍል መርሃ ግብር' : 'Class Schedule'}</h4>
-                <p className="schedule-text">
-                  {isAm 
-                    ? "የካቴድራሉ የአብነት መምህር የኔታ አባ ጊሩም የሚሰጡት የአብነት ትምህርት በየሳምንቱ ረቡዕ ከሰዓት በኋላ እስከ ምሽቱ ፪ ሰዓት (8:00 PM)፣ ቅዳሜ ደግሞ ከሰዓት በኋላ እስከ ምሽቱ ፲፪ ሰዓት (6:00 PM) ይሰጣል። በተጨማሪም ተማሪዎች ከሰኞ እስከ አርብ ባሉት ቀናት ከመምህሩ ጋር ቀጠሮ በመያዝ ትምህርቱን በግል መከታተል ይችላሉ።"
-                    : "The Abnet curriculum given by the Cathedral's Abnet teacher, Yeneta Abba Girum, is every Wednesday from 6 pm – 8 pm and Saturday from 3 pm – 6 pm. In addition, students can learn the lessons from the teacher by appointment from Monday to Friday."}
-                </p>
               </div>
             </div>
           </div>
@@ -215,7 +206,7 @@ export default function ChurchSchool({ lang }) {
                   <h4>{isAm ? 'የመጀመሪያ ደረጃ' : 'Beginner Level'}</h4>
                 </div>
                 <ul className="level-topics">
-                  <li>{isAm ? 'የአማርኛ ፊደል' : 'Amharic alphabet'}</li>
+                  <li>{isAm ? 'የፊደል ትምህርት' : 'Alphabet learning'}</li>
                   <li>{isAm ? 'የግዕዝ ቁጥር' : 'Geez number'}</li>
                   <li>{isAm ? 'የአማርኛ ንባብ' : 'Amharic reading'}</li>
                   <li>{isAm ? 'የግዕዝ ንባብ' : 'Geez reading'}</li>
