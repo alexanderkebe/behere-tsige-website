@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getArticleBySlug } from '@/lib/data/articles';
 import ArticleView from '@/screens/ArticleView';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function ArticleDetailPage({ params }) {
   const { slug } = await params;

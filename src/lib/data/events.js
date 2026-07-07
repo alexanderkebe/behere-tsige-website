@@ -1,7 +1,7 @@
-import { createClient } from '../supabase/server';
+import { createPublicClient } from '../supabase/public';
 
 export async function getEvents() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('events')
     .select('*')

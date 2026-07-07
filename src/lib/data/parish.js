@@ -1,10 +1,10 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 
 /** Published fathers/clergy, ordered for display. Safe to call before the
  *  schema exists — returns [] on any error so the page still renders. */
 export async function getFathers() {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('fathers')
       .select('*')
@@ -21,7 +21,7 @@ export async function getFathers() {
 /** Published parish office members, ordered for display. */
 export async function getMembers() {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('members')
       .select('*')

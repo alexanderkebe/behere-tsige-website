@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import defaultContent from '../data/defaultContent';
+import { mergeContentAll } from '../lib/contentShape';
 
 const ContentContext = createContext(null);
 
@@ -10,12 +11,6 @@ async function fetchContent() {
   } catch {
     /* API unavailable */
   }
-  try {
-    const res = await fetch('/content.json');
-    if (res.ok) return res.json();
-  } catch {
-    /* static fallback unavailable */
-  }
   return defaultContent;
 }
 
@@ -25,9 +20,10 @@ export function ContentProvider({ children }) {
 
   const reload = useCallback(async () => {
     const data = await fetchContent();
-    // Merge over defaults so any section missing from a saved content.json
-    // (e.g. newly added sections) still falls back to its default content.
-    const merged = { ...defaultContent, ...data };
+    // Merge over defaults, section by section, keeping each section's
+    // current shape — so missing sections/fields always fall back to their
+    // defaults and stale saved rows can't break the components.
+    const merged = mergeContentAll(defaultContent, data);
     setContent(merged);
     return merged;
   }, []);

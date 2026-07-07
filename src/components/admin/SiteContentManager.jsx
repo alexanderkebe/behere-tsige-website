@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import defaultContent from '../../data/defaultContent';
+import { mergeContentShape } from '../../lib/contentShape';
 
 /**
  * Edits every piece of site copy — all sections, all languages — stored in
@@ -9,18 +10,20 @@ import defaultContent from '../../data/defaultContent';
  * section's structure and renders an input for every text field, so anything
  * shown on the website (EN and AM alike) can be changed here. Saving upserts
  * the section row; the public site reads it back through /api/content.
+ *
+ * The section list comes from defaultContent, which mirrors exactly what the
+ * site renders — every section here controls real, visible text.
  */
 
 const SECTION_LABELS = {
-  hero: 'Hero (Home Banner)',
-  about: 'About / Our Journey',
-  services: 'Services Overview',
-  churchSchool: 'Church Education',
-  news: 'News & Father’s Message',
-  events: 'Events Section',
-  donate: 'Donate Section',
-  media: 'Media Section',
-  contact: 'Contact Section',
+  hero: 'Home — Hero Banner',
+  about: 'Home — About / Our Journey',
+  services: 'Services Page',
+  churchSchool: 'Services — Church Education',
+  events: 'Events Page',
+  donate: 'Donate Page',
+  media: 'Media Page',
+  contact: 'Contact Page',
   footer: 'Footer',
   socials: 'Social Links',
 };
@@ -300,11 +303,9 @@ export default function SiteContentManager({ supabase, user }) {
     load();
   }, [load]);
 
-  // Every section: those in the DB plus any new ones added to defaultContent.
-  const sections = useMemo(() => {
-    const keys = new Set([...Object.keys(defaultContent), ...Object.keys(rows)]);
-    return [...keys];
-  }, [rows]);
+  // Only sections the site actually renders (defaultContent is the source of
+  // truth); stale DB rows for removed sections are hidden and ignored.
+  const sections = useMemo(() => Object.keys(defaultContent), []);
 
   const onSaved = (section, data) => {
     setRows((r) => ({ ...r, [section]: { section, data, updated_at: new Date().toISOString() } }));
@@ -316,7 +317,7 @@ export default function SiteContentManager({ supabase, user }) {
         supabase={supabase}
         user={user}
         section={active}
-        initialData={rows[active]?.data ?? defaultContent[active]}
+        initialData={mergeContentShape(defaultContent[active], rows[active]?.data)}
         onBack={() => setActive(null)}
         onSaved={onSaved}
       />

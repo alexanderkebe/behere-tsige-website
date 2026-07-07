@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useSection } from '@/context/ContentContext';
 import AnnualFeasts from '@/components/AnnualFeasts';
 import WeeklySchedule from '@/components/WeeklySchedule';
 import Evangelism from '@/components/Evangelism';
@@ -96,74 +97,27 @@ export default function ServicesView({
 
   const isAm = lang === 'am';
 
+  // Page copy is edited in /admin → Site Content → Services Page. Each tab's
+  // label/description lives under section.tabs, keyed by the tab id below.
+  const section = useSection('services');
+  const c = (isAm ? section.am : section.en) || section.en;
+  const tabCopy = (id) => {
+    const tab = section.tabs?.[id];
+    return (isAm ? tab?.am : tab?.en) || tab?.en || {};
+  };
+
   const tabs = [
-    {
-      id: 'liturgy',
-      labelEn: 'Major Annual Feasts',
-      labelAm: 'ዐቢይ በዓላት',
-      descEn: 'Celebrate the major annual feast days and patron saint celebrations at our parish.',
-      descAm: 'በደብራችን የሚከበሩ ዓመታዊ ዐቢይ በዓላትንና የቅዱሳን መታሰቢያዎችን ይሳተፉ።',
-      subLabelEn: 'Patron Saints & Feast Days',
-      subLabelAm: 'ዐቢይ በዓላት እና ዓመታዊ በዓላት',
-      icon: CenserIcon,
-      component: <AnnualFeasts feasts={annualFeasts} />
-    },
-    {
-      id: 'weekly-schedule',
-      labelEn: 'Weekly Liturgical Schedule',
-      labelAm: 'የሳምንቱ ቁመታት',
-      descEn: 'Join us in our daily prayers, Sunday Divine Liturgy, Kidan services, Canonical Hours, and special feast day services.',
-      descAm: 'በዘወትር እንዲሁም በሠንበት ቅዳሴ ፣ በኪዳን ፣በሰዓታት እንዲሁም በበዓላት ቁመት ይሳተፉ',
-      subLabelEn: 'Daily Prayers & Sunday Kidase',
-      subLabelAm: 'ዕለታዊ ጸሎት እና ቅዳሴ',
-      icon: WorshipIcon,
-      component: <WeeklySchedule schedule={weeklySchedule} />
-    },
-    {
-      id: 'evangelism',
-      labelEn: 'Gospel & Sermons',
-      labelAm: 'ወንጌልና ስብከቶች',
-      descEn: 'Explore our nightly gospel teachings, seasonal sermons, and youth programs.',
-      descAm: 'የዕለት ማታ የወንጌል ትምህርቶች፣ ወቅታዊ ስብከቶች እና መዝሙራት መርሃ ግብር።',
-      subLabelEn: 'Nightly Teachings & Sermons',
-      subLabelAm: 'የወንጌል ስብከትና መርሃ ግብር',
-      icon: FellowshipIcon,
-      component: <Evangelism data={evangelismData} />
-    },
-    {
-      id: 'dejeselam',
-      labelEn: 'Project Dejeselam',
-      labelAm: 'የደጀ ሰላም ፕሮጀክት',
-      descEn: 'Join our daily charity feeding program, sponsor meals, and select available dates.',
-      descAm: 'በቤተ ክርስቲያን ደጃፍ የሚገኙ የተቸገሩ ወገኖችን በዕለት ማዕድ ለመደገፍ የበረከት ቀን ይምረጡ።',
-      subLabelEn: 'Feed the Needy (Matthew 25)',
-      subLabelAm: 'ለተቸገሩት የዕለት ማዕድ ማጋራት',
-      icon: MesobIcon,
-      component: <ProjectDejeselam />
-    },
+    { id: 'liturgy', icon: CenserIcon, component: <AnnualFeasts feasts={annualFeasts} /> },
+    { id: 'weekly-schedule', icon: WorshipIcon, component: <WeeklySchedule schedule={weeklySchedule} /> },
+    { id: 'evangelism', icon: FellowshipIcon, component: <Evangelism data={evangelismData} /> },
+    { id: 'dejeselam', icon: MesobIcon, component: <ProjectDejeselam /> },
     {
       id: 'sacraments',
-      labelEn: 'Holy Sacraments',
-      labelAm: 'ቅዱሳት ምስጢራት',
-      descEn: 'Register and request for Holy Baptism, Catechism, Confession, and Memorial services.',
-      descAm: 'የጥምቀት፣ የትምህርተ ሃይማኖት፣ የንስሐ አባቶች እና የፍትሐት ጸሎት አገልግሎት መጠየቂያ ቅጾች።',
-      subLabelEn: 'Baptism, Penance, Fithat',
-      subLabelAm: 'ጥምቀት፣ ንስሐ እና ፍትሐት',
       icon: LogoCross,
-      component: <SacramentsHub settings={settings} services={memorialServices} fathers={fathers} />
+      component: <SacramentsHub settings={settings} services={memorialServices} fathers={fathers} />,
     },
-    {
-      id: 'school',
-      labelEn: 'Church Education',
-      labelAm: 'የቤተክርስቲያን ትምህርት',
-      descEn: 'Discover traditional Abnet (Ge\'ez poetry, hymns) and modern Sunday School classes.',
-      descAm: 'የፊደል፣ የዜማ፣ የቅኔ የአብነት ትምህርት እና የህፃናት/ወጣቶች ሰንበት ትምህርት ቤቶች።',
-      subLabelEn: 'Abnet & Sunday School',
-      subLabelAm: 'የአብነትና የሰንበት ትምህርት ቤት',
-      icon: TeachingIcon,
-      component: <ChurchSchool lang={lang} />
-    }
-  ];
+    { id: 'school', icon: TeachingIcon, component: <ChurchSchool lang={lang} /> },
+  ].map((tab) => ({ ...tab, copy: tabCopy(tab.id) }));
 
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
@@ -190,17 +144,9 @@ export default function ServicesView({
           )}
           <div className="services-hero-overlay"></div>
           <Reveal className="services-hero-content" direction="up">
-            <span className="services-hero-tag">
-              {isAm ? 'ቤተ መቅደስ እና አገልግሎት' : 'SANCTUARY & SERVICES'}
-            </span>
-            <h1 className="services-hero-title">
-              {isAm ? 'የደብራችን መንፈሳዊ አገልግሎቶች' : 'Spiritual Services & Ministries'}
-            </h1>
-            <p className="services-hero-desc">
-              {isAm 
-                ? '«የእግዚአብሔር ማደሪያ ሰላማዊትና የቅዱሳኑ ማረፊያ ናት...» ጥንታዊውን የቤተ ክርስቲያን ሥርዓትና ትውፊት ጠብቀን በጸሎት፣ በምስጢራትና በትምህርት እናገለግላለን።' 
-                : 'Preserving ancient traditions, we serve our community through daily prayers, Holy Sacraments, educational programs, and local charity outreach.'}
-            </p>
+            <span className="services-hero-tag">{c.heroTag}</span>
+            <h1 className="services-hero-title">{c.heroTitle}</h1>
+            <p className="services-hero-desc">{c.heroDescription}</p>
             <div className="services-hero-ornament">
               <DiamondOrnament />
             </div>
@@ -213,8 +159,8 @@ export default function ServicesView({
         <section className="services-overview-grid-section">
           <div className="services-overview-container">
             <Reveal className="services-overview-header" direction="up">
-              <h2>{isAm ? 'የአገልግሎት ዘርፎች' : 'Our Service Hub'}</h2>
-              <p>{isAm ? 'በብሔረ ጽጌ መካነ ሰላም ቅድስት ድንግል ማርያም ቤተክርስቲያን የሚያገኟቸው መንፈሳዊ አገልግሎቶች' : 'Discover the spiritual ministries and services available at Behere Tsegie Mekane Selam Kidist Dingel Maryam Church.'}</p>
+              <h2>{c.hubTitle}</h2>
+              <p>{c.hubDescription}</p>
             </Reveal>
 
             <div className="services-overview-grid">
@@ -222,17 +168,17 @@ export default function ServicesView({
                 const IconComponent = tab.icon;
                 return (
                   <Reveal key={tab.id} delay={idx * 80} direction="up" as="div" className="services-overview-card-wrapper">
-                    <button 
-                      onClick={() => handleTabChange(tab.id)} 
+                    <button
+                      onClick={() => handleTabChange(tab.id)}
                       className="services-overview-card"
                     >
                       <div className="services-overview-card-icon">
                         <IconComponent size={32} />
                       </div>
-                      <h3>{isAm ? tab.labelAm : tab.labelEn}</h3>
-                      <p>{isAm ? tab.descAm : tab.descEn}</p>
+                      <h3>{tab.copy.label}</h3>
+                      <p>{tab.copy.description}</p>
                       <span className="services-overview-card-link">
-                        {isAm ? 'አገልግሎቱን ይክፈቱ' : 'Explore Service'} &rarr;
+                        {c.explore} &rarr;
                       </span>
                     </button>
                   </Reveal>
@@ -261,7 +207,7 @@ export default function ServicesView({
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M19 12H5M5 12L12 19M5 12L12 5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span>{isAm ? 'ዋና አገልግሎቶች' : 'All Services'}</span>
+              <span>{c.allServices}</span>
             </button>
           </div>
 
@@ -279,12 +225,8 @@ export default function ServicesView({
                     <Icon size={20} />
                   </div>
                   <div className="services-sidebar-item-text">
-                    <span className="sidebar-main-label">
-                      {isAm ? tab.labelAm : tab.labelEn}
-                    </span>
-                    <span className="sidebar-sub-label">
-                      {isAm ? tab.subLabelAm : tab.subLabelEn}
-                    </span>
+                    <span className="sidebar-main-label">{tab.copy.label}</span>
+                    <span className="sidebar-sub-label">{tab.copy.subLabel}</span>
                   </div>
                   {isActive && <div className="services-sidebar-active-indicator" />}
                 </button>
@@ -304,7 +246,7 @@ export default function ServicesView({
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M19 12H5M5 12L12 19M5 12L12 5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span>{isAm ? 'ወደ መጀመሪያው ይመለሱ' : 'Back to Overview'}</span>
+            <span>{c.backToOverview}</span>
           </button>
         </div>
         <div className="services-mobile-tabs-scroll">
@@ -316,7 +258,7 @@ export default function ServicesView({
                 onClick={() => handleTabChange(tab.id)}
                 className={`services-mobile-tab-btn ${isActive ? 'active' : ''}`}
               >
-                {isAm ? tab.labelAm : tab.labelEn}
+                {tab.copy.label}
               </button>
             );
           })}

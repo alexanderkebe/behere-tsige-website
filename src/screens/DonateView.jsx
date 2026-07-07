@@ -2,45 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useSection } from '@/context/ContentContext';
 import PageHero from '@/components/PageHero';
 import '@/styles/donate.css';
 import '@/styles/donate-bank.css';
-
-const T = {
-  en: {
-    heroTitle: 'Donations & Support',
-    heroSubtitle: 'Your generosity sustains our parish, our schools, and our outreach. Thank you for giving cheerfully.',
-    quote: '“Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.”',
-    quoteRef: '— 2 Corinthians 9:7',
-    introText: 'Your generosity sustains our parish, our schools, and our outreach. Thank you for giving cheerfully.',
-    projectsTitle: 'Current Projects', raised: 'raised', goal: 'Goal',
-    readMore: 'Read more', less: 'Show less', contribute: 'Contribute to this project',
-    generalTitle: 'General Parish Support', generalDesc: 'Not sure where to give? Support the overall ministry of the parish — every gift helps.', giveNow: 'Give Now',
-    modalTitle: 'Make a Donation', name: 'Full Name', email: 'Email', amount: 'Amount (ETB)', message: 'Message (optional)',
-    anon: 'Give anonymously', giveWithChapa: 'Donate with Chapa', processing: 'Processing…',
-    successTitle: 'Thank You!', successText: 'Your contribution has been received. May God bless your generosity.', close: 'Close',
-    bankTitle: 'Bank Transfer', accName: 'Account Name', accNum: 'Account Number', copy: 'Copy', copied: 'Copied!',
-  },
-  am: {
-    heroTitle: 'ልገሳ እና ድጋፍ',
-    heroSubtitle: 'የእርስዎ ልግስና ደብራችንን፣ ትምህርት ቤቶቻችንንና አገልግሎቶቻችንን ይደግፋል። በደስታ ስለሰጡ እናመሰግናለን።',
-    quote: '“እያንዳንዱ በልቡ እንዳሰበ ይስጥ፥ በኀዘን ወይም በግድ አይደለም፤ እግዚአብሔር በደስታ የሚሰጠውን ይወዳልና።”',
-    quoteRef: '— 2ኛ ቆሮንቶስ 9፥7',
-    introText: 'የእርስዎ ልግስና ደብራችንን፣ ትምህርት ቤቶቻችንንና አገልግሎቶቻችንን ይደግፋል። በደስታ ስለሰጡ እናመሰግናለን።',
-    projectsTitle: 'የአሁኑ ፕሮጀክቶች', raised: 'ተሰብስቧል', goal: 'ግብ',
-    readMore: 'ተጨማሪ ያንብቡ', less: 'ይዝጉ', contribute: 'ለዚህ ፕሮጀክት ያዋጡ',
-    generalTitle: 'አጠቃላይ የደብር ድጋፍ', generalDesc: 'የት እንደሚሰጡ እርግጠኛ አይደሉም? የደብሩን አጠቃላይ አገልግሎት ይደግፉ — እያንዳንዱ ስጦታ ይረዳል።', giveNow: 'አሁን ይስጡ',
-    modalTitle: 'ልገሳ ያድርጉ', name: 'ሙሉ ስም', email: 'ኢሜይል', amount: 'መጠን (ብር)', message: 'መልእክት (በፈቃደኝነት)',
-    anon: 'በስም-አልባ ይስጡ', giveWithChapa: 'በቻፓ ይለግሱ', processing: 'በማስኬድ ላይ…',
-    successTitle: 'እናመሰግናለን!', successText: 'ልገሳዎ ደርሶናል። እግዚአብሔር ልግስናዎን ይባርክ።', close: 'ዝጋ',
-    bankTitle: 'የባንክ ማስተላለፊያ', accName: 'የሒሳብ ስም', accNum: 'የሒሳብ ቍጥር', copy: 'ቅዳ', copied: 'ተቀድቷል!',
-  },
-};
-
-const CAT = {
-  en: { parish: 'Parish', sunday_school: 'Sunday School', abnet: 'Abnet School', general: 'General' },
-  am: { parish: 'ደብር', sunday_school: 'ሰንበት ት/ቤት', abnet: 'አብነት', general: 'አጠቃላይ' },
-};
 
 const pct = (r, g) => (!g || g <= 0 ? 0 : Math.min(100, Math.round((Number(r) / Number(g)) * 100)));
 const money = (n, c) => `${Number(n || 0).toLocaleString()} ${c || 'ETB'}`;
@@ -56,7 +21,7 @@ function ProjectCard({ p, lang, t, onContribute }) {
     <div className="project-card">
       {p.cover_url && <img className="project-card-image" src={p.cover_url} alt="" loading="lazy" />}
       <div className="project-card-content">
-        <div className="project-card-category">{CAT[lang]?.[p.category] || p.category}</div>
+        <div className="project-card-category">{t.categories?.[p.category] || p.category}</div>
         <h3 className="project-card-title">{title}</h3>
         <p className="project-card-desc">{desc}</p>
 
@@ -178,7 +143,9 @@ function BankCard({ b, t }) {
 
 export default function DonateView({ projects = [], bankAccounts = [] }) {
   const { lang } = useLanguage();
-  const t = T[lang] || T.en;
+  // Page copy is edited in /admin → Site Content → Donate Page.
+  const section = useSection('donate');
+  const t = (lang === 'am' ? section.am : section.en) || section.en;
   const [modal, setModal] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -207,7 +174,7 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
         </section>
 
         <section className="donate-projects-section">
-          <h2 className="donate-section-subtitle">{CAT[lang]?.parish || 'Projects of the Parish'}</h2>
+          <h2 className="donate-section-subtitle">{t.categories?.parish}</h2>
           <div className="projects-grid">
             {projects.filter(p => p.category === 'parish').map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
             <div className="general-donation-card">
@@ -219,19 +186,19 @@ export default function DonateView({ projects = [], bankAccounts = [] }) {
             </div>
           </div>
 
-          <h2 className="donate-section-subtitle" style={{ marginTop: '60px' }}>{CAT[lang]?.sunday_school || 'Projects of the Sunday School'}</h2>
+          <h2 className="donate-section-subtitle" style={{ marginTop: '60px' }}>{t.categories?.sunday_school}</h2>
           <div className="projects-grid">
             {projects.filter(p => p.category === 'sunday_school').map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
             {projects.filter(p => p.category === 'sunday_school').length === 0 && (
-              <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)' }}>{lang === 'am' ? 'በአሁኑ ጊዜ ፕሮጀክቶች የሉም' : 'No projects at this time.'}</p>
+              <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)' }}>{t.noProjects}</p>
             )}
           </div>
 
-          <h2 className="donate-section-subtitle" style={{ marginTop: '60px' }}>{CAT[lang]?.abnet || 'Projects of the Abnet School'}</h2>
+          <h2 className="donate-section-subtitle" style={{ marginTop: '60px' }}>{t.categories?.abnet}</h2>
           <div className="projects-grid">
             {projects.filter(p => p.category === 'abnet').map((p) => <ProjectCard key={p.id} p={p} lang={lang} t={t} onContribute={setModal} />)}
             {projects.filter(p => p.category === 'abnet').length === 0 && (
-              <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)' }}>{lang === 'am' ? 'በአሁኑ ጊዜ ፕሮጀክቶች የሉም' : 'No projects at this time.'}</p>
+              <p style={{ gridColumn: '1 / -1', color: 'var(--text-muted)' }}>{t.noProjects}</p>
             )}
           </div>
         </section>

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import PageHero from '@/components/PageHero';
 import Reveal from '@/components/Reveal';
 import { useLanguage } from '@/context/LanguageContext';
+import { useSection } from '@/context/ContentContext';
 import { DiamondOrnament } from '@/components/Icons';
 import '@/styles/events.css';
 
@@ -15,24 +16,9 @@ export default function EventsView({ initialEvents = [] }) {
   const [activeTab, setActiveTab] = useState('all'); // all | feasts | regular
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  const t = {
-    tag: isAm ? 'የቤተ ክርስቲያን መርሃ ግብሮች' : 'Church Calendar',
-    title: isAm ? 'መንፈሳዊ በዓላትና መርሃ ግብሮች' : 'Parish Events & Feasts',
-    subtitle: isAm ? 'በደብራችን የሚካሄዱ በዓላት፣ ኮንፈረንሶች እና መንፈሳዊ መርሃ ግብሮች' : 'Join us for our upcoming feasts, conferences, and spiritual gatherings.',
-    upcomingTitle: isAm ? 'ቀጣይ በዓላትና መርሃ ግብሮች' : 'Upcoming Gatherings',
-    noEvents: isAm ? 'ተስማሚ መርሃ ግብር አልተገኘም።' : 'No matching events scheduled at this time.',
-    mainFeast: isAm ? 'ታላቅ ዓመታዊ በዓል' : 'Main Annual Feast',
-    location: isAm ? 'ቦታ' : 'Location',
-    time: isAm ? 'ሰዓት' : 'Time',
-    date: isAm ? 'ቀን' : 'Date',
-    learnMore: isAm ? 'የበለጠ ለመረዳት' : 'Learn More',
-    searchPlaceholder: isAm ? 'መርሃ ግብሮችን በስም ወይም በዝርዝር ፈልግ...' : 'Search events by title or description...',
-    tabAll: isAm ? 'ሁሉም መርሃ ግብሮች' : 'All Events',
-    tabFeasts: isAm ? 'ዓመታዊ በዓላት' : 'Main Feasts',
-    tabRegular: isAm ? 'ሌሎች መርሃ ግብሮች' : 'Other Events',
-    close: isAm ? 'ዝጋ' : 'Close',
-    viewLocation: isAm ? 'በካርታ ላይ አሳይ' : 'View on Map',
-  };
+  // Page copy is edited in /admin → Site Content → Events Page.
+  const section = useSection('events');
+  const t = (isAm ? section.am : section.en) || section.en;
 
   // Close modal on Escape key
   useEffect(() => {
@@ -288,7 +274,7 @@ export default function EventsView({ initialEvents = [] }) {
 
               <div className="event-modal-info-side">
                 <span className="modal-badge">
-                  {selectedEvent.is_main ? t.mainFeast : (isAm ? 'መርሃ ግብር' : 'Event')}
+                  {selectedEvent.is_main ? t.mainFeast : t.eventBadge}
                 </span>
                 
                 <h3 className="event-modal-title">

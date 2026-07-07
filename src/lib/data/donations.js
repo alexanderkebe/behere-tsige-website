@@ -1,4 +1,4 @@
-import { createClient } from '../supabase/server';
+import { createPublicClient } from '../supabase/public';
 
 /**
  * Fetches all donation projects from the database, ordered by creation date.
@@ -123,7 +123,7 @@ const MOCK_PROJECTS = [
  * Fetches all donation projects from the database, ordered by creation date.
  */
 export async function getDonationProjects() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('donation_projects')
     .select('*')
@@ -157,7 +157,7 @@ export async function getDonationProjects() {
  * Fetches all bank accounts from the database, ordered by display order.
  */
 export async function getBankAccounts() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('bank_accounts')
     .select('*')

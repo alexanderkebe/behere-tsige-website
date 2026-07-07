@@ -1,4 +1,4 @@
-import { createClient } from '../supabase/server';
+import { createPublicClient } from '../supabase/public';
 
 const SELECT = '*, author:authors(id,name,photo_url), articles_tags(tag:tags(id,tag))';
 
@@ -9,7 +9,7 @@ function normalize(a) {
 /** Published articles, newest first. */
 export async function getPublishedArticles() {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('articles_with_stats')
       .select(SELECT)
@@ -32,7 +32,7 @@ export async function getPublishedArticles() {
 /** A single published article by slug, or null. */
 export async function getArticleBySlug(slug) {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('articles_with_stats')
       .select(SELECT)

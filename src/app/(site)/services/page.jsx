@@ -10,7 +10,7 @@ import {
 import { getFathers } from '@/lib/data/parish';
 import ServicesView from '@/screens/ServicesView';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function ServicesPage() {
   const [

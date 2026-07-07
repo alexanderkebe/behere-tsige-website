@@ -1,7 +1,7 @@
-import { createClient } from '../supabase/server';
+import { createPublicClient } from '../supabase/public';
 
 export async function getSiteSettings() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase.from('site_settings').select('*');
   if (error) {
     console.error('Error fetching site_settings:', error);
@@ -16,7 +16,7 @@ export async function getSiteSettings() {
 }
 
 export async function getAnnualFeasts() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('annual_feasts')
     .select('*')
@@ -30,7 +30,7 @@ export async function getAnnualFeasts() {
 }
 
 export async function getWeeklySchedule() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('weekly_schedule')
     .select('*')
@@ -44,7 +44,7 @@ export async function getWeeklySchedule() {
 }
 
 export async function getSundaySchoolData() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   
   const [teamRes, projectsRes, deptsRes] = await Promise.all([
     supabase.from('ss_team').select('*').order('display_order', { ascending: true }),
@@ -60,13 +60,13 @@ export async function getSundaySchoolData() {
 }
 
 export async function getAbnetData() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase.from('abnet_events').select('*').order('event_date', { ascending: true });
   return { events: data || [] };
 }
 
 export async function getEvangelismData() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   
   const [programsRes, sermonsRes] = await Promise.all([
     supabase.from('gospel_programs').select('*').order('display_order', { ascending: true }),
@@ -80,7 +80,7 @@ export async function getEvangelismData() {
 }
 
 export async function getMemorialServices() {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase.from('memorial_services').select('*');
   
   if (error) {

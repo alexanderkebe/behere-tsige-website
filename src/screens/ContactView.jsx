@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import PageHero from '@/components/PageHero';
 import Reveal from '@/components/Reveal';
 import { useLanguage } from '@/context/LanguageContext';
-import { DiamondOrnament } from '@/components/Icons';
+import { useSection } from '@/context/ContentContext';
 import { createClient } from '@/lib/supabase/client';
 import '@/styles/contact.css';
 
@@ -40,39 +40,13 @@ export default function ContactView() {
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [toastMessage, setToastMessage] = useState('');
 
+  // Page copy is edited in /admin → Site Content → Contact Page; the phone
+  // number and email live at the section root (shared by both languages).
+  const section = useSection('contact');
   const t = {
-    tag: isAm ? 'ያግኙን' : 'Reach Us',
-    title: isAm ? 'የደብሩ ጽሕፈት ቤት' : 'Parish Contacts',
-    subtitle: isAm ? 'በእምነት እና በፍቅር እናገለግልዎታለን' : 'We are here to serve you in faith, love, and fellowship.',
-    infoHeading: isAm ? 'የመገናኛ መረጃ' : 'Contact Information',
-    addressLabel: isAm ? 'አድራሻ' : 'Address',
-    address: isAm ? 'የብሔረ ጽጌ መንገድ፣ ጉለሌ፣ አዲስ አበባ፣ ኢትዮጵያ' : 'Bihere Tsige Road, Gullele, Addis Ababa, Ethiopia',
-    phoneLabel: isAm ? 'ስልክ' : 'Phone',
-    phone: '+251 11 320 1234',
-    emailLabel: isAm ? 'ኢሜይል' : 'Email',
-    email: 'info@beheretsigestmary.org',
-    hoursLabel: isAm ? 'የቢሮ ሰዓታት' : 'Office Hours',
-    hours: isAm ? 'ከሰኞ – ቅዳሜ፡ ከጠዋቱ 2:00 – ከቀኑ 11:00' : 'Mon – Sat: 8:00 AM – 5:00 PM',
-    formHeading: isAm ? 'መልእክት ይላኩልን' : 'Send a Message',
-    nameLabel: isAm ? 'ሙሉ ስም' : 'Your Name',
-    namePlaceholder: isAm ? 'ሙሉ ስምዎን እዚህ ያስገቡ' : 'Enter your full name',
-    phoneLabelField: isAm ? 'ስልክ ቁጥር' : 'Phone Number',
-    phonePlaceholder: isAm ? 'ስልክ ቁጥርዎን ያስገቡ' : 'Enter your phone number',
-    emailFieldLabel: isAm ? 'ኢሜይል አድራሻ' : 'Email Address',
-    emailPlaceholder: isAm ? 'you@example.com' : 'you@example.com',
-    subjectFieldLabel: isAm ? 'ጉዳዩ' : 'Subject',
-    subjectPlaceholder: isAm ? 'የመልእክቱን ርዕስ ያስገቡ' : 'Enter subject of your message',
-    messageLabel: isAm ? 'መልእክት' : 'Message',
-    messagePlaceholder: isAm ? 'መልእክትዎን እዚህ ይጻፉ...' : 'Type your message here...',
-    sendLabel: isAm ? 'መልእክት ላክ' : 'Submit Message',
-    sending: isAm ? 'በመላክ ላይ...' : 'Sending Message...',
-    success: isAm ? 'ስለ ላኩልን እናመሰግናለን! መልእክትዎ ደርሶናል፤ በቅርቡ እናገኝዎታለን።' : 'Thank you for reaching out! Your message has been received, and we will contact you shortly.',
-    errorMsg: isAm ? 'የሆነ ስህተት ተፈጥሯል፤ እባክዎን እንደገና ይሞክሩ።' : 'An error occurred while sending your message. Please try again.',
-    callBtn: isAm ? 'ይደውሉ' : 'Call',
-    smsBtn: isAm ? 'መልዕክት' : 'SMS',
-    writeBtn: isAm ? 'ይጻፉ' : 'Email',
-    copyBtn: isAm ? 'ይቅዱ' : 'Copy',
-    copiedText: isAm ? 'ኮፒ ተደርጓል!' : 'Copied to clipboard!'
+    ...((isAm ? section.am : section.en) || section.en),
+    phone: section.phone,
+    email: section.email,
   };
 
   const handleCopyLink = (text, label) => {
