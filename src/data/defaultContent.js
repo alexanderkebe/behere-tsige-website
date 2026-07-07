@@ -105,7 +105,7 @@ const defaultContent = {
     },
     am: {
       sectionTag: 'በደብርዎ ያገልግሉ',
-      sectionTitle: 'ባህላዊ የቤተ ክርስቲያን ትምህርት ቤት',
+      sectionTitle: 'መንፈሳዊ የቤተ ክርስቲያን ትምህርት ቤት',
       abnet: {
         title: 'የአቢነት ትምህርት',
         subtitle: 'ባህላዊ ትምህርት ቤት',

@@ -114,31 +114,10 @@ export default function ChurchSchool({ lang }) {
               <h2 className="abnet-detail-title">{isAm ? 'ስለ አብነት ትምህርት' : 'About Ye\'abinet Timhirt'}</h2>
               <div className="abnet-detail-intro" style={{ fontSize: '0.98rem', lineHeight: '1.75', marginBottom: '1.5rem' }}>
                 {isAm ? (
-                  <p style={{ margin: 0 }}>የአብነት ትምህርት ቤት ማለት ከአባት የተገኘ ከአበው የተወረሰ ከጥንት የነበረ ፣ የማንነት መግለጫ በራስ ቋንቋ ， በራስ ፊደል ， በራስ ስርዓት ትምህርት የሚሰጥ ከትውልድ ወደ ትውል የተላለፈ ትምህርት የሚሰጥበት ትምህርት ቤት ማለት ነው ፡፡ የአንድን ህዝብ የአንድን ሃገር ጥበብና እውቀት ለዚያ ህዝብና ለዚያች ሀገር ዜጐች የሚያስተምሩበት ትምህርት ቤት ማለት ነው ፡፡ የአብነት ትምህርት ቤት በልማድ “ የቆሎ ትምህርት ቤት በመባል በህዝባችን ዘንድ ይታወቃል ፡፡ አንዳንድ ሰዎች ደግሞ “ የቄስ ትምህርት ቤት “ አንዳንዶች ደግሞ “ የቤተክህነት ትምህርት ቤት “ ይሎታል” የሀይማኖት ቤት አባቶች የጥንታዊ ስልጣኔ መነሻወች  እና የዘመናዊ ትምህርትም መሰረቶች ናቸው ፡፡ ያም ሆነ ይህ ትክክለኛው ስያሜ “ የአብነት ት/ቤት ነው፡፡</p>
+                  <p style={{ margin: 0 }}>የአብነት ትምህርት ቤት ማለት ከአባት የተገኘ ከአበው የተወረሰ ከጥንት የነበረ ， የማንነት መግለጫ በራስ ቋንቋ ， በራስ ፊደል ， በራስ ስርዓት ትምህርት የሚሰጥ ከትውልድ ወደ ትውል የተላለፈ ትምህርት የሚሰጥበት ትምህርት ቤት ማለት ነው ፡፡ የአንድን ህዝብ የአንድን ሃገር ጥበብና እውቀት ለዚያ ህዝብና ለዚያች ሀገር ዜጐች የሚያስተምሩበት ትምህርት ቤት ማለት ነው ፡፡ የአብነት ትምህርት ቤት በልማድ “ የቆሎ ትምህርት ቤት በመባል በህዝባችን ዘንድ ይታወቃል ፡፡ አንዳንድ ሰዎች ደግሞ “ የቄስ ትምህርት ቤት “ አንዳንዶች ደግሞ “ የቤተክህነት ትምህርት ቤት “ ይሎታል” የሀይማኖት ቤት አባቶች የጥንታዊ ስልጣኔ መነሻወች  እና የዘመናዊ ትምህርትም መሰረቶች ናቸው ፡፡ ያም ሆነ ይህ ትክክለኛው ስያሜ “ የአብነት ት/ቤት ነው፡፡</p>
                 ) : (
-                  <>
-                    <p style={{ marginBottom: '0.8rem' }}>An Abinet School is a traditional Ethiopian ecclesiastical school that has been passed down from generation to generation. It preserves a heritage inherited from our forefathers and ancestors, maintaining an ancient system of education that reflects the identity of the Ethiopian people. Instruction is given in the nation's own language, using its own script and according to its own long-established educational tradition.</p>
-                    <p style={{ marginBottom: '0.8rem' }}>An Abinet School is an institution where the wisdom, knowledge, culture, and intellectual heritage of a people and their country are taught to succeeding generations. It has played a vital role in preserving Ethiopia's religious, literary, linguistic, and cultural legacy throughout history.</p>
-                    <p style={{ marginBottom: '0.8rem' }}>Traditionally, Abinet Schools are commonly known among the Ethiopian people as "Qolo Schools" (Schools of Traditional Learning). Some also refer to them as "Priests' Schools" or "Ecclesiastical Schools." However, the historically accurate and proper name is "Abinet School."</p>
-                    <p style={{ margin: 0 }}>The fathers of the Church were the pioneers of Ethiopia's ancient civilization and laid the foundations for both traditional and, ultimately, modern education. For this reason, the Abinet School remains one of the most important institutions for preserving the country's spiritual, intellectual, and cultural heritage.</p>
-                  </>
+                  <p style={{ margin: 0 }}>An Abinet School is a traditional Ethiopian ecclesiastical school that has been passed down from generation to generation. It preserves a heritage inherited from our forefathers and ancestors, maintaining an ancient system of education that reflects the identity of the Ethiopian people. Instruction is given in the nation's own language, using its own script and according to its own long-established educational tradition.</p>
                 )}
-              </div>
-
-              {/* Abbot Bio Card */}
-              <div className="abbot-card">
-                <div className="abbot-avatar-ring">
-                  <span className="abbot-avatar-monogram">YQ</span>
-                </div>
-                <div className="abbot-info">
-                  <span className="abbot-tag">{isAm ? 'የኔታ' : 'Ye\'abinet Timhirt Abbot'}</span>
-                  <h4 className="abbot-name">{isAm ? 'የኔታ ቆሞስ አባ ጊሩም አየለ' : 'Yeneta Qomos Abba Girum Ayele'}</h4>
-                  <p className="abbot-bio">
-                    {isAm
-                      ? "የደብሩ የአብነት ትምህርት መምህር የኔታ ቆሞስ አባ ጊሩም አየለ በቤተክርስቲያናችን ከፍተኛ የአብነት ትምህርት ክፍል (በተለይም በአብያተ ጉባኤያት ቅኔ፣ በገናና መጻሕፍት) ትምህርታቸውን ያጠናቀቁ ታላቅ ሊቅ ናቸው። በተጨማሪም በቅዱስ ጳውሎስ ከፍተኛ ቲኦሎጂካል ኮሌጅ በዲፕሎማ መርሃ ግብር ተመርቀዋል።"
-                      : "The Cathedral's Ye'abinet Timhirt abbot is Yeneta Qomos Abba Girum Ayele. He is an abbot who has completed his studies in the higher school of the traditional education of the Ethiopian Orthodox Church with the chant book (Degwa) and Poetry school (Qene Bet). Yeneta Girum also completed a diploma program in New testament interpretation from Sewasewe Birhan St. Paul Ethiopian Orthodox Tewahedo Church's Theological College."}
-                  </p>
-                </div>
               </div>
             </div>
 
