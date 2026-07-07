@@ -35,13 +35,13 @@ export default function Evangelism({ data }) {
         
         <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--text-dark)', opacity: 0.85, marginBottom: '1rem' }}>
           {lang === 'am'
-            ? 'በየዕለቱ ማታ ከጸሎት እና ከመንፈሳዊ መዝሙር ጋር የስብከተ ወንጌል ትምህርት ይሰጣል። እንዲሁም በቅዳሜ፣ በእሑድ እና በበዓላት ቀን ከቅዳሴ በኋላ ትምህርት ይቀጥላል።'
+            ? 'ኑ በእያንዳንዱ ሰርክ የሕይወት መንገድ የነፍስ እረፍትና የእግዚአብሔር ፍቅር የተገለጠበትን ቅዱስ ወንጌልን አብረን እንማር።'
             : 'There is a Gospel teaching every evening, accompanied by prayers and spiritual hymns. On weekends and church holidays, the teaching continues after the Divine Liturgy.'}
         </p>
         
         <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--text-dark)', opacity: 0.85 }}>
           {lang === 'am'
-            ? 'በእምነት ጉዞዎ ላይ ጀማሪም ሆኑ የእግዚአብሔርን ቃል በጥልቀት ለመረዳት የሚሹ፣ ከእኛ ጋር እንዲቀላቀሉ በደስታ ተጋብዘዋል። መጥተው ወንጌልን ይማሩ፣ ከቤተ ክርስቲያን ጋር ያምልኩ፣ እንዲሁም በጌታችን ጸጋ እና እውቀት ይደጉ።'
+            ? 'ጸጋው ከበዛላቸው ዐይን የደብራችን መምህራንና ከተጋባዥ ዘማርያን ጋር ዝግጅታችንን ጨርሰን የዕርስዎን መምጣት በጉጉት እንጠብቃለን ።'
             : 'Whether you are beginning your journey of faith or seeking to deepen your understanding of God\'s Word, you are warmly invited to join us. Come, learn the Gospel, worship with the Church, and grow in the grace and knowledge of our Lord.'}
         </p>
       </Reveal>
