@@ -2,37 +2,23 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { ArrowLeft, Heart, MessageCircle, Eye, Share2, Link2, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import Comments from '@/components/articles/Comments';
+import { FacebookIcon, TelegramIcon, WhatsAppIcon } from '@/components/Icons';
 import { createClient } from '@/lib/supabase/client';
+import { formatDate } from '@/lib/dates';
+import { useArticleLike } from '@/hooks/useArticleLike';
 import '@/styles/articles.css';
 import '@/styles/article-comments.css';
 
-const ShareIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
-    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-  </svg>
-);
-
-const LinkIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-  </svg>
-);
-
+/** Compact icon-only share row: native share, Telegram, WhatsApp, Facebook, copy. */
 function ShareBar({ title, lang }) {
   const [copied, setCopied] = useState(false);
   const url = typeof window !== 'undefined' ? window.location.href : '';
   const enc = encodeURIComponent(url);
   const encTitle = encodeURIComponent(title);
-
-  const t = {
-    share: lang === 'am' ? 'ያጋሩ' : 'Share',
-    copy: lang === 'am' ? 'ሊንክ ይቅዱ' : 'Copy Link',
-    copied: lang === 'am' ? 'ተቀድቷል!' : 'Copied!',
-  };
+  const shareLabel = lang === 'am' ? 'ያጋሩ' : 'Share';
 
   const copy = () => {
     navigator.clipboard.writeText(url).then(() => {
@@ -47,86 +33,114 @@ function ShareBar({ title, lang }) {
   };
 
   return (
-    <div className="article-share">
-      <span className="article-share-label">{t.share}</span>
-      <button className="btn-share" onClick={nativeShare}><ShareIcon /> {t.share}</button>
-      <a className="btn-share" href={`https://t.me/share/url?url=${enc}&text=${encTitle}`} target="_blank" rel="noopener noreferrer">Telegram</a>
-      <a className="btn-share" href={`https://wa.me/?text=${encTitle}%20${enc}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      <a className="btn-share" href={`https://www.facebook.com/sharer/sharer.php?u=${enc}`} target="_blank" rel="noopener noreferrer">Facebook</a>
-      <button className="btn-share" onClick={copy}><LinkIcon /> {copied ? t.copied : t.copy}</button>
+    <div className="article-share" role="group" aria-label={shareLabel}>
+      <span className="article-share-label">{shareLabel}</span>
+      <button type="button" className="share-icon-btn" onClick={nativeShare} aria-label={shareLabel} title={shareLabel}>
+        <Share2 size={17} strokeWidth={1.8} />
+      </button>
+      <a
+        className="share-icon-btn share-telegram"
+        href={`https://t.me/share/url?url=${enc}&text=${encTitle}`}
+        target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram"
+      >
+        <TelegramIcon style={{ width: 17, height: 17 }} />
+      </a>
+      <a
+        className="share-icon-btn share-whatsapp"
+        href={`https://wa.me/?text=${encTitle}%20${enc}`}
+        target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp"
+      >
+        <WhatsAppIcon style={{ width: 17, height: 17 }} />
+      </a>
+      <a
+        className="share-icon-btn share-facebook"
+        href={`https://www.facebook.com/sharer/sharer.php?u=${enc}`}
+        target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"
+      >
+        <FacebookIcon style={{ width: 17, height: 17 }} />
+      </a>
+      <button
+        type="button"
+        className={`share-icon-btn ${copied ? 'share-copied' : ''}`}
+        onClick={copy}
+        aria-label={lang === 'am' ? 'ሊንክ ይቅዱ' : 'Copy link'}
+        title={copied ? (lang === 'am' ? 'ተቀድቷል!' : 'Copied!') : (lang === 'am' ? 'ሊንክ ይቅዱ' : 'Copy link')}
+      >
+        {copied ? <Check size={17} strokeWidth={2.2} /> : <Link2 size={17} strokeWidth={1.8} />}
+      </button>
     </div>
   );
 }
 
 export default function ArticleView({ article }) {
   const { lang } = useLanguage();
+  const isAm = lang === 'am';
   const supabase = useMemo(() => createClient(), []);
-  const [likes, setLikes] = useState(article.likes_count || 0);
-  const [liked, setLiked] = useState(false);
+  const { likes, liked, toggle } = useArticleLike(article.id, article.likes_count || 0);
+  const [views, setViews] = useState(article.views_count || 0);
 
+  // Count this read once per browser session (survives strict-mode remounts).
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setLiked(!!localStorage.getItem(`liked_${article.id}`));
-    }
-  }, [article.id]);
-
-  const handleLike = async () => {
-    const nextLiked = !liked;
-    setLiked(nextLiked);
-    setLikes((prev) => nextLiked ? prev + 1 : Math.max(0, prev - 1));
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(`liked_${article.id}`, nextLiked ? 'true' : '');
-    }
-
+    if (!article?.id) return;
+    const key = `viewed_${article.id}`;
     try {
-      const { data, error } = await supabase.rpc('toggle_article_like', {
-        target_article_id: article.id,
-        increment_like: nextLiked,
-      });
-      if (error) throw error;
-      if (typeof data === 'number') {
-        setLikes(data);
-      }
-    } catch (err) {
-      console.error('Failed to toggle like:', err);
-      // Revert if request failed
-      setLiked(!nextLiked);
-      setLikes((prev) => nextLiked ? Math.max(0, prev - 1) : prev + 1);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(`liked_${article.id}`, nextLiked ? '' : 'true');
-      }
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, '1');
+    } catch {
+      /* storage unavailable — still record the view */
     }
-  };
+    supabase
+      .rpc('record_article_view', { target_article_id: article.id })
+      .then(({ data, error }) => {
+        if (!error && typeof data === 'number') setViews(data);
+      });
+  }, [article?.id, supabase]);
 
-  const title = lang === 'am' ? article.title_am || article.title_en : article.title_en;
-  const body = lang === 'am' ? article.body_am || article.body_en : article.body_en;
-  const date = article.published_at
-    ? new Date(article.published_at).toLocaleDateString(lang === 'am' ? 'am-ET' : 'en-US', {
-        year: 'numeric', month: 'long', day: 'numeric',
-      })
-    : '';
+  const title = isAm ? article.title_am || article.title_en : article.title_en;
+  const body = isAm ? article.body_am || article.body_en : article.body_en;
+  const date = formatDate(article.published_at, lang);
   const paragraphs = (body || '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+  const wordCount = (body || '').split(/\s+/).filter(Boolean).length;
+  const readMinutes = Math.max(1, Math.round(wordCount / 200));
+  const readTime = isAm ? `${readMinutes} ደቂቃ ንባብ` : `${readMinutes} min read`;
 
   return (
     <main className="site-page article-detail">
       <article className="article-detail-inner">
-        <Link href="/articles" className="article-back">← {lang === 'am' ? 'ወደ ጽሑፎች' : 'Back to articles'}</Link>
+        <Link href="/articles" className="article-back">
+          <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
+          {isAm ? 'ወደ ጽሑፎች' : 'Back to articles'}
+        </Link>
 
         {article.tags?.length > 0 && (
           <div className="article-tags">
-            {article.tags.map((tg) => <span key={tg} className="article-tag">#{tg}</span>)}
+            {article.tags.map((tg) => <span key={tg} className="article-tag">{tg}</span>)}
           </div>
         )}
 
         <h1 className="article-detail-title">{title}</h1>
 
         <div className="article-detail-meta">
-          {article.author?.photo_url && (
-            <img src={article.author.photo_url} alt="" className="article-author-photo" />
-          )}
-          <span className="article-author-name">{article.author?.name}</span>
-          {date && <span className="article-date">· {date}</span>}
+          <div className="article-detail-author">
+            {article.author?.photo_url ? (
+              <img src={article.author.photo_url} alt="" className="article-author-photo article-author-photo-lg" />
+            ) : (
+              <span className="article-author-initial article-author-initial-lg" aria-hidden="true">
+                {(article.author?.name || '·').charAt(0)}
+              </span>
+            )}
+            <div className="article-detail-author-text">
+              <span className="article-author-name">{article.author?.name}</span>
+              {date && <span className="article-date">{date}</span>}
+            </div>
+          </div>
+          <div className="article-detail-meta-right">
+            <span className="stat" title={isAm ? 'እይታዎች' : 'Views'}>
+              <Eye size={16} strokeWidth={1.8} aria-hidden="true" /> {views}
+            </span>
+            <span className="article-read-time">{readTime}</span>
+          </div>
         </div>
 
         {article.cover_url && <img src={article.cover_url} alt="" className="article-detail-cover" />}
@@ -136,16 +150,23 @@ export default function ArticleView({ article }) {
         </div>
 
         <div className="article-detail-actions">
-          <button onClick={handleLike} className={`btn-like ${liked ? 'liked' : ''}`}>
-            {liked ? '❤️' : '🤍'} {likes} {lang === 'am' ? 'ወደድኩት' : 'Like'}
-          </button>
-          <div className="article-detail-stats">
-            <span className="stat">💬 {article.comments_count || 0}</span>
-            <span className="stat">👁️ {article.views_count || 0}</span>
+          <div className="article-detail-actions-left">
+            <button
+              type="button"
+              onClick={toggle}
+              className={`btn-like ${liked ? 'liked' : ''}`}
+              aria-pressed={liked}
+            >
+              <Heart size={17} strokeWidth={1.8} aria-hidden="true" />
+              <span>{likes}</span>
+              <span className="btn-like-label">{isAm ? 'ወደድኩት' : 'Like'}</span>
+            </button>
+            <span className="stat" title={isAm ? 'አስተያየቶች' : 'Comments'}>
+              <MessageCircle size={16} strokeWidth={1.8} aria-hidden="true" /> {article.comments_count || 0}
+            </span>
           </div>
+          <ShareBar title={title} lang={lang} />
         </div>
-
-        <ShareBar title={title} lang={lang} />
 
         <Comments articleId={article.id} lang={lang} />
       </article>

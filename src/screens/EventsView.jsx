@@ -6,6 +6,7 @@ import Reveal from '@/components/Reveal';
 import { useLanguage } from '@/context/LanguageContext';
 import { useSection } from '@/context/ContentContext';
 import { DiamondOrnament } from '@/components/Icons';
+import { formatDate as formatDateLib, calendarParts, formatTime as formatTimeLib } from '@/lib/dates';
 import '@/styles/events.css';
 
 export default function EventsView({ initialEvents = [] }) {
@@ -29,54 +30,11 @@ export default function EventsView({ initialEvents = [] }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const formatDate = (dateStr) => {
-    if (!dateStr) return '';
-    try {
-      const dateObj = new Date(dateStr);
-      if (isNaN(dateObj.getTime())) return dateStr;
-      return dateObj.toLocaleDateString(isAm ? 'am-ET-u-ca-ethiopian' : 'en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    } catch (e) {
-      return dateStr;
-    }
-  };
-
-  const getCalendarDate = (dateStr) => {
-    if (!dateStr) return { month: '', day: '' };
-    try {
-      const dateObj = new Date(dateStr);
-      if (isNaN(dateObj.getTime())) return { month: '', day: '' };
-      
-      const month = dateObj.toLocaleDateString(isAm ? 'am-ET-u-ca-ethiopian' : 'en-US', { month: 'short' }).replace('.', '');
-      const day = isAm 
-        ? dateObj.toLocaleDateString('am-ET-u-ca-ethiopian', { day: 'numeric' })
-        : dateObj.getDate();
-      return { month, day };
-    } catch (e) {
-      return { month: '', day: '' };
-    }
-  };
-
-  const formatTime = (timeStr) => {
-    if (!timeStr) return '';
-    try {
-      const parts = timeStr.split(':');
-      if (parts.length < 2) return timeStr;
-      const hour = Number(parts[0]);
-      const min = parts[1];
-      if (isNaN(hour)) return timeStr;
-      
-      const ampm = hour >= 12 ? (isAm ? 'ከሰዓት' : 'PM') : (isAm ? 'ጠዋት' : 'AM');
-      const displayHour = hour % 12 || 12;
-      return `${displayHour}:${min} ${ampm}`;
-    } catch (e) {
-      return timeStr;
-    }
-  };
+  // Ethiopian calendar in Amharic, Gregorian in English (lib/dates.js).
+  const formatDate = (dateStr) =>
+    formatDateLib(dateStr, lang, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const getCalendarDate = (dateStr) => calendarParts(dateStr, lang);
+  const formatTime = (timeStr) => formatTimeLib(timeStr, lang);
 
   // Filter events based on active tab and search query
   const filteredEvents = initialEvents.filter((event) => {
