@@ -48,7 +48,7 @@ export default function EventsView({ initialEvents = [] }) {
     try {
       const dateObj = new Date(dateStr);
       if (isNaN(dateObj.getTime())) return dateStr;
-      return dateObj.toLocaleDateString(isAm ? 'am-ET' : 'en-US', {
+      return dateObj.toLocaleDateString(isAm ? 'am-ET-u-ca-ethiopian' : 'en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -65,8 +65,10 @@ export default function EventsView({ initialEvents = [] }) {
       const dateObj = new Date(dateStr);
       if (isNaN(dateObj.getTime())) return { month: '', day: '' };
       
-      const month = dateObj.toLocaleDateString(isAm ? 'am-ET' : 'en-US', { month: 'short' }).replace('.', '');
-      const day = dateObj.getDate();
+      const month = dateObj.toLocaleDateString(isAm ? 'am-ET-u-ca-ethiopian' : 'en-US', { month: 'short' }).replace('.', '');
+      const day = isAm 
+        ? dateObj.toLocaleDateString('am-ET-u-ca-ethiopian', { day: 'numeric' })
+        : dateObj.getDate();
       return { month, day };
     } catch (e) {
       return { month: '', day: '' };
