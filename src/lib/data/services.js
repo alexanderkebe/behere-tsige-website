@@ -15,15 +15,15 @@ export async function getSiteSettings() {
   }, {});
 }
 
-export async function getLiturgySchedule() {
+export async function getAnnualFeasts() {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from('liturgy_schedule')
+    .from('annual_feasts')
     .select('*')
     .order('display_order', { ascending: true });
   
   if (error) {
-    console.error('Error fetching liturgy_schedule:', error);
+    console.error('Error fetching annual_feasts:', error);
     return [];
   }
   return data;

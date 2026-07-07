@@ -5349,64 +5349,115 @@ a.contact-info-value:hover {
   margin-top: 2.5rem;
 }
 
-/* Liturgy & Prayer Schedule Redesign Styles */
-.liturgy-schedule-section {
+/* Annual Feasts Section Redesign Styles */
+.annual-feasts-section {
   width: 100%;
 }
-.schedule-container {
-  max-width: 800px;
+.feasts-container {
+  max-width: 700px;
   margin: 0 auto;
-}
-.schedule-row {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(197, 160, 68, 0.15);
-  padding: 1.5rem 0;
-  align-items: center;
-}
-.schedule-row:last-child {
-  border-bottom: none;
-}
-.schedule-info-col {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  text-align: left;
+  gap: 1.25rem;
 }
-.schedule-row-title {
+.feast-row {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(197, 160, 68, 0.15);
+  border-radius: 12px;
+  padding: 1.25rem 1.75rem;
+  transition: all 0.3s var(--ease-smooth);
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+.feast-row:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 25px rgba(197, 160, 68, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+}
+.feast-date-col {
+  flex-shrink: 0;
+}
+.feast-calendar-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  border: 1.5px solid var(--gold);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(15, 27, 61, 0.15);
+}
+.feast-calendar-month {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  letter-spacing: 0.06em;
+  padding: 5px 0;
+  width: 100%;
+  text-align: center;
+  background: rgba(197, 160, 68, 0.12);
+  border-bottom: 1.5px solid var(--gold);
+}
+.feast-calendar-day {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--white);
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feast-info-col {
+  flex-grow: 1;
+}
+.feast-title-text {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: var(--navy);
+  line-height: 1.4;
 }
-.schedule-row-note {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--text-dark);
-  opacity: 0.75;
-}
-.schedule-time-col {
-  text-align: right;
-  min-width: 130px;
-}
-.schedule-row-day {
-  font-family: var(--font-ui);
-  font-weight: 700;
-  display: block;
-  color: var(--navy);
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.schedule-row-time {
-  font-family: var(--font-ui);
-  color: var(--gold-dark);
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-top: 4px;
-  display: block;
+
+/* Responsive fixes */
+@media (max-width: 600px) {
+  .feast-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+  .feast-calendar-badge {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 6px 12px;
+    gap: 8px;
+    border-radius: 8px;
+  }
+  .feast-calendar-month {
+    width: auto;
+    padding: 0;
+    background: none;
+    border-bottom: none;
+    font-size: 0.85rem;
+  }
+  .feast-calendar-day {
+    font-size: 1rem;
+    font-family: var(--font-ui);
+    font-weight: 600;
+  }
 }
 
 /* Sacraments Hub card layout */

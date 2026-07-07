@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import LiturgySchedule from '@/components/LiturgySchedule';
+import AnnualFeasts from '@/components/AnnualFeasts';
 import Evangelism from '@/components/Evangelism';
 import ProjectDejeselam from '@/components/ProjectDejeselam';
 import SacramentsHub from '@/components/SacramentsHub';
@@ -21,20 +21,26 @@ import {
 // Mesob (traditional Ethiopian food basket) icon for Project Dejeselam.
 // Same call signature as the SVG icons so it drops into the tab config.
 function MesobIcon({ size = 32 }) {
+  // The PNG's strokes are thin; stack tight gold drop-shadows in every
+  // direction to visually thicken the lines to match the other icons.
+  const g = 'var(--gold, #C5A044)';
   return (
     <img
       src="/assets/mesob-icon.png"
       alt=""
       width={size}
       height={size}
-      style={{ objectFit: 'contain' }}
+      style={{
+        objectFit: 'contain',
+        filter: `drop-shadow(0.6px 0 0 ${g}) drop-shadow(-0.6px 0 0 ${g}) drop-shadow(0 0.6px 0 ${g}) drop-shadow(0 -0.6px 0 ${g})`,
+      }}
     />
   );
 }
 
 export default function ServicesView({
   settings,
-  liturgySchedule,
+  annualFeasts,
   sundaySchoolData,
   abnetData,
   evangelismData,
@@ -74,14 +80,14 @@ export default function ServicesView({
   const tabs = [
     {
       id: 'liturgy',
-      labelEn: 'Liturgy & Worship',
-      labelAm: 'ቅዳሴና አምልኮ',
-      descEn: 'Join our daily prayers, Mahlet, and Sunday Divine Liturgy services.',
-      descAm: 'በዕለታዊ ጸሎቶች፣ ማኅሌት እና በደማቁ የእሑድ ቅዳሴ መርሃ ግብር ላይ ይሳተፉ።',
-      subLabelEn: 'Daily Prayers & Sunday Kidase',
-      subLabelAm: 'ዕለታዊ ጸሎት እና ቅዳሴ',
+      labelEn: 'Major Annual Feasts',
+      labelAm: 'ዐቢይ በዓላት',
+      descEn: 'Celebrate the major annual feast days and patron saint celebrations at our parish.',
+      descAm: 'በደብራችን የሚከበሩ ዓመታዊ ዐቢይ በዓላትንና የቅዱሳን መታሰቢያዎችን ይሳተፉ።',
+      subLabelEn: 'Patron Saints & Feast Days',
+      subLabelAm: 'ዐቢይ በዓላት እና ዓመታዊ በዓላት',
       icon: WorshipIcon,
-      component: <LiturgySchedule schedule={liturgySchedule} />
+      component: <AnnualFeasts feasts={annualFeasts} />
     },
     {
       id: 'evangelism',

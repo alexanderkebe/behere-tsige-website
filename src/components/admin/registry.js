@@ -3,7 +3,7 @@ import AnalyticsDashboard from './AnalyticsDashboard';
 import FathersManager from './FathersManager';
 import MembersManager from './MembersManager';
 import RequestsManager from './RequestsManager';
-import LiturgyManager from './LiturgyManager';
+import FeastsManager from './FeastsManager';
 import MemorialManager from './MemorialManager';
 import SermonsManager from './SermonsManager';
 import SchoolsManager from './SchoolsManager';
@@ -24,7 +24,7 @@ export const adminRegistry = [
   { id: 'fathers', label: 'Fathers', Component: FathersManager },
   { id: 'members', label: 'Parish Council', Component: MembersManager },
   { id: 'requests', label: 'Confessor Requests', Component: RequestsManager },
-  { id: 'liturgy', label: 'Liturgy Schedule', Component: LiturgyManager },
+  { id: 'feasts', label: 'Annual Feasts', Component: FeastsManager },
   { id: 'memorial', label: 'Memorial Services', Component: MemorialManager },
   { id: 'sermons', label: 'Sermons & Programs', Component: SermonsManager },
   { id: 'schools', label: 'Schools & Config', Component: SchoolsManager },

@@ -1,6 +1,6 @@
 import {
   getSiteSettings,
-  getLiturgySchedule,
+  getAnnualFeasts,
   getSundaySchoolData,
   getAbnetData,
   getEvangelismData,
@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export default async function ServicesPage() {
   const [
     settings,
-    liturgySchedule,
+    annualFeasts,
     sundaySchoolData,
     abnetData,
     evangelismData,
@@ -22,7 +22,7 @@ export default async function ServicesPage() {
     fathers,
   ] = await Promise.all([
     getSiteSettings(),
-    getLiturgySchedule(),
+    getAnnualFeasts(),
     getSundaySchoolData(),
     getAbnetData(),
     getEvangelismData(),
@@ -33,7 +33,7 @@ export default async function ServicesPage() {
   return (
     <ServicesView
       settings={settings}
-      liturgySchedule={liturgySchedule}
+      annualFeasts={annualFeasts}
       sundaySchoolData={sundaySchoolData}
       abnetData={abnetData}
       evangelismData={evangelismData}
