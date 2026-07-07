@@ -179,9 +179,9 @@ insert into public.fathers
   (full_name_en, full_name_am, title_en, title_am, role, bio_en, bio_am, photo_url, is_confessor, is_penance_father, display_order)
 values
   ('Melake Genet Memhir Habtewold Tegegn', 'መልዓከ ገነት መምህር ሃብተወልድ ተገኝ',
-   'Head Priest', 'ዋና ካህን', 'head_priest',
+   'Head Priest', 'የደብሩ አስተዳዳሪ', 'head_priest',
    'Head priest of the parish, serving the congregation in worship, teaching, and pastoral care.',
-   'የደብሩ ዋና ካህን፤ ምዕመናንን በአምልኮ፣ በትምህርትና በመንፈሳዊ እንክብካቤ ያገለግላሉ።',
+   'የደብሩ አስተዳዳሪ፤ ምዕመናንን በአምልኮ፣ በትምህርትና በመንፈሳዊ እንክብካቤ ያገለግላሉ።',
    '/assets/profile-pic-preist.png', true, true, 1),
   ('Father Tesfaye Bekele', 'አባ ተስፋዬ በቀለ',
    'Priest & Confessor', 'ካህንና የንስሐ አባት', 'confessor',

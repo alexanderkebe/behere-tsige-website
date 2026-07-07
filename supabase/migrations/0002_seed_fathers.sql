@@ -13,9 +13,9 @@ insert into public.fathers
   (full_name_en, full_name_am, title_en, title_am, role, bio_en, bio_am, photo_url, is_confessor, is_penance_father, phone, email, display_order)
 values
   ('Melake Genet Memhir Habtewold Tegegn', 'መልአከ ገነት መምህር ሀብተወልድ ተገኝ',
-   'Head Priest', 'ዋና ካህን', 'head_priest',
+   'Head Priest', 'የደብሩ አስተዳዳሪ', 'head_priest',
    'Head priest of the parish for over two decades, leading the congregation in worship, teaching, and pastoral care.',
-   'ከሁለት አስርት ዓመታት በላይ የደብሩ ዋና ካህን ሆነው ምዕመናንን በአምልኮ፣ በትምህርትና በመንፈሳዊ እንክብካቤ ይመራሉ።',
+   'ከሁለት አስርት ዓመታት በላይ የደብሩ አስተዳዳሪ ሆነው ምዕመናንን በአምልኮ፣ በትምህርትና በመንፈሳዊ እንክብካቤ ይመራሉ።',
    '/assets/profile-pic-preist.png', true, true, '+251 911 100 101', 'habtewold@beheretsigestmary.org', 1),
 
   ('Kesis Tesfaye Bekele', 'ቀሲስ ተስፋዬ በቀለ',
