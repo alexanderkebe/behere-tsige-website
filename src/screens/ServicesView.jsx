@@ -57,6 +57,23 @@ function CenserIcon({ size = 32 }) {
   );
 }
 
+// Mequamia (liturgical staff) icon for Weekly Liturgical Schedule.
+function MequamiaIcon({ size = 32 }) {
+  const g = 'var(--gold, #C5A044)';
+  return (
+    <img
+      src="/assets/mequamia-icon.png"
+      alt=""
+      width={size}
+      height={size}
+      style={{
+        objectFit: 'contain',
+        filter: `drop-shadow(0.6px 0 0 ${g}) drop-shadow(-0.6px 0 0 ${g}) drop-shadow(0 0.6px 0 ${g}) drop-shadow(0 -0.6px 0 ${g})`,
+      }}
+    />
+  );
+}
+
 export default function ServicesView({
   settings,
   annualFeasts,
@@ -108,7 +125,7 @@ export default function ServicesView({
 
   const tabs = [
     { id: 'liturgy', icon: CenserIcon, component: <AnnualFeasts feasts={annualFeasts} /> },
-    { id: 'weekly-schedule', icon: WorshipIcon, component: <WeeklySchedule schedule={weeklySchedule} /> },
+    { id: 'weekly-schedule', icon: MequamiaIcon, component: <WeeklySchedule schedule={weeklySchedule} /> },
     { id: 'evangelism', icon: FellowshipIcon, component: <Evangelism data={evangelismData} /> },
     { id: 'dejeselam', icon: MesobIcon, component: <ProjectDejeselam /> },
     {
