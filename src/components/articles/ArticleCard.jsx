@@ -9,6 +9,7 @@ import { useArticleLike } from '@/hooks/useArticleLike';
 export default function ArticleCard({ article, lang }) {
   const title = lang === 'am' ? article.title_am || article.title_en : article.title_en;
   const excerpt = lang === 'am' ? article.excerpt_am || article.excerpt_en : article.excerpt_en;
+  const authorName = lang === 'am' ? article.author?.name_am || article.author?.name : article.author?.name;
   const date = formatDate(article.published_at, lang, { year: 'numeric', month: 'short', day: 'numeric' });
   const { likes, liked, toggle } = useArticleLike(article.id, article.likes_count || 0);
 
@@ -45,7 +46,7 @@ export default function ArticleCard({ article, lang }) {
               </span>
             )}
             <div className="article-card-meta-text">
-              <span className="article-author-name">{article.author?.name}</span>
+              <span className="article-author-name">{authorName}</span>
               {date && <span className="article-date">{date}</span>}
             </div>
           </div>

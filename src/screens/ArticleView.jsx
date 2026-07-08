@@ -98,6 +98,7 @@ export default function ArticleView({ article }) {
 
   const title = isAm ? article.title_am || article.title_en : article.title_en;
   const body = isAm ? article.body_am || article.body_en : article.body_en;
+  const authorName = isAm ? article.author?.name_am || article.author?.name : article.author?.name;
   const date = formatDate(article.published_at, lang);
   const paragraphs = (body || '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 
@@ -131,7 +132,7 @@ export default function ArticleView({ article }) {
               </span>
             )}
             <div className="article-detail-author-text">
-              <span className="article-author-name">{article.author?.name}</span>
+              <span className="article-author-name">{authorName}</span>
               {date && <span className="article-date">{date}</span>}
             </div>
           </div>

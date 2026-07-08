@@ -1,6 +1,6 @@
 import { createPublicClient } from '../supabase/public';
 
-const SELECT = '*, author:authors(id,name,photo_url), articles_tags(tag:tags(id,tag))';
+const SELECT = '*, author:authors(id,name,name_am,photo_url), articles_tags(tag:tags(id,tag))';
 
 function normalize(a) {
   return { ...a, tags: (a.articles_tags || []).map((t) => t.tag?.tag).filter(Boolean) };
