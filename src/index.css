@@ -5529,6 +5529,29 @@ a.contact-info-value:hover {
   color: var(--off-white);
 }
 
+.weekly-no-events {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  border: 1px dashed rgba(197, 160, 68, 0.3);
+  border-radius: 8px;
+  background: rgba(197, 160, 68, 0.03);
+  margin-top: 1rem;
+}
+.weekly-no-events p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+.dark-theme .weekly-no-events {
+  border-color: rgba(197, 160, 68, 0.4);
+  background: rgba(197, 160, 68, 0.05);
+}
+.dark-theme .weekly-no-events p {
+  color: var(--off-white);
+}
+
 /* Sacraments Hub card layout */
 .sacraments-grid {
   display: grid;

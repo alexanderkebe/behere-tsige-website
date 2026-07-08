@@ -45,10 +45,11 @@ function formatDay(val, isAm) {
 export default function WeeklySchedule({ schedule = [] }) {
   const { lang } = useLanguage();
   
-  if (!schedule || schedule.length === 0) return null;
-
   const isAm = lang === 'am' || lang === 'gez';
   const sectionTitle = isAm ? 'የሳምንቱ ቁመታት' : 'Weekly Liturgical Schedule';
+  const noEventsText = isAm 
+    ? 'በዚህ ሳምንት ምንም መርሃ ግብሮች የሉም።' 
+    : 'There are no events scheduled for this week.';
 
   return (
     <section id="weekly-schedule" className="weekly-schedule-section">
@@ -60,28 +61,34 @@ export default function WeeklySchedule({ schedule = [] }) {
       </Reveal>
  
       <div className="weekly-container">
-        {schedule.map((item, index) => (
-          <Reveal key={item.id} delay={index * 50} direction="up" as="div" className="weekly-row">
-            <div className="weekly-info-col">
-              <h3 className="weekly-row-title">
-                {lang === 'am' ? item.title_am || item.title_en : item.title_en}
-              </h3>
-              {(item.note_am || item.note_en) && (
-                <p className="weekly-row-note">
-                  {lang === 'am' ? item.note_am : item.note_en}
-                </p>
-              )}
-            </div>
-            <div className="weekly-time-col">
-              <span className="weekly-row-day">
-                {formatDay(item.day_of_week, isAm)}
-              </span>
-              <span className="weekly-row-time">
-                {item.start_time ? item.start_time.substring(0, 5) : ''}
-              </span>
-            </div>
+        {!schedule || schedule.length === 0 ? (
+          <Reveal delay={100} direction="up" as="div" className="weekly-no-events">
+            <p>{noEventsText}</p>
           </Reveal>
-        ))}
+        ) : (
+          schedule.map((item, index) => (
+            <Reveal key={item.id} delay={index * 50} direction="up" as="div" className="weekly-row">
+              <div className="weekly-info-col">
+                <h3 className="weekly-row-title">
+                  {lang === 'am' ? item.title_am || item.title_en : item.title_en}
+                </h3>
+                {(item.note_am || item.note_en) && (
+                  <p className="weekly-row-note">
+                    {lang === 'am' ? item.note_am : item.note_en}
+                  </p>
+                )}
+              </div>
+              <div className="weekly-time-col">
+                <span className="weekly-row-day">
+                  {formatDay(item.day_of_week, isAm)}
+                </span>
+                <span className="weekly-row-time">
+                  {item.start_time ? item.start_time.substring(0, 5) : ''}
+                </span>
+              </div>
+            </Reveal>
+          ))
+        )}
       </div>
     </section>
   );
