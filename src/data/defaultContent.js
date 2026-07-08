@@ -112,7 +112,7 @@ const defaultContent = {
         am: {
           label: 'የሳምንቱ ቁመታት',
           description: 'በዘወትር እንዲሁም በሠንበት ቅዳሴ ፣ በኪዳን ፣በሰዓታት እንዲሁም በበዓላት ቁመት ይሳተፉ',
-          subLabel: 'ዕለታዊ ጸሎት እና ቅዳሴ',
+          subLabel: 'ማህሌት፣ ሰአታት፣ ዋዜማ',
         },
       },
       evangelism: {
