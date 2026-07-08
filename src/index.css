@@ -461,15 +461,7 @@ button {
   z-index: 1;
   pointer-events: none;
   transition: background var(--transition-base);
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.9) 0%,       /* White top gradient for navbar legibility */
-    rgba(255, 255, 255, 0.45) 20%,
-    rgba(255, 255, 255, 0) 40%,         /* Clear center viewport */
-    rgba(255, 255, 255, 0) 65%,
-    rgba(255, 255, 255, 0.45) 80%,
-    rgba(255, 255, 255, 0.95) 100%      /* White bottom gradient for section blend */
-  );
+  background: rgba(255, 255, 255, 0.45); /* Solid white translucent overlay to make text readable on all screens */
 }
 
 .hero-bg picture,
@@ -3563,10 +3555,6 @@ a.contact-info-value:hover {
 
 /* ── Desktop only (> 1024px): clean top layout, no gradient ── */
 @media (min-width: 1181px) {
-  .hero-bg::after {
-    background: rgba(255, 255, 255, 0.45); /* Solid white translucent overlay */
-  }
-
   .hero-content {
     align-items: center; /* Center vertically on desktop */
     padding: 110px 40px 80px;
