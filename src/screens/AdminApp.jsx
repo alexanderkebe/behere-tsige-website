@@ -19,8 +19,11 @@ export default function AdminApp() {
 
   useEffect(() => {
     let active = true;
+    let resolution = 0;
 
     const resolve = async (sessionUser) => {
+      if (!active) return;
+      const currentResolution = ++resolution;
       if (!sessionUser) {
         if (active) { setUser(null); setStatus('anon'); }
         return;
@@ -30,7 +33,7 @@ export default function AdminApp() {
         .select('role, full_name, email')
         .eq('id', sessionUser.id)
         .single();
-      if (!active) return;
+      if (!active || currentResolution !== resolution) return;
       if (!error && data && (data.role === 'admin' || data.role === 'super_admin')) {
         setUser({ ...sessionUser, profile: data });
         setStatus('admin');
@@ -41,9 +44,10 @@ export default function AdminApp() {
     };
 
     supabase.auth.getSession().then(({ data }) => resolve(data.session?.user || null));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) =>
-      resolve(session?.user || null)
-    );
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      // Run database calls after the auth callback releases its session lock.
+      setTimeout(() => { void resolve(session?.user || null); }, 0);
+    });
 
     // Re-verify the session whenever the admin returns to the tab. Supabase
     // refreshes tokens in the background, but if a refresh failed (or the

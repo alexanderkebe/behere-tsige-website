@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useState } from 'react';
  *  - All Accounts: every registered profile with its role; admins promote or
  *    demote accounts through the admin_set_role() RPC (you can't change your
  *    own role, and only a super admin can touch super admin roles).
- * New sign-ups from /admin start as "member" (no access) until promoted here.
+ * Accounts are provisioned privately; the admin login has no public signup.
  */
 
 const ROLE_LABELS = {
@@ -204,7 +204,7 @@ export default function AccountsManager({ supabase, user }) {
       <div className="admin-card">
         <p className="admin-subheading">All Accounts</p>
         <p className="admin-status">
-          New sign-ups from the admin login page start as “Member — no access”. Promote an account
+          Accounts are provisioned by the site owner. Promote an existing account
           to Admin to give it full access to this panel; demote it to Member to remove access. You
           cannot change your own role{isSuper ? '' : ', and only a super admin can manage super admin roles'}.
         </p>

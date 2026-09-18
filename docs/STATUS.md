@@ -1,5 +1,11 @@
 # Behere Tsige — Project Status & How to Continue
 
+> **2026-09-13 update:** The active local database is now `bnwkxmlmajwvqkyykirj`
+> (`beheretsegemaryam`), initialized and verified through migration 0039.
+> The admin login is provisioned; public signup is disabled. Website push and
+> deployment remain pending approval. See [current rollout](ADMIN-ROLLOUT.md)
+> and [database rebuild](DATABASE-REBUILD.md). The June snapshot below is historical.
+
 **Last updated:** 2026-06-26 · **Branch:** `nextjs-migration` (not yet merged to `main`)
 
 This is the living "where are we / what's next" doc. The full requirements live in
@@ -88,13 +94,11 @@ npx supabase db push --db-url "postgresql://postgres.tozstfdnhjtldigdiscv:${SUPA
 
 ## 4. Admin access
 
-1. Go to `/admin` → **Sign up** with **alexanderkebe@gmail.com** (migration 0004
-   auto-grants this email the `admin` role on signup).
-2. If signup is blocked by email confirmation, either confirm via the email, or
-   disable confirmation in Supabase → Authentication → Providers → Email
-   ("Confirm email" off).
-3. To make a different/extra admin: add the email to the allow-list in a new
-   migration, or run `update profiles set role='admin' where email='…';`.
+The revised `/admin` is sign-in only. Accounts are provisioned privately;
+passwords are never embedded in the website. The intended administrator is
+**alexanderkebe@gmail.com**. The account is provisioned and hosted signup is
+disabled; see [Admin rollout](ADMIN-ROLLOUT.md) for the current deployment plan.
+Migration 0039 replaces the historical email-based auto-admin trigger.
 
 ---
 

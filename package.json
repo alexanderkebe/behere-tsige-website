@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:link": "supabase link --project-ref tozstfdnhjtldigdiscv",
+    "db:link": "supabase link --project-ref bnwkxmlmajwvqkyykirj",
     "db:push": "node scripts/db-push.mjs",
     "db:diff": "supabase db diff",
     "db:pull": "supabase db pull"
