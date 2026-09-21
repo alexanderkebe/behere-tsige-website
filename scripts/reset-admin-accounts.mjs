@@ -63,10 +63,15 @@ async function main() {
     throw new Error('Disable new user signups in the hosted Supabase project before applying the reset.');
   }
 
-  // Save the new credential privately before changing the account, so a later
-  // network failure cannot lose it. Existing credential files are never replaced.
-  const password = randomBytes(24).toString('base64url');
-  await writeFile(CREDENTIAL_PATH, `Admin URL: https://www.beheretsigemariam.org/admin\nEmail: ${adminEmail}\nPassword: ${password}\n`, { flag: 'wx', mode: 0o600 });
+  // An explicitly supplied password is useful for a deliberate admin reset;
+  // otherwise generate a strong credential and preserve it locally.
+  const password = process.env.ADMIN_PASSWORD || randomBytes(24).toString('base64url');
+  if (process.env.ADMIN_PASSWORD && password.length < 8) {
+    throw new Error('ADMIN_PASSWORD must be at least 8 characters.');
+  }
+  if (!process.env.ADMIN_PASSWORD) {
+    await writeFile(CREDENTIAL_PATH, `Admin URL: https://www.beheretsigemariam.org/admin\nEmail: ${adminEmail}\nPassword: ${password}\n`, { flag: 'wx', mode: 0o600 });
+  }
   const result = owner
     ? await admin.auth.admin.updateUserById(owner.id, { password, email_confirm: true, ban_duration: 'none' })
     : await admin.auth.admin.createUser({ email: adminEmail, password, email_confirm: true });

@@ -28,7 +28,7 @@ export const metadata = {
   title: 'Behere Tsige St. Mary | A Spiritual Home Rooted in Faith',
   description:
     'Mekane Selam Behere Tsige St. Mary Ethiopian Orthodox Tewahedo Church — worship, services, events, media, and fellowship.',
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/favicon.svg?v=2' },
 };
 
 export default function RootLayout({ children }) {
